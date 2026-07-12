@@ -268,7 +268,7 @@
   </div>
 </div>
 
-<div class="footer">EzyAccount · v3.0-1207/1546</div>
+<div class="footer">EzyAccount · v3.1-1207/1600</div>
 
 <script>
 const COMPANIES = [
@@ -401,10 +401,21 @@ async function registerPending(u){
   row[0]=(u.email||'').toLowerCase(); row[1]=u.name||''; row[2]=u.picture||'';
   row[REGISTRY_HEADER.length-1]=new Date().toLocaleDateString('en-GB');
   try{
-    await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A:Z:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,{
+    // Ensure the Staff tab + header exist first (super_admin may not have saved yet)
+    const chk=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A1:A1`,{headers:{Authorization:'Bearer '+currentToken}});
+    const chkD=await chk.json();
+    if(chkD.error){
+      await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}:batchUpdate`,{method:'POST',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({requests:[{addSheet:{properties:{title:'Staff'}}}]})});
+    }
+    if(chkD.error||!chkD.values||!chkD.values.length){
+      await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A1?valueInputOption=RAW`,{method:'PUT',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({values:[REGISTRY_HEADER]})});
+    }
+    const res=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A:Z:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,{
       method:'POST',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({values:[row]})
     });
+    if(!res.ok){ console.warn('registerPending: append failed',res.status,'— sheet mesti dikongsi sebagai EDITOR'); return; }
     _registry.rows.push(row);
+    console.log('registerPending: added',u.email,'as pending');
   }catch(e){ console.warn('registerPending failed (registry may need Editor access):',e); }
 }
 function pendingScreenHtml(email){
