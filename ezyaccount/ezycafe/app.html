@@ -205,7 +205,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
   <label class="kekal-row">
     <input type="checkbox" id="kekalCheck"> Kekal Log Masuk
   </label>
-  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v4.1-1207/1931</div>
+  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v4.2-1207/2133</div>
 </div>
 
 <!-- PENDING SCREEN -->
@@ -233,7 +233,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
     <div class="header-left">
       <img id="headerCompanyLogo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD7HY4Un0Ga8+stR1y50XTtVu/FF1bNqFstyIbXQTOkYYA7cqrHjOOTk9a9Ak/1bf7p/lXl9jY3t/4I8Ita6fLcj+yYQzrbeaEJVev+kRY9eh+vavRwPJyvmtuuifR90znrXurf1t2Lth4p8SaL8Qz4b8Q2F7e6PeeUthrS2XlIJnX/AFT7eOSMA9QevByPRa8l8Y+J7PTtTsvDtnol3cWuiXMd3cXMUnlxq0Q8xlBfPA3jOWzlgB2r1SxuYbyxt7y3YtDPEssZIxlWAI/Q1zYnEUa8k6as1o7K17dbba9baE4eom5QUr2/r5kxGQRjINcPZ+E/EemWNvp+m+K9UjtLWNYoI/KtfkRRtUZMRJwvc9Ww3sb/AIv8INr+t6Zqa6rLbCxDDyCpZHJYMDwy4Py4PUFSR3rkk+Ft8IV0cat5VmdMuYp7uBTH5tzIHWKTytxwY/NlbIYA5QADbXXh1RjSb9qr72cb7X6v+tfJjqOblbl073/r+kaMvw0h1S7kn1++1K8890e4VZ0iS42cL5iRqAxA4yAD/TuNLvdMnQ22nXNs4twYzFEwzGFZo8Y6gBkZfqpHavKtV+BkFzcao1l4luLSC7hhit4TFI6W3liLAx5oDoDFuVWBALtndk56XwH8OI/C3iu58QnVEv7m7tJLeeSW0Cykm5knUhw3AAl2lcYOxSNuMVwSUG3JbvsrF06UYNtLc//Z" alt="" class="header-logo" style="width:32px;height:32px;border-radius:6px;object-fit:contain">
       <span class="header-title" id="headerCompanyName">EzyAccount</span>
-      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v4.1-1207/1931</span>
+      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v4.2-1207/2133</span>
     </div>
     <div class="header-right"><button onclick="window.location.href='../index.html'" title="Tukar Syarikat" style="background:none;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;padding:5px 10px;margin-right:4px">🏢 Tukar</button>
       <button id="btnRefresh" onclick="refreshAllData()" title="Refresh Data" style="background:none;border:none;font-size:18px;cursor:pointer;padding:4px;line-height:1">🔄</button>
@@ -849,9 +849,9 @@ function setJualan(list){ lsSet('ezy_jualan_'+COMPANY_CONFIG.id,list); }
 async function loadJualanFromSheet(){
   const tok=getValidToken()||accessToken||currentToken; if(!tok) return;
   try{
-    const r=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Jualan!A2:D`,{headers:{Authorization:'Bearer '+tok}});
+    const r=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Jualan!A2:E`,{headers:{Authorization:'Bearer '+tok}});
     const d=await r.json(); if(d.error) return;
-    setJualan((d.values||[]).filter(x=>x[0]).map(x=>({date:x[0],amount:parseFloat((x[1]||'').toString().replace(/,/g,''))||0,by:x[2]||'',at:x[3]||''})));
+    setJualan((d.values||[]).filter(x=>x[0]).map(x=>({id:x[0],date:x[1]||'',amount:parseFloat((x[2]||'').toString().replace(/,/g,''))||0,by:x[3]||'',at:x[4]||''})));
   }catch(e){ console.warn('loadJualan:',e); }
 }
 async function syncJualanToSheet(){
@@ -861,9 +861,9 @@ async function syncJualanToSheet(){
     if((await cr.json()).error){
       await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}:batchUpdate`,{method:'POST',headers:{Authorization:'Bearer '+tok,'Content-Type':'application/json'},body:JSON.stringify({requests:[{addSheet:{properties:{title:'Jualan'}}}]})});
     }
-    await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Jualan!A1:D100000:clear`,{method:'POST',headers:{Authorization:'Bearer '+tok,'Content-Type':'application/json'}});
-    const rows=[['Tarikh','Jumlah','Dimasukkan Oleh','Kemaskini']];
-    getJualan().forEach(j=>rows.push([toSheetDateText(j.date),j.amount,j.by,j.at]));
+    await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Jualan!A1:E100000:clear`,{method:'POST',headers:{Authorization:'Bearer '+tok,'Content-Type':'application/json'}});
+    const rows=[['ID','Tarikh','Jumlah','Dimasukkan Oleh','Masa']];
+    getJualan().forEach(j=>rows.push([j.id||'',toSheetDateText(j.date),j.amount,j.by,j.at]));
     await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Jualan!A1?valueInputOption=USER_ENTERED`,{method:'PUT',headers:{Authorization:'Bearer '+tok,'Content-Type':'application/json'},body:JSON.stringify({values:rows})});
   }catch(e){ console.warn('syncJualan:',e); }
 }
@@ -872,15 +872,36 @@ function saveJualan(){
   const amount=Math.round((parseFloat(document.getElementById('jualanAmount').value)||0)*100)/100;
   if(!dateRaw||!amount){ showToast('Sila isi tarikh & jumlah ⚠️'); return; }
   const date=fmtDate(dateRaw); // clean dd/mm/yyyy
-  const list=getJualan();
   const by=(currentUser&&(getUserProfile(currentUser.email).fullname||currentUser.name))||'';
   const at=new Date().toLocaleString('en-MY');
-  const existing=list.find(j=>dateSortKey(j.date)===dateSortKey(date));
-  if(existing){ existing.amount=amount; existing.by=by; existing.at=at; showToast('Jualan dikemaskini ✅'); }
-  else { list.push({date,amount,by,at}); showToast('Jualan disimpan ✅'); }
+  const list=getJualan();
+  list.push({id:'JL-'+Date.now()+Math.random().toString(36).substr(2,4),date,amount,by,at});
   setJualan(list);
   syncJualanToSheet().catch(()=>{});
+  const amtInp=document.getElementById('jualanAmount'); if(amtInp) amtInp.value='';
+  showToast('Jualan disimpan ✅');
   _renderJualanInner();
+}
+function deleteJualan(id){
+  if(!confirm('Buang entri jualan ini?')) return;
+  setJualan(getJualan().filter(j=>j.id!==id));
+  syncJualanToSheet().catch(()=>{});
+  _renderJualanInner();
+}
+// Period filter for the sales list
+window._jualanPeriod = window._jualanPeriod || 'Bulan';
+function setJualanPeriod(p){ window._jualanPeriod=p; window._jualanFrom=''; window._jualanTo=''; _renderJualanInner(); }
+function applyJualanRange(){ window._jualanFrom=(document.getElementById('jualanFrom')||{}).value||''; window._jualanTo=(document.getElementById('jualanTo')||{}).value||''; _renderJualanInner(); }
+function jualanFilter(list){
+  const from=window._jualanFrom, to=window._jualanTo;
+  if(from&&to){ return list.filter(j=>{const k=dateSortKey(j.date); return k&&k>=from&&k<=to;}); }
+  const now=new Date(); const todayK=dateSortKey(now.toISOString().split('T')[0]);
+  const p=window._jualanPeriod;
+  if(p==='Semua') return list;
+  if(p==='Hari') return list.filter(j=>dateSortKey(j.date)===todayK);
+  if(p==='Minggu'){ const d=new Date(); d.setDate(d.getDate()-6); const wk=dateSortKey(d.toISOString().split('T')[0]); return list.filter(j=>{const k=dateSortKey(j.date); return k&&k>=wk&&k<=todayK;}); }
+  const ym=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0'); // Bulan
+  return list.filter(j=>(dateSortKey(j.date)||'').startsWith(ym));
 }
 function renderJualanScreen(){
   const el=document.getElementById('jualanContent'); if(!el) return;
@@ -889,29 +910,40 @@ function renderJualanScreen(){
 }
 function _renderJualanInner(){
   const el=document.getElementById('jualanContent'); if(!el) return;
-  const list=getJualan().slice().sort((a,b)=>(dateSortKey(b.date)||'').localeCompare(dateSortKey(a.date)||''));
-  const now=new Date(); const ym=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
-  const monthRows=list.filter(j=>(dateSortKey(j.date)||'').startsWith(ym));
-  const monthTotal=monthRows.reduce((a,j)=>a+parseFloat(j.amount||0),0);
+  const all=getJualan();
+  const filtered=jualanFilter(all).slice().sort((a,b)=>(dateSortKey(b.date)||'').localeCompare(dateSortKey(a.date)||''));
+  const periodTotal=filtered.reduce((a,j)=>a+parseFloat(j.amount||0),0);
+  const allTotal=all.reduce((a,j)=>a+parseFloat(j.amount||0),0);
   const today=new Date().toISOString().split('T')[0];
+  const p=window._jualanPeriod; const custom=window._jualanFrom&&window._jualanTo;
+  const pbtn=(lbl)=>`<button class="btn btn-sm ${(!custom&&p===lbl)?'btn-primary':'btn-secondary'}" style="white-space:nowrap" onclick="setJualanPeriod('${lbl}')">${lbl}</button>`;
   let html=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
       <div style="font-size:18px;font-weight:700">Jualan Harian</div>
       <button class="btn btn-sm btn-secondary" onclick="renderJualanScreen()">🔄</button></div>
-    <div class="card mb-12" style="padding:14px">
-      <div class="form-group"><label class="form-label">Tarikh</label><input type="date" id="jualanDate" class="form-input" value="${today}"></div>
-      <div class="form-group"><label class="form-label">Jumlah Jualan (RM)</label><input type="number" step="0.01" id="jualanAmount" class="form-input" placeholder="0.00"></div>
-      <button class="btn btn-primary btn-block" onclick="saveJualan()">Simpan Jualan</button>
-      <div style="font-size:11px;color:var(--mid);margin-top:6px">Satu entri satu hari — masuk semula tarikh sama akan kemaskini.</div>
-    </div>
     <div class="kpi-grid" style="margin-bottom:12px">
-      <div class="kpi-card"><div class="kpi-label">Jualan Bulan Ini</div><div class="kpi-value" style="font-size:15px;color:var(--green)">${formatRM(monthTotal)}</div></div>
-      <div class="kpi-card"><div class="kpi-label">Hari Direkod</div><div class="kpi-value">${monthRows.length}</div></div>
+      <div class="kpi-card"><div class="kpi-label">Jualan (${custom?'Julat':p})</div><div class="kpi-value" style="font-size:15px;color:var(--green)">${formatRM(periodTotal)}</div></div>
+      <div class="kpi-card"><div class="kpi-label">Bil. Entri</div><div class="kpi-value">${filtered.length}</div></div>
+      <div class="kpi-card"><div class="kpi-label">Purata/Entri</div><div class="kpi-value" style="font-size:14px">${formatRM(filtered.length?periodTotal/filtered.length:0)}</div></div>
+      <div class="kpi-card"><div class="kpi-label">Jumlah Semua</div><div class="kpi-value" style="font-size:14px">${formatRM(allTotal)}</div></div>
+    </div>
+    <div style="display:flex;gap:6px;margin-bottom:8px;overflow-x:auto">${pbtn('Hari')}${pbtn('Minggu')}${pbtn('Bulan')}${pbtn('Semua')}</div>
+    <div style="display:flex;gap:6px;align-items:center;margin-bottom:12px;font-size:12px;color:var(--mid)">
+      <span>Dari</span><input type="date" id="jualanFrom" value="${window._jualanFrom||''}" onchange="applyJualanRange()" style="font-size:12px;padding:4px 6px;border:1px solid var(--border);border-radius:6px">
+      <span>Hingga</span><input type="date" id="jualanTo" value="${window._jualanTo||''}" onchange="applyJualanRange()" style="font-size:12px;padding:4px 6px;border:1px solid var(--border);border-radius:6px">
+    </div>
+    <div class="card mb-12" style="padding:14px">
+      <div style="font-size:12px;font-weight:600;color:var(--mid);margin-bottom:8px">+ REKOD JUALAN</div>
+      <div style="display:flex;gap:8px">
+        <div class="form-group" style="flex:1"><label class="form-label">Tarikh</label><input type="date" id="jualanDate" class="form-input" value="${today}"></div>
+        <div class="form-group" style="flex:1"><label class="form-label">Jumlah (RM)</label><input type="number" step="0.01" id="jualanAmount" class="form-input" placeholder="0.00"></div>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="saveJualan()">Simpan Jualan</button>
     </div>`;
-  if(!list.length){ html+='<div class="empty-state"><div class="empty-icon">💵</div><div>Tiada rekod jualan</div></div>'; }
+  if(!filtered.length){ html+='<div class="empty-state"><div class="empty-icon">💵</div><div>Tiada rekod jualan untuk tempoh ini</div></div>'; }
   else {
-    html+=`<div style="font-size:12px;font-weight:600;color:var(--mid);margin-bottom:8px">SEJARAH</div>
-      <div class="table-wrap"><table class="data-table"><thead><tr><th>Tarikh</th><th>RM</th><th>Oleh</th></tr></thead><tbody>`;
-    list.slice(0,60).forEach(j=>{ html+=`<tr><td>${fmtDate(j.date)}</td><td style="font-weight:600;color:var(--green)">${formatRM(j.amount)}</td><td style="font-size:11px;color:var(--mid)">${j.by||'-'}</td></tr>`; });
+    html+=`<div style="font-size:12px;font-weight:600;color:var(--mid);margin-bottom:8px">SEJARAH (${filtered.length})</div>
+      <div class="table-wrap"><table class="data-table"><thead><tr><th>Tarikh</th><th>RM</th><th>Oleh</th><th></th></tr></thead><tbody>`;
+    filtered.slice(0,120).forEach(j=>{ html+=`<tr><td>${fmtDate(j.date)}</td><td style="font-weight:600;color:var(--green)">${formatRM(j.amount)}</td><td style="font-size:11px;color:var(--mid)">${j.by||'-'}</td><td style="text-align:right"><button class="btn btn-sm btn-danger" onclick="deleteJualan('${j.id}')" style="padding:2px 8px">✕</button></td></tr>`; });
     html+=`</tbody></table></div>`;
   }
   el.innerHTML=html;
@@ -1490,8 +1522,8 @@ function setupAppForRole(){
     setupTabs([
       {id:'dashboard',label:'Dashboard',fn:renderAccountantDashboard},
       {id:'upload',label:'Belian',fn:renderBelianTab},
-      {id:'suppliers',label:'Supplier',fn:renderSuppliersList},
-      {id:'jualan',label:'Jualan',fn:renderJualanScreen}
+      {id:'jualan',label:'Jualan',fn:renderJualanScreen},
+      {id:'suppliers',label:'Supplier',fn:renderSuppliersList}
     ]);
     switchTab('dashboard');
   } else if(role==='accountant'){
@@ -1499,9 +1531,9 @@ function setupAppForRole(){
     setupTabs([
       {id:'dashboard',label:'Dashboard',fn:renderAccountantDashboard},
       {id:'upload',label:'Belian',fn:renderBelianTab},
+      {id:'jualan',label:'Jualan',fn:renderJualanScreen},
       {id:'suppliers',label:'Supplier',fn:renderSuppliersList},
-      {id:'payment',label:'Bayaran',fn:renderPaymentScreen},
-      {id:'jualan',label:'Jualan',fn:renderJualanScreen}
+      {id:'payment',label:'Bayaran',fn:renderPaymentScreen}
     ]);
     switchTab('dashboard');
   } else if(role==='super_admin'){
@@ -1509,9 +1541,9 @@ function setupAppForRole(){
     setupTabs([
       {id:'dashboard',label:'Dashboard',fn:renderAdminDashboard},
       {id:'upload',label:'Belian',fn:renderBelianTab},
+      {id:'jualan',label:'Jualan',fn:renderJualanScreen},
       {id:'supplier-admin',label:'Supplier',fn:renderSupplierAdmin},
-      {id:'payment',label:'Bayaran',fn:renderPaymentScreen},
-      {id:'jualan',label:'Jualan',fn:renderJualanScreen}
+      {id:'payment',label:'Bayaran',fn:renderPaymentScreen}
     ]);
     switchTab('dashboard');
   }
@@ -2991,6 +3023,12 @@ function renderSuppliersList(){
     <div class="kpi-card"><div class="kpi-label">Bil. Belian</div><div class="kpi-value">${valid.length}</div></div>
     <div class="kpi-card"><div class="kpi-label">Purata/Resit</div><div class="kpi-value" style="font-size:14px">${formatRM(valid.length?totalBeli/valid.length:0)}</div></div>
   </div>`;
+  const chartHtml=`<div class="card mb-12">
+    <div class="card-title mb-8">🍩 Belian Ikut Supplier</div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="position:relative;width:120px;height:120px;flex-shrink:0"><canvas id="suppPie"></canvas></div>
+      <div id="suppLegend" style="flex:1;min-width:0"></div>
+    </div></div>`;
   const listHtml=suppliers.map(s=>{
     const sn=s.name.toLowerCase();
     const sRec=valid.filter(r=>r.vendor&&r.vendor.toLowerCase()===sn);
@@ -3003,7 +3041,32 @@ function renderSuppliersList(){
       <span class="supplier-count" style="color:var(--dark);font-weight:700">${formatRM(sBeli)}</span>
     </div>`;
   }).join('');
-  el.innerHTML=kpiHtml+listHtml;
+  el.innerHTML=kpiHtml+chartHtml+listHtml;
+  renderSupplierDonut('suppPie','suppLegend');
+}
+// Donut of purchase share per supplier (+ %).
+function renderSupplierDonut(canvasId, legendId){
+  const valid=getReceipts().filter(r=>r.status!=='Rejected');
+  const byVendor={};
+  valid.forEach(r=>{ if(r.vendor) byVendor[r.vendor]=(byVendor[r.vendor]||0)+parseFloat(r.amount||0); });
+  const keys=Object.keys(byVendor).filter(k=>byVendor[k]>0.001).sort((a,b)=>byVendor[b]-byVendor[a]);
+  const lg=document.getElementById(legendId);
+  if(!keys.length){ if(lg) lg.innerHTML='<div style="font-size:12px;color:var(--mid)">Tiada data belian</div>'; return; }
+  const palette=['#1a7a4a','#3b82f6','#f59e0b','#8b5cf6','#ec4899','#06b6d4','#ef4444','#14b8a6','#a855f7','#6b7280'];
+  const total=keys.reduce((a,k)=>a+byVendor[k],0);
+  const colors=keys.map((k,i)=>palette[i%palette.length]);
+  const canvas=document.getElementById(canvasId);
+  if(canvas&&window.Chart){
+    destroyChart(canvasId);
+    charts[canvasId]=new Chart(canvas,{type:'doughnut',
+      data:{labels:keys,datasets:[{data:keys.map(k=>byVendor[k]),backgroundColor:colors,borderWidth:2,borderColor:'#fff'}]},
+      options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:c=>c.label+': '+formatRM(c.parsed)+' ('+Math.round(c.parsed/total*100)+'%)'}}}}});
+  }
+  if(lg) lg.innerHTML=keys.slice(0,8).map((k,i)=>`<div style="display:flex;align-items:center;gap:6px;font-size:12px;margin-bottom:4px">
+    <span style="width:10px;height:10px;border-radius:2px;background:${colors[i]};flex-shrink:0"></span>
+    <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${k}</span>
+    <span style="font-weight:700">${Math.round(byVendor[k]/total*100)}%</span></div>`).join('');
 }
 
 function showSupplierHistory(supplierName){
@@ -3236,9 +3299,9 @@ function renderCategoryPie(canvasId, legendId){
   const colors=keys.map(c=>(CAT_COLORS&&CAT_COLORS[c])||'#ccc');
   if(canvas&&window.Chart){
     destroyChart(canvasId);
-    charts[canvasId]=new Chart(canvas,{type:'pie',
-      data:{labels:keys,datasets:[{data:keys.map(k=>byCat[k]),backgroundColor:colors}]},
-      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
+    charts[canvasId]=new Chart(canvas,{type:'doughnut',
+      data:{labels:keys,datasets:[{data:keys.map(k=>byCat[k]),backgroundColor:colors,borderWidth:2,borderColor:'#fff'}]},
+      options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},
         tooltip:{callbacks:{label:c=>c.label+': '+formatRM(c.parsed)+' ('+Math.round(c.parsed/total*100)+'%)'}}}}});
   }
   if(lg) lg.innerHTML=keys.map((k,i)=>`<div style="display:flex;align-items:center;gap:6px;font-size:12px;margin-bottom:4px">
@@ -3347,14 +3410,14 @@ function renderReceiptCard(r, tab){
       ${r.driveLink?`<div style="margin-top:8px;text-align:center"><button onclick="showReceiptImageModal('${r.driveLink}')" style="background:none;border:none;color:var(--green);font-size:11px;cursor:pointer;padding:0">📷 Lihat Gambar Resit</button></div>`:''}
     </div>`:'';
   return `<div class="receipt-card" id="card-${r.id}">
-    <div class="receipt-header" onclick="toggleReceiptItems('${r.id}')" style="cursor:${hasItems?'pointer':'default'}">
+    <div class="receipt-header" onclick="showReceiptDetailModal('${r.id}')" style="cursor:pointer">
       <div>
         <div class="receipt-vendor">${r.vendor}</div>
         <span class="status-badge ${statusClass}">${r.status}</span>
       </div>
       <div style="text-align:right">
         <div class="receipt-amount">${formatRM(parseFloat(r.amount||0))}</div>
-        ${hasItems?`<div style="font-size:10px;color:var(--mid)">${r.itemDetails.length} item · klik ▼</div>`:''}
+        <div style="font-size:10px;color:var(--green)">${hasItems?r.itemDetails.length+' item · ':''}butiran ›</div>
       </div>
     </div>
     <div class="receipt-meta">📅 ${fmtDate(r.date)} · 🏬 ${r.branch}</div>
@@ -3382,33 +3445,39 @@ function showReceiptDetailModal(id){
   const r=getReceipts().find(x=>x.id===id);
   if(!r) return;
   const hasItems=r.itemDetails&&r.itemDetails.length>0;
+  const payLine=r.payAkaun?`<div>💰 ${r.payAkaun} · <b style="color:${receiptPayStatus(r)==='Paid'?'var(--green)':'var(--red)'}">${receiptPayStatus(r)}</b>${receiptPayType(r)==='supplier_credit'&&r.dueDate?` · Due ${fmtDate(r.dueDate)}`:''}${r.paidAt?` · Dibayar ${fmtDate(r.paidAt)}`:''}</div>`:'';
   let body=`<div style="font-size:13px;color:var(--mid);margin-bottom:10px">
     <div><b>${r.vendor||'-'}</b></div>
     <div>${fmtDate(r.date)} · ${r.branch||'-'} · <span class="status-badge status-${(r.status||'').toLowerCase()}">${r.status}</span></div>
-    <div style="margin-top:4px;font-weight:600;color:var(--dark)">${formatRM(parseFloat(r.amount||0))}</div>
+    <div style="margin-top:4px;font-weight:700;color:var(--dark);font-size:15px">${formatRM(parseFloat(r.amount||0))}</div>
+    ${payLine}
+    ${r.nota?`<div style="font-style:italic;margin-top:2px">"${r.nota}"</div>`:''}
   </div>`;
+  if(r.driveLink){
+    body+=`<div style="margin-bottom:12px;text-align:center"><button class="btn btn-primary btn-block" onclick="showReceiptImageModal('${r.driveLink}')">📷 Lihat Gambar Resit</button></div>`;
+  }
   if(hasItems){
-    body+=`<table style="width:100%;font-size:12px;border-collapse:collapse">
+    body+=`<div style="font-size:12px;font-weight:600;color:var(--mid);margin-bottom:4px">ITEM (${r.itemDetails.length})</div>
+    <div style="overflow-x:auto"><table style="width:100%;font-size:12px;border-collapse:collapse">
       <thead><tr style="color:var(--mid)">
         <th style="text-align:left;padding:4px">Item</th>
-        <th style="text-align:left;padding:4px">Kod</th>
+        <th style="text-align:left;padding:4px">Kategori</th>
         <th style="text-align:center;padding:4px">Qty</th>
+        <th style="text-align:center;padding:4px">Unit</th>
         <th style="text-align:right;padding:4px">Harga</th>
         <th style="text-align:right;padding:4px">Jumlah</th>
       </tr></thead>
       <tbody>${r.itemDetails.map(it=>`<tr style="border-top:1px solid #f0f0f0">
-        <td style="padding:4px">${it.name||'-'}</td>
-        <td style="padding:4px;color:var(--mid)">${it.code||'-'}</td>
+        <td style="padding:4px">${it.name||'-'}<div style="font-size:9px;color:var(--mid)">${it.code||''}</div></td>
+        <td style="padding:4px;font-size:11px;color:var(--mid)">${it.category||'-'}</td>
         <td style="padding:4px;text-align:center">${it.qty||1}</td>
+        <td style="padding:4px;text-align:center;font-size:11px;color:var(--mid)">${it.unit||'-'}</td>
         <td style="padding:4px;text-align:right">${formatRM(it.price||0)}</td>
         <td style="padding:4px;text-align:right;font-weight:600">${formatRM(it.lineTotal||((it.qty||1)*(it.price||0)))}</td>
       </tr>`).join('')}</tbody>
-    </table>`;
+    </table></div>`;
   } else {
     body+=`<div style="font-size:12px;color:var(--mid)">Tiada butiran item untuk resit ini.</div>`;
-  }
-  if(r.driveLink){
-    body+=`<div style="margin-top:12px;text-align:center"><button class="btn btn-outline" onclick="showReceiptImageModal('${r.driveLink}')">📷 Lihat Gambar Resit</button></div>`;
   }
   showModal(r.vendor||'Butiran Resit',body);
 }
@@ -5986,7 +6055,7 @@ function renderStaffClaims(containerId){
         <div style="display:flex;align-items:center;gap:8px">${payTickBox(r.id)}<div><div>${r.vendor||'-'}</div><div style="color:var(--mid)">${fmtDate(r.date)}</div></div></div>
         <div style="text-align:right;display:flex;align-items:center;gap:8px">
           <span style="font-weight:600">${formatRM(parseFloat(r.amount||0))}</span>
-          <button class="btn btn-sm btn-secondary" onclick="markReceiptPaid('${r.id}')">Bayar</button>
+          <button class="btn btn-sm btn-secondary" onclick="markReceiptPaid('')">Click to Pay</button>
         </div></div>`;
     });
     html+=`</div>`;
@@ -6011,7 +6080,7 @@ function renderSupplierOutstanding(containerId){
       <td>${fmtDate(r.date)}</td>
       <td style="color:${isOverdue?'var(--red)':'var(--dark)'};font-weight:${isOverdue?'700':'400'}">${r.dueDate?fmtDate(r.dueDate):'-'}${isOverdue?' ⚠️':''}</td>
       <td style="font-weight:600">${formatRM(parseFloat(r.amount||0))}</td>
-      <td style="text-align:right"><button class="btn btn-sm btn-secondary" onclick="markReceiptPaid('${r.id}')">Paid</button></td>
+      <td style="text-align:right"><button class="btn btn-sm btn-secondary" onclick="markReceiptPaid('')">Click to Pay</button></td>
     </tr>`;
   });
   html+=`</tbody></table></div>`;
@@ -6081,7 +6150,7 @@ function renderSettlementScreen(containerId){
         <td style="font-weight:600">${r.vendor||'-'}</td>
         <td>${fmtDate(r.date)}</td>
         <td style="font-weight:600">${formatRM(parseFloat(r.amount||0))}</td>
-        <td style="text-align:right"><button class="btn btn-sm btn-secondary" onclick="markReceiptPaid('${r.id}')">Paid</button></td>
+        <td style="text-align:right"><button class="btn btn-sm btn-secondary" onclick="markReceiptPaid('')">Click to Pay</button></td>
       </tr>`;
     });
     html+=`</tbody></table></div>`;
