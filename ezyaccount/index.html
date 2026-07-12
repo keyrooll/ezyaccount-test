@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EzyAccount</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
   <script>window._gisLoaded=false;window.onGISLoaded=function(){window._gisLoaded=true;if(typeof _doGISInit==='function')_doGISInit();}</script>
   <script src="https://accounts.google.com/gsi/client" async defer onload="window.onGISLoaded()"></script>
   <style>
@@ -238,12 +239,13 @@
       <div class="user-bar-email" id="userEmail"></div>
     </div>
     <div class="user-bar-right">
+      <button id="urusStaffBtn" style="display:none;background:#111827;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;margin-right:8px" onclick="openStaffManager()">👥 Urus Staff</button>
       <button class="btn-logout" onclick="doLogout()">Keluar</button>
     </div>
   </div>
   <div class="company-head"><p>Pilih syarikat untuk masuk</p></div>
   <div class="grid" id="companyGrid"></div>
-  <div id="adminBar" style="margin-top:16px;text-align:center"></div>
+  <div id="adminBar" style="display:none"></div>
 </div>
 
 <!-- Staff Manager overlay (super_admin) -->
@@ -266,7 +268,7 @@
   </div>
 </div>
 
-<div class="footer">EzyAccount · v2.9-1207/1512</div>
+<div class="footer">EzyAccount · v3.0-1207/1546</div>
 
 <script>
 const COMPANIES = [
@@ -386,6 +388,36 @@ function _companyCard(c,role){
     <div class="sub">${role?('👤 '+role):c.sub}</div>
   </a>`;
 }
+function inRegistry(email){
+  const header=_registry.header||[], rows=_registry.rows||[];
+  if(!header.length) return false;
+  const ei=Math.max(0,header.findIndex(h=>(h||'').toLowerCase()==='email'));
+  return rows.some(r=>(r[ei]||'').toString().trim().toLowerCase()===(email||'').toLowerCase());
+}
+// Auto-add a not-yet-approved user to the registry (empty roles = pending) so the admin sees them.
+// Requires the registry sheet to be shared as EDITOR (Anyone with link).
+async function registerPending(u){
+  const row=new Array(REGISTRY_HEADER.length).fill('');
+  row[0]=(u.email||'').toLowerCase(); row[1]=u.name||''; row[2]=u.picture||'';
+  row[REGISTRY_HEADER.length-1]=new Date().toLocaleDateString('en-GB');
+  try{
+    await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A:Z:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,{
+      method:'POST',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({values:[row]})
+    });
+    _registry.rows.push(row);
+  }catch(e){ console.warn('registerPending failed (registry may need Editor access):',e); }
+}
+function pendingScreenHtml(email){
+  return `<div style="grid-column:1/-1;background:linear-gradient(160deg,#fefce8 0%,#ecfccb 100%);border:1px solid #d9f99d;border-radius:22px;padding:44px 22px 36px;text-align:center;position:relative;overflow:hidden">
+    <div style="position:absolute;top:-12px;left:-6px;font-size:46px;opacity:.22;transform:rotate(-18deg)">🌿</div>
+    <div style="position:absolute;top:8px;right:-8px;font-size:40px;opacity:.22;transform:rotate(22deg)">🍃</div>
+    <div style="position:absolute;bottom:-14px;left:40%;font-size:44px;opacity:.18">🌿</div>
+    <div style="font-size:66px;line-height:1;margin-bottom:6px">⏳</div>
+    <div style="font-family:'Pacifico',cursive;font-size:34px;color:#3f6212;margin-bottom:16px;line-height:1.1">Menunggu Kelulusan</div>
+    <div style="font-size:14px;color:#4b5563;line-height:1.8">Akaun anda <b style="color:#1a7a4a">${(email||'').replace(/</g,'&lt;')}</b><br>belum diberi akses ke mana-mana syarikat.<br>Sila hubungi admin untuk kelulusan.</div>
+    <div style="margin-top:18px;color:#a3e635;letter-spacing:4px;font-size:12px">• • • 🥭 • • •</div>
+  </div>`;
+}
 async function showCompanyScreen(u){
   document.getElementById('userPic').src=u.picture||'';
   document.getElementById('userName').textContent=u.name||'';
@@ -396,30 +428,27 @@ async function showCompanyScreen(u){
 
   const isSA=(u.email||'').toLowerCase()===SUPER_ADMIN;
   const grid=document.getElementById('companyGrid');
-  const adminBar=document.getElementById('adminBar');
-  const head=document.querySelector('.company-head p');
+  const head=document.querySelector('.company-head');
+  const staffBtn=document.getElementById('urusStaffBtn');
   grid.innerHTML='<div style="grid-column:1/-1;text-align:center;color:#6b7280;padding:20px">⏳ Menyemak akses...</div>';
   try{ await loadRegistry(); }catch(e){ _registry={header:[],rows:[]}; }
 
   if(isSA){
-    if(head) head.textContent='Pilih syarikat untuk masuk';
+    if(head) head.style.display='';
+    if(staffBtn) staffBtn.style.display='inline-block';
     grid.innerHTML=COMPANIES.map(c=>_companyCard(c,'')).join('');
-    if(adminBar) adminBar.innerHTML=`<button onclick="openStaffManager()" style="background:#111827;color:#fff;border:none;border-radius:10px;padding:12px 20px;cursor:pointer;font-size:14px;font-weight:600">👥 Urus Staff</button>`;
     return;
   }
-  if(adminBar) adminBar.innerHTML='';
+  if(staffBtn) staffBtn.style.display='none';
   const roles=userRolesFor(u.email);
   const allowed=COMPANIES.filter(c=>roles[c.id]);
   if(!allowed.length){
-    if(head) head.textContent='';
-    grid.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:24px">
-      <div style="font-size:40px;margin-bottom:8px">⏳</div>
-      <div style="font-weight:700;margin-bottom:4px">Menunggu Kelulusan</div>
-      <div style="font-size:13px;color:#6b7280">Akaun anda (${(u.email||'').replace(/</g,'&lt;')}) belum diberi akses ke mana-mana syarikat.<br>Sila hubungi admin.</div>
-    </div>`;
+    if(!inRegistry(u.email)) registerPending(u); // let admin see this pending user
+    if(head) head.style.display='none';
+    grid.innerHTML=pendingScreenHtml(u.email);
     return;
   }
-  if(head) head.textContent='Pilih syarikat untuk masuk';
+  if(head) head.style.display='';
   grid.innerHTML=allowed.map(c=>_companyCard(c,roles[c.id])).join('');
 }
 
@@ -473,8 +502,9 @@ function renderStaffTable(){
     </tr></thead><tbody>`;
   if(!rows.length) html+=`<tr><td colspan="${GROUP_COMPANIES.length+2}" style="padding:20px;text-align:center;color:#6b7280">Tiada staff lagi — tambah di bawah</td></tr>`;
   rows.forEach((row,i)=>{
-    html+=`<tr style="border-bottom:1px solid #f0f0f0">
-      <td style="padding:6px 8px"><div style="font-weight:600">${(row[0]||'').replace(/</g,'&lt;')}</div><div style="color:#6b7280;font-size:11px">${(row[1]||'').replace(/</g,'&lt;')}</div></td>
+    const hasRole=GROUP_COMPANIES.some(c=>(row[colOf(c.id)]||'').toString().trim());
+    html+=`<tr style="border-bottom:1px solid #f0f0f0${hasRole?'':';background:#fffbeb'}">
+      <td style="padding:6px 8px"><div style="font-weight:600">${(row[0]||'').replace(/</g,'&lt;')} ${hasRole?'':'<span style="font-size:10px;color:#d97706;font-weight:600">⏳ pending</span>'}</div><div style="color:#6b7280;font-size:11px">${(row[1]||'').replace(/</g,'&lt;')}</div></td>
       ${GROUP_COMPANIES.map(c=>{const ci=colOf(c.id);const val=(row[ci]||'').toLowerCase();return `<td style="padding:4px;text-align:center"><select onchange="updateCell(${i},'${c.id}',this.value)" style="font-size:11px;padding:3px;border:1px solid #e5e7eb;border-radius:5px">${ROLE_OPTS.map(o=>`<option value="${o[0]}" ${val===o[0]?'selected':''}>${o[1]}</option>`).join('')}</select></td>`;}).join('')}
       <td style="padding:4px;text-align:center"><button onclick="removeStaff(${i})" style="background:none;border:none;color:#dc2626;cursor:pointer;font-size:14px">✕</button></td>
     </tr>`;
