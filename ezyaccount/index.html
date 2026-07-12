@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EzyAccount</title>
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
   <script>window._gisLoaded=false;window.onGISLoaded=function(){window._gisLoaded=true;if(typeof _doGISInit==='function')_doGISInit();}</script>
   <script src="https://accounts.google.com/gsi/client" async defer onload="window.onGISLoaded()"></script>
   <style>
@@ -239,36 +238,14 @@
       <div class="user-bar-email" id="userEmail"></div>
     </div>
     <div class="user-bar-right">
-      <button id="urusStaffBtn" style="display:none;background:#111827;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;margin-right:8px" onclick="openStaffManager()">👥 Urus Staff</button>
       <button class="btn-logout" onclick="doLogout()">Keluar</button>
     </div>
   </div>
   <div class="company-head"><p>Pilih syarikat untuk masuk</p></div>
   <div class="grid" id="companyGrid"></div>
-  <div id="adminBar" style="display:none"></div>
 </div>
 
-<!-- Staff Manager overlay (super_admin) -->
-<div id="staffOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center;padding:16px">
-  <div style="background:#fff;border-radius:14px;width:100%;max-width:760px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden">
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:16px;border-bottom:1px solid #e5e7eb">
-      <div style="font-size:16px;font-weight:700">👥 Urus Staff (Semua Company)</div>
-      <button onclick="closeStaffManager()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#6b7280">×</button>
-    </div>
-    <div style="padding:10px 16px;border-bottom:1px solid #f0f0f0;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-      <input id="newStaffEmail" type="email" placeholder="email@gmail.com" style="flex:1;min-width:160px;padding:8px;border:1px solid #e5e7eb;border-radius:8px;font-size:13px">
-      <input id="newStaffName" type="text" placeholder="Nama" style="flex:1;min-width:120px;padding:8px;border:1px solid #e5e7eb;border-radius:8px;font-size:13px">
-      <button onclick="addStaffRow()" style="background:#1a7a4a;color:#fff;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;font-weight:600">+ Tambah</button>
-    </div>
-    <div id="staffTableWrap" style="flex:1;overflow:auto;padding:8px 12px"></div>
-    <div style="padding:12px 16px;border-top:1px solid #e5e7eb;display:flex;gap:8px;justify-content:flex-end">
-      <button onclick="closeStaffManager()" style="background:#f3f4f6;border:none;border-radius:8px;padding:10px 16px;cursor:pointer;font-size:13px">Tutup</button>
-      <button id="btnSaveRegistry" onclick="saveStaffRegistry()" style="background:#1a7a4a;color:#fff;border:none;border-radius:8px;padding:10px 20px;cursor:pointer;font-size:13px;font-weight:600">Simpan Semua</button>
-    </div>
-  </div>
-</div>
-
-<div class="footer">EzyAccount · v3.2-1207/1615</div>
+<div class="footer">EzyAccount · v2.6-2806/1520</div>
 
 <script>
 const COMPANIES = [
@@ -281,17 +258,6 @@ const COMPANIES = [
 
 function lsGet(k,def=null){try{const v=localStorage.getItem(k);return v?JSON.parse(v):def;}catch{return def;}}
 function lsSet(k,v){localStorage.setItem(k,JSON.stringify(v));}
-
-// ===== Central staff registry (EzyGroup Staff sheet) — super_admin manages here =====
-const SUPER_ADMIN='keyrooll@gmail.com';
-const STAFF_REGISTRY_SHEET_ID='1Ej0vKOeizIKvH0x-7cTskU8Z26MYa1xoXtIpqiL77Qg';
-const GROUP_COMPANIES=[
-  {id:'ezysupplier',name:'Supplier'},{id:'ezybranch',name:'Branch'},{id:'ezybakery',name:'Bakery'},
-  {id:'ezycafe',name:'Cafe'},{id:'ezydurian',name:'Durian'},{id:'ezysentralkitchen',name:'Sentral Kitchen'}
-];
-const REGISTRY_HEADER=['Email','Nama','Gambar',...GROUP_COMPANIES.map(c=>c.id),'JoinedAt'];
-const ROLE_OPTS=[['','—'],['staff','Staff'],['manager','Manager'],['accountant','Accountant']];
-let _registry={header:REGISTRY_HEADER.slice(),rows:[]};
 
 let tokenClient=null, gisReady=false, currentToken=null;
 
@@ -367,115 +333,33 @@ function autoLogin(){
   if(token&&user){currentToken=token;showCompanyScreen(user);}
 }
 
-// Roles this user has (from the loaded registry): {companyId: role} for non-empty roles only.
-function userRolesFor(email){
-  const header=_registry.header||[], rows=_registry.rows||[];
-  if(!header.length) return {};
-  const ei=Math.max(0,header.findIndex(h=>(h||'').toLowerCase()==='email'));
-  const row=rows.find(r=>(r[ei]||'').toString().trim().toLowerCase()===(email||'').toLowerCase());
-  if(!row) return {};
-  const roles={};
-  GROUP_COMPANIES.forEach(c=>{ const ci=REGISTRY_HEADER.indexOf(c.id); const v=(row[ci]||'').toString().trim(); if(v&&v.toLowerCase()!=='pending') roles[c.id]=v; });
-  return roles;
-}
-function _companyCard(c,role){
-  return `<a class="card" href="${c.path}" style="border-color:${c.color}30">
-    <div class="card-logo-wrap" style="background:${c.bg}">
-      <img class="card-logo" src="${c.logo}" alt="${c.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-      <span class="card-emoji">${c.emoji}</span>
-    </div>
-    <div class="name">${c.name}</div>
-    <div class="sub">${role?('👤 '+role):c.sub}</div>
-  </a>`;
-}
-function inRegistry(email){
-  const header=_registry.header||[], rows=_registry.rows||[];
-  if(!header.length) return false;
-  const ei=Math.max(0,header.findIndex(h=>(h||'').toLowerCase()==='email'));
-  return rows.some(r=>(r[ei]||'').toString().trim().toLowerCase()===(email||'').toLowerCase());
-}
-// Auto-add a not-yet-approved user to the registry (empty roles = pending) so the admin sees them.
-// Requires the registry sheet to be shared as EDITOR (Anyone with link).
-async function registerPending(u){
-  const row=new Array(REGISTRY_HEADER.length).fill('');
-  row[0]=(u.email||'').toLowerCase(); row[1]=u.name||''; row[2]=u.picture||'';
-  row[REGISTRY_HEADER.length-1]=new Date().toLocaleDateString('en-GB');
-  try{
-    // Ensure the Staff tab + header exist first (super_admin may not have saved yet)
-    const chk=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A1:A1`,{headers:{Authorization:'Bearer '+currentToken}});
-    const chkD=await chk.json();
-    if(chkD.error){
-      const cr=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}:batchUpdate`,{method:'POST',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({requests:[{addSheet:{properties:{title:'Staff'}}}]})});
-      if(!cr.ok) return cr.status===403?'need_editor':'error';
-    }
-    if(chkD.error||!chkD.values||!chkD.values.length){
-      const hr=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A1?valueInputOption=RAW`,{method:'PUT',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({values:[REGISTRY_HEADER]})});
-      if(!hr.ok) return hr.status===403?'need_editor':'error';
-    }
-    const res=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A:Z:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,{
-      method:'POST',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({values:[row]})
-    });
-    if(!res.ok){ console.warn('registerPending: append failed',res.status); return res.status===403?'need_editor':'error'; }
-    _registry.rows.push(row);
-    console.log('registerPending: added',u.email,'as pending');
-    return 'ok';
-  }catch(e){ console.warn('registerPending failed:',e); return 'error'; }
-}
-function pendingScreenHtml(email){
-  return `<div style="grid-column:1/-1;background:linear-gradient(160deg,#fefce8 0%,#ecfccb 100%);border:1px solid #d9f99d;border-radius:22px;padding:44px 22px 36px;text-align:center;position:relative;overflow:hidden">
-    <div style="position:absolute;top:-12px;left:-6px;font-size:46px;opacity:.22;transform:rotate(-18deg)">🌿</div>
-    <div style="position:absolute;top:8px;right:-8px;font-size:40px;opacity:.22;transform:rotate(22deg)">🍃</div>
-    <div style="position:absolute;bottom:-14px;left:40%;font-size:44px;opacity:.18">🌿</div>
-    <div style="font-size:66px;line-height:1;margin-bottom:6px">⏳</div>
-    <div style="font-family:'Pacifico',cursive;font-size:34px;color:#3f6212;margin-bottom:16px;line-height:1.1">Menunggu Kelulusan</div>
-    <div style="font-size:14px;color:#4b5563;line-height:1.8">Akaun anda <b style="color:#1a7a4a">${(email||'').replace(/</g,'&lt;')}</b><br>belum diberi akses ke mana-mana syarikat.<br>Sila hubungi admin untuk kelulusan.</div>
-    <div id="pendingStatus" style="margin-top:14px;font-size:12px;color:#6b7280"></div>
-    <div style="margin-top:14px;color:#a3e635;letter-spacing:4px;font-size:12px">• • • 🥭 • • •</div>
-  </div>`;
-}
-async function showCompanyScreen(u){
+function showCompanyScreen(u){
   document.getElementById('userPic').src=u.picture||'';
   document.getElementById('userName').textContent=u.name||'';
   document.getElementById('userEmail').textContent=u.email||'';
+  // fallback initial
   const fb=document.getElementById('userPicFallback');
   fb.textContent=(u.name||u.email||'?')[0].toUpperCase();
-  showScreen('companyScreen');
 
-  const isSA=(u.email||'').toLowerCase()===SUPER_ADMIN;
   const grid=document.getElementById('companyGrid');
-  const head=document.querySelector('.company-head');
-  const staffBtn=document.getElementById('urusStaffBtn');
-  grid.innerHTML='<div style="grid-column:1/-1;text-align:center;color:#6b7280;padding:20px">⏳ Menyemak akses...</div>';
-  try{ await loadRegistry(); }catch(e){ _registry={header:[],rows:[]}; }
-
-  if(isSA){
-    if(head) head.style.display='';
-    if(staffBtn) staffBtn.style.display='inline-block';
-    grid.innerHTML=COMPANIES.map(c=>_companyCard(c,'')).join('');
-    return;
-  }
-  if(staffBtn) staffBtn.style.display='none';
-  const roles=userRolesFor(u.email);
-  const allowed=COMPANIES.filter(c=>roles[c.id]);
-  if(!allowed.length){
-    if(head) head.style.display='none';
-    grid.innerHTML=pendingScreenHtml(u.email);
-    const stEl=document.getElementById('pendingStatus');
-    if(inRegistry(u.email)){
-      if(stEl) stEl.textContent='Permintaan anda sedang menunggu kelulusan admin.';
-    } else {
-      if(stEl) stEl.textContent='Merekod permintaan...';
-      const st=await registerPending(u);
-      if(stEl){
-        if(st==='ok') stEl.innerHTML='✅ Admin telah dimaklumkan — sila tunggu kelulusan.';
-        else if(st==='need_editor') stEl.innerHTML='⚠️ Sheet registry perlu dikongsi sebagai <b>Editor</b>. Minta admin.';
-        else stEl.innerHTML='⚠️ Tak dapat rekod automatik — minta admin tambah email anda.';
-      }
-    }
-    return;
-  }
-  if(head) head.style.display='';
-  grid.innerHTML=allowed.map(c=>_companyCard(c,roles[c.id])).join('');
+  grid.innerHTML='';
+  COMPANIES.forEach(c=>{
+    const a=document.createElement('a');
+    a.className='card';
+    a.href=c.path;
+    a.style.borderColor=c.color+'30';
+    a.innerHTML=`
+      <div class="card-logo-wrap" style="background:${c.bg}">
+        <img class="card-logo" src="${c.logo}" alt="${c.name}"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <span class="card-emoji">${c.emoji}</span>
+      </div>
+      <div class="name">${c.name}</div>
+      <div class="sub">${c.sub}</div>
+    `;
+    grid.appendChild(a);
+  });
+  showScreen('companyScreen');
 }
 
 function doLogout(){
@@ -485,97 +369,6 @@ function doLogout(){
   localStorage.removeItem('ezy_user');
   currentToken=null;
   showScreen('loginScreen');
-}
-
-// ===================== STAFF MANAGER (super_admin only) =====================
-function isSuperAdmin(){ const u=lsGet('ezy_user',{}); return (u.email||'').toLowerCase()===SUPER_ADMIN; }
-
-async function loadRegistry(){
-  const r=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A1:Z`,{headers:{Authorization:'Bearer '+currentToken}});
-  const d=await r.json();
-  if(d.error||!d.values||!d.values.length){ _registry={header:REGISTRY_HEADER.slice(),rows:[]}; return _registry; }
-  _registry={header:d.values[0].map(h=>(h||'').toString()), rows:d.values.slice(1).filter(x=>x[0])};
-  return _registry;
-}
-async function saveRegistry(){
-  // Ensure Staff tab exists
-  const chk=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A1:A1`,{headers:{Authorization:'Bearer '+currentToken}});
-  if((await chk.json()).error){
-    await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}:batchUpdate`,{method:'POST',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({requests:[{addSheet:{properties:{title:'Staff'}}}]})});
-  }
-  await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A1:Z10000:clear`,{method:'POST',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'}});
-  const values=[REGISTRY_HEADER, ..._registry.rows];
-  await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A1?valueInputOption=RAW`,{method:'PUT',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({values})});
-}
-// Column index of a company id within REGISTRY_HEADER
-function colOf(companyId){ return REGISTRY_HEADER.indexOf(companyId); }
-
-// Create the "Staff" tab + header if it doesn't exist yet (super_admin owns the sheet → always can).
-async function ensureRegistryTab(){
-  const chk=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A1:A1`,{headers:{Authorization:'Bearer '+currentToken}});
-  const d=await chk.json();
-  if(d.error){
-    await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}:batchUpdate`,{method:'POST',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({requests:[{addSheet:{properties:{title:'Staff'}}}]})});
-  }
-  if(d.error||!d.values||!d.values.length){
-    await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A1?valueInputOption=RAW`,{method:'PUT',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({values:[REGISTRY_HEADER]})});
-  }
-}
-async function openStaffManager(){
-  document.getElementById('staffOverlay').style.display='flex';
-  document.getElementById('staffTableWrap').innerHTML='<div style="padding:30px;text-align:center;color:#6b7280">⏳ Memuatkan...</div>';
-  try{ await ensureRegistryTab(); await loadRegistry(); renderStaffTable(); }
-  catch(e){ document.getElementById('staffTableWrap').innerHTML='<div style="padding:20px;color:#dc2626">Gagal muat. Pastikan sheet dikongsi & anda super_admin.</div>'; }
-}
-function closeStaffManager(){ document.getElementById('staffOverlay').style.display='none'; }
-
-function renderStaffTable(){
-  const rows=_registry.rows;
-  let html=`<table style="width:100%;border-collapse:collapse;font-size:12px">
-    <thead><tr style="background:#f9fafb;position:sticky;top:0">
-      <th style="padding:8px;text-align:left;border-bottom:1px solid #e5e7eb;min-width:150px">Email / Nama</th>
-      ${GROUP_COMPANIES.map(c=>`<th style="padding:8px;text-align:center;border-bottom:1px solid #e5e7eb;font-size:11px">${c.name}</th>`).join('')}
-      <th style="border-bottom:1px solid #e5e7eb"></th>
-    </tr></thead><tbody>`;
-  if(!rows.length) html+=`<tr><td colspan="${GROUP_COMPANIES.length+2}" style="padding:20px;text-align:center;color:#6b7280">Tiada staff lagi — tambah di bawah</td></tr>`;
-  rows.forEach((row,i)=>{
-    const hasRole=GROUP_COMPANIES.some(c=>(row[colOf(c.id)]||'').toString().trim());
-    html+=`<tr style="border-bottom:1px solid #f0f0f0${hasRole?'':';background:#fffbeb'}">
-      <td style="padding:6px 8px"><div style="font-weight:600">${(row[0]||'').replace(/</g,'&lt;')} ${hasRole?'':'<span style="font-size:10px;color:#d97706;font-weight:600">⏳ pending</span>'}</div><div style="color:#6b7280;font-size:11px">${(row[1]||'').replace(/</g,'&lt;')}</div></td>
-      ${GROUP_COMPANIES.map(c=>{const ci=colOf(c.id);const val=(row[ci]||'').toLowerCase();return `<td style="padding:4px;text-align:center"><select onchange="updateCell(${i},'${c.id}',this.value)" style="font-size:11px;padding:3px;border:1px solid #e5e7eb;border-radius:5px">${ROLE_OPTS.map(o=>`<option value="${o[0]}" ${val===o[0]?'selected':''}>${o[1]}</option>`).join('')}</select></td>`;}).join('')}
-      <td style="padding:4px;text-align:center"><button onclick="removeStaff(${i})" style="background:none;border:none;color:#dc2626;cursor:pointer;font-size:14px">✕</button></td>
-    </tr>`;
-  });
-  html+=`</tbody></table>`;
-  document.getElementById('staffTableWrap').innerHTML=html;
-}
-function updateCell(rowIdx, companyId, role){
-  const ci=colOf(companyId);
-  while(_registry.rows[rowIdx].length<=ci) _registry.rows[rowIdx].push('');
-  _registry.rows[rowIdx][ci]=role;
-}
-function removeStaff(rowIdx){
-  if(!confirm('Buang staff ini dari registry?')) return;
-  _registry.rows.splice(rowIdx,1);
-  renderStaffTable();
-}
-function addStaffRow(){
-  const email=(document.getElementById('newStaffEmail').value||'').trim().toLowerCase();
-  const name=(document.getElementById('newStaffName').value||'').trim();
-  if(!email||!email.includes('@')){ alert('Sila masukkan email yang sah'); return; }
-  if(_registry.rows.some(r=>(r[0]||'').toLowerCase()===email)){ alert('Email ni dah ada dalam senarai'); return; }
-  const row=new Array(REGISTRY_HEADER.length).fill('');
-  row[0]=email; row[1]=name; row[REGISTRY_HEADER.length-1]=new Date().toLocaleDateString('en-GB');
-  _registry.rows.push(row);
-  document.getElementById('newStaffEmail').value='';
-  document.getElementById('newStaffName').value='';
-  renderStaffTable();
-}
-async function saveStaffRegistry(){
-  const btn=document.getElementById('btnSaveRegistry');
-  btn.disabled=true; btn.textContent='Menyimpan...';
-  try{ await saveRegistry(); btn.textContent='✅ Disimpan'; setTimeout(()=>{btn.textContent='Simpan Semua';btn.disabled=false;},1500); }
-  catch(e){ alert('Gagal simpan: '+e.message); btn.textContent='Simpan Semua'; btn.disabled=false; }
 }
 
 function showScreen(id){
