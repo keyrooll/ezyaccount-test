@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EzyAccount</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
   <script>window._gisLoaded=false;window.onGISLoaded=function(){window._gisLoaded=true;if(typeof _doGISInit==='function')_doGISInit();}</script>
   <script src="https://accounts.google.com/gsi/client" async defer onload="window.onGISLoaded()"></script>
   <style>
@@ -238,14 +239,36 @@
       <div class="user-bar-email" id="userEmail"></div>
     </div>
     <div class="user-bar-right">
+      <button id="urusStaffBtn" style="display:none;background:#111827;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;margin-right:8px" onclick="openStaffManager()">👥 Urus Staff</button>
       <button class="btn-logout" onclick="doLogout()">Keluar</button>
     </div>
   </div>
   <div class="company-head"><p>Pilih syarikat untuk masuk</p></div>
   <div class="grid" id="companyGrid"></div>
+  <div id="adminBar" style="display:none"></div>
 </div>
 
-<div class="footer">EzyAccount · v2.6-2806/1520</div>
+<!-- Staff Manager overlay (super_admin) -->
+<div id="staffOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center;padding:16px">
+  <div style="background:#fff;border-radius:14px;width:100%;max-width:760px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:16px;border-bottom:1px solid #e5e7eb">
+      <div style="font-size:16px;font-weight:700">👥 Urus Staff (Semua Company)</div>
+      <button onclick="closeStaffManager()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#6b7280">×</button>
+    </div>
+    <div style="padding:10px 16px;border-bottom:1px solid #f0f0f0;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <input id="newStaffEmail" type="email" placeholder="email@gmail.com" style="flex:1;min-width:160px;padding:8px;border:1px solid #e5e7eb;border-radius:8px;font-size:13px">
+      <input id="newStaffName" type="text" placeholder="Nama" style="flex:1;min-width:120px;padding:8px;border:1px solid #e5e7eb;border-radius:8px;font-size:13px">
+      <button onclick="addStaffRow()" style="background:#1a7a4a;color:#fff;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;font-weight:600">+ Tambah</button>
+    </div>
+    <div id="staffTableWrap" style="flex:1;overflow:auto;padding:8px 12px"></div>
+    <div style="padding:12px 16px;border-top:1px solid #e5e7eb;display:flex;gap:8px;justify-content:flex-end">
+      <button onclick="closeStaffManager()" style="background:#f3f4f6;border:none;border-radius:8px;padding:10px 16px;cursor:pointer;font-size:13px">Tutup</button>
+      <button id="btnSaveRegistry" onclick="saveStaffRegistry()" style="background:#1a7a4a;color:#fff;border:none;border-radius:8px;padding:10px 20px;cursor:pointer;font-size:13px;font-weight:600">Simpan Semua</button>
+    </div>
+  </div>
+</div>
+
+<div class="footer">EzyAccount · v3.3-1307/0033</div>
 
 <script>
 const COMPANIES = [
@@ -254,10 +277,23 @@ const COMPANIES = [
   { id:'ezybakery',         name:'Ezy Bakery',      sub:'Bakeri',        logo:'data:image/jpeg;base64,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',   emoji:'🥐', color:'#f59e0b', bg:'#fffbeb', path:'ezybakery/index.html'   },
   { id:'ezycafe',           name:'Ezy Cafe',        sub:'Kafe',          logo:'data:image/jpeg;base64,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',     emoji:'☕', color:'#8b5cf6', bg:'#f5f3ff', path:'ezycafe/index.html'     },
   { id:'ezysentralkitchen', name:'Sentral Kitchen', sub:'Dapur Pusat',   logo:'data:image/jpeg;base64,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',  emoji:'🍳', color:'#ef4444', bg:'#fff1f2', path:'ezysentralkitchen/index.html' },
+  { id:'ezydurianhq',       name:'Ezydurian HQ',    sub:'HQ',            logo:'logo/ezydurian.png', emoji:'🌰', color:'#1a7a4a', bg:'#e8f5ee', path:'ezydurianhq/index.html' },
 ];
 
 function lsGet(k,def=null){try{const v=localStorage.getItem(k);return v?JSON.parse(v):def;}catch{return def;}}
 function lsSet(k,v){localStorage.setItem(k,JSON.stringify(v));}
+
+// ===== Central staff registry (EzyGroup Staff sheet) — super_admin manages here =====
+const SUPER_ADMIN='keyrooll@gmail.com';
+const STAFF_REGISTRY_SHEET_ID='1Ej0vKOeizIKvH0x-7cTskU8Z26MYa1xoXtIpqiL77Qg';
+const GROUP_COMPANIES=[
+  {id:'ezysupplier',name:'Supplier'},{id:'ezybranch',name:'Branch'},{id:'ezybakery',name:'Bakery'},
+  {id:'ezycafe',name:'Cafe'},{id:'ezydurian',name:'Durian'},{id:'ezysentralkitchen',name:'Sentral Kitchen'},
+  {id:'ezydurianhq',name:'Durian HQ'},{id:'ezycashier',name:'Cashier'}
+];
+const REGISTRY_HEADER=['Email','Nama','Gambar',...GROUP_COMPANIES.map(c=>c.id),'JoinedAt'];
+const ROLE_OPTS=[['','—'],['staff','Staff'],['manager','Manager'],['accountant','Accountant']];
+let _registry={header:REGISTRY_HEADER.slice(),rows:[]};
 
 let tokenClient=null, gisReady=false, currentToken=null;
 
@@ -333,33 +369,129 @@ function autoLogin(){
   if(token&&user){currentToken=token;showCompanyScreen(user);}
 }
 
-function showCompanyScreen(u){
-  document.getElementById('userPic').src=u.picture||'';
-  document.getElementById('userName').textContent=u.name||'';
-  document.getElementById('userEmail').textContent=u.email||'';
-  // fallback initial
-  const fb=document.getElementById('userPicFallback');
-  fb.textContent=(u.name||u.email||'?')[0].toUpperCase();
-
-  const grid=document.getElementById('companyGrid');
-  grid.innerHTML='';
-  COMPANIES.forEach(c=>{
-    const a=document.createElement('a');
-    a.className='card';
-    a.href=c.path;
-    a.style.borderColor=c.color+'30';
-    a.innerHTML=`
+// Roles this user has (from the loaded registry): {companyId: role} for non-empty roles only.
+function userRolesFor(email){
+  const header=_registry.header||[], rows=_registry.rows||[];
+  if(!header.length) return {};
+  const ei=Math.max(0,header.findIndex(h=>(h||'').toLowerCase()==='email'));
+  const row=rows.find(r=>(r[ei]||'').toString().trim().toLowerCase()===(email||'').toLowerCase());
+  if(!row) return {};
+  const roles={};
+  GROUP_COMPANIES.forEach(c=>{ const ci=REGISTRY_HEADER.indexOf(c.id); const v=(row[ci]||'').toString().trim(); if(v&&v.toLowerCase()!=='pending') roles[c.id]=v; });
+  return roles;
+}
+function _companyCard(c,role,dimmed){
+  if(dimmed){
+    // Not assigned to this company — show it dimmed & non-clickable
+    return `<div class="card" style="border-color:#e5e7eb;opacity:.45;cursor:not-allowed;filter:grayscale(1)" title="Tiada akses">
       <div class="card-logo-wrap" style="background:${c.bg}">
-        <img class="card-logo" src="${c.logo}" alt="${c.name}"
-          onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+        <img class="card-logo" src="${c.logo}" alt="${c.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
         <span class="card-emoji">${c.emoji}</span>
       </div>
       <div class="name">${c.name}</div>
-      <div class="sub">${c.sub}</div>
-    `;
-    grid.appendChild(a);
-  });
+      <div class="sub">🔒 Tiada akses</div>
+    </div>`;
+  }
+  return `<a class="card" href="${c.path}" style="border-color:${c.color}30">
+    <div class="card-logo-wrap" style="background:${c.bg}">
+      <img class="card-logo" src="${c.logo}" alt="${c.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+      <span class="card-emoji">${c.emoji}</span>
+    </div>
+    <div class="name">${c.name}</div>
+    <div class="sub">${role?('👤 '+role):c.sub}</div>
+  </a>`;
+}
+function inRegistry(email){
+  const header=_registry.header||[], rows=_registry.rows||[];
+  if(!header.length) return false;
+  const ei=Math.max(0,header.findIndex(h=>(h||'').toLowerCase()==='email'));
+  return rows.some(r=>(r[ei]||'').toString().trim().toLowerCase()===(email||'').toLowerCase());
+}
+// Auto-add a not-yet-approved user to the registry (empty roles = pending) so the admin sees them.
+// Requires the registry sheet to be shared as EDITOR (Anyone with link).
+async function registerPending(u){
+  const row=new Array(REGISTRY_HEADER.length).fill('');
+  row[0]=(u.email||'').toLowerCase(); row[1]=u.name||''; row[2]=u.picture||'';
+  row[REGISTRY_HEADER.length-1]=new Date().toLocaleDateString('en-GB');
+  try{
+    // Ensure the Staff tab + header exist first (super_admin may not have saved yet)
+    const chk=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A1:A1`,{headers:{Authorization:'Bearer '+currentToken}});
+    const chkD=await chk.json();
+    if(chkD.error){
+      const cr=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}:batchUpdate`,{method:'POST',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({requests:[{addSheet:{properties:{title:'Staff'}}}]})});
+      if(!cr.ok) return cr.status===403?'need_editor':'error';
+    }
+    if(chkD.error||!chkD.values||!chkD.values.length){
+      const hr=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A1?valueInputOption=RAW`,{method:'PUT',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({values:[REGISTRY_HEADER]})});
+      if(!hr.ok) return hr.status===403?'need_editor':'error';
+    }
+    const res=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A:Z:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,{
+      method:'POST',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({values:[row]})
+    });
+    if(!res.ok){ console.warn('registerPending: append failed',res.status); return res.status===403?'need_editor':'error'; }
+    _registry.rows.push(row);
+    console.log('registerPending: added',u.email,'as pending');
+    return 'ok';
+  }catch(e){ console.warn('registerPending failed:',e); return 'error'; }
+}
+function pendingScreenHtml(email){
+  return `<div style="grid-column:1/-1;background:linear-gradient(160deg,#fefce8 0%,#ecfccb 100%);border:1px solid #d9f99d;border-radius:22px;padding:44px 22px 36px;text-align:center;position:relative;overflow:hidden">
+    <div style="position:absolute;top:-12px;left:-6px;font-size:46px;opacity:.22;transform:rotate(-18deg)">🌿</div>
+    <div style="position:absolute;top:8px;right:-8px;font-size:40px;opacity:.22;transform:rotate(22deg)">🍃</div>
+    <div style="position:absolute;bottom:-14px;left:40%;font-size:44px;opacity:.18">🌿</div>
+    <div style="font-size:66px;line-height:1;margin-bottom:6px">⏳</div>
+    <div style="font-family:'Pacifico',cursive;font-size:34px;color:#3f6212;margin-bottom:16px;line-height:1.1">Menunggu Kelulusan</div>
+    <div style="font-size:14px;color:#4b5563;line-height:1.8">Akaun anda <b style="color:#1a7a4a">${(email||'').replace(/</g,'&lt;')}</b><br>belum diberi akses ke mana-mana syarikat.<br>Sila hubungi admin untuk kelulusan.</div>
+    <div id="pendingStatus" style="margin-top:14px;font-size:12px;color:#6b7280"></div>
+    <div style="margin-top:14px;color:#a3e635;letter-spacing:4px;font-size:12px">• • • 🥭 • • •</div>
+  </div>`;
+}
+async function showCompanyScreen(u){
+  document.getElementById('userPic').src=u.picture||'';
+  document.getElementById('userName').textContent=u.name||'';
+  document.getElementById('userEmail').textContent=u.email||'';
+  const fb=document.getElementById('userPicFallback');
+  fb.textContent=(u.name||u.email||'?')[0].toUpperCase();
   showScreen('companyScreen');
+
+  const isSA=(u.email||'').toLowerCase()===SUPER_ADMIN;
+  const grid=document.getElementById('companyGrid');
+  const head=document.querySelector('.company-head');
+  const staffBtn=document.getElementById('urusStaffBtn');
+  grid.innerHTML='<div style="grid-column:1/-1;text-align:center;color:#6b7280;padding:20px">⏳ Menyemak akses...</div>';
+  try{ await loadRegistry(); }catch(e){ _registry={header:[],rows:[]}; }
+
+  if(isSA){
+    if(head) head.style.display='';
+    if(staffBtn) staffBtn.style.display='inline-block';
+    grid.innerHTML=COMPANIES.map(c=>_companyCard(c,'')).join('');
+    return;
+  }
+  if(staffBtn) staffBtn.style.display='none';
+  const roles=userRolesFor(u.email);
+  const allowed=COMPANIES.filter(c=>roles[c.id]);
+  // Only one company assigned → skip the landing, go straight in
+  if(allowed.length===1){ window.location.href=allowed[0].path; return; }
+  if(!allowed.length){
+    if(head) head.style.display='none';
+    grid.innerHTML=pendingScreenHtml(u.email);
+    const stEl=document.getElementById('pendingStatus');
+    if(inRegistry(u.email)){
+      if(stEl) stEl.textContent='Permintaan anda sedang menunggu kelulusan admin.';
+    } else {
+      if(stEl) stEl.textContent='Merekod permintaan...';
+      const st=await registerPending(u);
+      if(stEl){
+        if(st==='ok') stEl.innerHTML='✅ Admin telah dimaklumkan — sila tunggu kelulusan.';
+        else if(st==='need_editor') stEl.innerHTML='⚠️ Sheet registry perlu dikongsi sebagai <b>Editor</b>. Minta admin.';
+        else stEl.innerHTML='⚠️ Tak dapat rekod automatik — minta admin tambah email anda.';
+      }
+    }
+    return;
+  }
+  if(head) head.style.display='';
+  // Show every company; dim the ones the user isn't assigned to
+  grid.innerHTML=COMPANIES.map(c=>_companyCard(c, roles[c.id]||'', !roles[c.id])).join('');
 }
 
 function doLogout(){
@@ -369,6 +501,97 @@ function doLogout(){
   localStorage.removeItem('ezy_user');
   currentToken=null;
   showScreen('loginScreen');
+}
+
+// ===================== STAFF MANAGER (super_admin only) =====================
+function isSuperAdmin(){ const u=lsGet('ezy_user',{}); return (u.email||'').toLowerCase()===SUPER_ADMIN; }
+
+async function loadRegistry(){
+  const r=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A1:Z`,{headers:{Authorization:'Bearer '+currentToken}});
+  const d=await r.json();
+  if(d.error||!d.values||!d.values.length){ _registry={header:REGISTRY_HEADER.slice(),rows:[]}; return _registry; }
+  _registry={header:d.values[0].map(h=>(h||'').toString()), rows:d.values.slice(1).filter(x=>x[0])};
+  return _registry;
+}
+async function saveRegistry(){
+  // Ensure Staff tab exists
+  const chk=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A1:A1`,{headers:{Authorization:'Bearer '+currentToken}});
+  if((await chk.json()).error){
+    await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}:batchUpdate`,{method:'POST',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({requests:[{addSheet:{properties:{title:'Staff'}}}]})});
+  }
+  await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A1:Z10000:clear`,{method:'POST',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'}});
+  const values=[REGISTRY_HEADER, ..._registry.rows];
+  await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A1?valueInputOption=RAW`,{method:'PUT',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({values})});
+}
+// Column index of a company id within REGISTRY_HEADER
+function colOf(companyId){ return REGISTRY_HEADER.indexOf(companyId); }
+
+// Create the "Staff" tab + header if it doesn't exist yet (super_admin owns the sheet → always can).
+async function ensureRegistryTab(){
+  const chk=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A1:A1`,{headers:{Authorization:'Bearer '+currentToken}});
+  const d=await chk.json();
+  if(d.error){
+    await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}:batchUpdate`,{method:'POST',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({requests:[{addSheet:{properties:{title:'Staff'}}}]})});
+  }
+  if(d.error||!d.values||!d.values.length){
+    await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A1?valueInputOption=RAW`,{method:'PUT',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({values:[REGISTRY_HEADER]})});
+  }
+}
+async function openStaffManager(){
+  document.getElementById('staffOverlay').style.display='flex';
+  document.getElementById('staffTableWrap').innerHTML='<div style="padding:30px;text-align:center;color:#6b7280">⏳ Memuatkan...</div>';
+  try{ await ensureRegistryTab(); await loadRegistry(); renderStaffTable(); }
+  catch(e){ document.getElementById('staffTableWrap').innerHTML='<div style="padding:20px;color:#dc2626">Gagal muat. Pastikan sheet dikongsi & anda super_admin.</div>'; }
+}
+function closeStaffManager(){ document.getElementById('staffOverlay').style.display='none'; }
+
+function renderStaffTable(){
+  const rows=_registry.rows;
+  let html=`<table style="width:100%;border-collapse:collapse;font-size:12px">
+    <thead><tr style="background:#f9fafb;position:sticky;top:0">
+      <th style="padding:8px;text-align:left;border-bottom:1px solid #e5e7eb;min-width:150px">Email / Nama</th>
+      ${GROUP_COMPANIES.map(c=>`<th style="padding:8px;text-align:center;border-bottom:1px solid #e5e7eb;font-size:11px">${c.name}</th>`).join('')}
+      <th style="border-bottom:1px solid #e5e7eb"></th>
+    </tr></thead><tbody>`;
+  if(!rows.length) html+=`<tr><td colspan="${GROUP_COMPANIES.length+2}" style="padding:20px;text-align:center;color:#6b7280">Tiada staff lagi — tambah di bawah</td></tr>`;
+  rows.forEach((row,i)=>{
+    const hasRole=GROUP_COMPANIES.some(c=>(row[colOf(c.id)]||'').toString().trim());
+    html+=`<tr style="border-bottom:1px solid #f0f0f0${hasRole?'':';background:#fffbeb'}">
+      <td style="padding:6px 8px"><div style="font-weight:600">${(row[0]||'').replace(/</g,'&lt;')} ${hasRole?'':'<span style="font-size:10px;color:#d97706;font-weight:600">⏳ pending</span>'}</div><div style="color:#6b7280;font-size:11px">${(row[1]||'').replace(/</g,'&lt;')}</div></td>
+      ${GROUP_COMPANIES.map(c=>{const ci=colOf(c.id);const val=(row[ci]||'').toLowerCase();return `<td style="padding:4px;text-align:center"><select onchange="updateCell(${i},'${c.id}',this.value)" style="font-size:11px;padding:3px;border:1px solid #e5e7eb;border-radius:5px">${ROLE_OPTS.map(o=>`<option value="${o[0]}" ${val===o[0]?'selected':''}>${o[1]}</option>`).join('')}</select></td>`;}).join('')}
+      <td style="padding:4px;text-align:center"><button onclick="removeStaff(${i})" style="background:none;border:none;color:#dc2626;cursor:pointer;font-size:14px">✕</button></td>
+    </tr>`;
+  });
+  html+=`</tbody></table>`;
+  document.getElementById('staffTableWrap').innerHTML=html;
+}
+function updateCell(rowIdx, companyId, role){
+  const ci=colOf(companyId);
+  while(_registry.rows[rowIdx].length<=ci) _registry.rows[rowIdx].push('');
+  _registry.rows[rowIdx][ci]=role;
+}
+function removeStaff(rowIdx){
+  if(!confirm('Buang staff ini dari registry?')) return;
+  _registry.rows.splice(rowIdx,1);
+  renderStaffTable();
+}
+function addStaffRow(){
+  const email=(document.getElementById('newStaffEmail').value||'').trim().toLowerCase();
+  const name=(document.getElementById('newStaffName').value||'').trim();
+  if(!email||!email.includes('@')){ alert('Sila masukkan email yang sah'); return; }
+  if(_registry.rows.some(r=>(r[0]||'').toLowerCase()===email)){ alert('Email ni dah ada dalam senarai'); return; }
+  const row=new Array(REGISTRY_HEADER.length).fill('');
+  row[0]=email; row[1]=name; row[REGISTRY_HEADER.length-1]=new Date().toLocaleDateString('en-GB');
+  _registry.rows.push(row);
+  document.getElementById('newStaffEmail').value='';
+  document.getElementById('newStaffName').value='';
+  renderStaffTable();
+}
+async function saveStaffRegistry(){
+  const btn=document.getElementById('btnSaveRegistry');
+  btn.disabled=true; btn.textContent='Menyimpan...';
+  try{ await saveRegistry(); btn.textContent='✅ Disimpan'; setTimeout(()=>{btn.textContent='Simpan Semua';btn.disabled=false;},1500); }
+  catch(e){ alert('Gagal simpan: '+e.message); btn.textContent='Simpan Semua'; btn.disabled=false; }
 }
 
 function showScreen(id){
