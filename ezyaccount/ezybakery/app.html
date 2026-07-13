@@ -205,7 +205,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
   <label class="kekal-row">
     <input type="checkbox" id="kekalCheck"> Kekal Log Masuk
   </label>
-  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v5.1-1307/2051</div>
+  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v5.2-1307/2134</div>
 </div>
 
 <!-- PENDING SCREEN -->
@@ -233,7 +233,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
     <div class="header-left">
       <img id="headerCompanyLogo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD7HY4Un0Ga8+stR1y50XTtVu/FF1bNqFstyIbXQTOkYYA7cqrHjOOTk9a9Ak/1bf7p/lXl9jY3t/4I8Ita6fLcj+yYQzrbeaEJVev+kRY9eh+vavRwPJyvmtuuifR90znrXurf1t2Lth4p8SaL8Qz4b8Q2F7e6PeeUthrS2XlIJnX/AFT7eOSMA9QevByPRa8l8Y+J7PTtTsvDtnol3cWuiXMd3cXMUnlxq0Q8xlBfPA3jOWzlgB2r1SxuYbyxt7y3YtDPEssZIxlWAI/Q1zYnEUa8k6as1o7K17dbba9baE4eom5QUr2/r5kxGQRjINcPZ+E/EemWNvp+m+K9UjtLWNYoI/KtfkRRtUZMRJwvc9Ww3sb/AIv8INr+t6Zqa6rLbCxDDyCpZHJYMDwy4Py4PUFSR3rkk+Ft8IV0cat5VmdMuYp7uBTH5tzIHWKTytxwY/NlbIYA5QADbXXh1RjSb9qr72cb7X6v+tfJjqOblbl073/r+kaMvw0h1S7kn1++1K8890e4VZ0iS42cL5iRqAxA4yAD/TuNLvdMnQ22nXNs4twYzFEwzGFZo8Y6gBkZfqpHavKtV+BkFzcao1l4luLSC7hhit4TFI6W3liLAx5oDoDFuVWBALtndk56XwH8OI/C3iu58QnVEv7m7tJLeeSW0Cykm5knUhw3AAl2lcYOxSNuMVwSUG3JbvsrF06UYNtLc//Z" alt="" class="header-logo" style="width:32px;height:32px;border-radius:6px;object-fit:contain">
       <span class="header-title" id="headerCompanyName">EzyAccount</span>
-      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v5.1-1307/2051</span>
+      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v5.2-1307/2134</span>
     </div>
     <div class="header-right"><button onclick="window.location.href='../index.html'" title="Tukar Syarikat" style="background:none;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;padding:5px 10px;margin-right:4px">🏢 Tukar</button>
       <button id="btnRefresh" onclick="refreshAllData()" title="Refresh Data" style="background:none;border:none;font-size:18px;cursor:pointer;padding:4px;line-height:1">🔄</button>
@@ -5270,7 +5270,7 @@ function showInvoiceForm(invId=null){
   const branchKeys = Object.keys(addresses);
   const inv = invId ? (sheetInvoices()).find(x=>x.id===invId) : null;
   editingInvoiceId = invId;
-  invoiceItems = inv ? JSON.parse(JSON.stringify(inv.items||[])) : [{desc:'',unit:'kg',qty:'',rate:'',amount:''}];
+  invoiceItems = inv ? JSON.parse(JSON.stringify(inv.items||[])) : [{desc:'',qty:'',rate:'',amount:''}];
 
   const addressOpts = branchKeys.map(k=>`<option value="${addresses[k]}" ${inv?.billTo===addresses[k]?'selected':''}>${k}</option>`).join('');
 
@@ -5301,15 +5301,7 @@ function showInvoiceForm(invId=null){
       </div>
 
       <div style="margin-bottom:12px">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-          <label style="font-size:12px;color:var(--mid)">Item</label>
-          <div style="display:flex;align-items:center;gap:8px">
-            <label style="font-size:11px;color:var(--mid)">Supplier sama untuk semua:</label>
-            <select id="invGlobalSupplier" class="form-input" style="font-size:12px;padding:4px 8px;width:auto" onchange="applyGlobalSupplier(this.value)">
-              <option value="">-- Pilih --</option>
-            </select>
-          </div>
-        </div>
+        <label style="font-size:12px;color:var(--mid);display:block;margin-bottom:6px">Item Jualan</label>
         <div id="invItemsWrap"></div>
         <button class="btn btn-outline" style="width:100%;margin-top:8px" onclick="addInvoiceItem()">+ Tambah Item</button>
       </div>
@@ -5325,12 +5317,7 @@ function showInvoiceForm(invId=null){
       </div>
     </div>`;
   renderInvoiceItems();
-  // Populate global supplier dropdown
-  const gs = $id('invGlobalSupplier');
-  if(gs){
-    const suppliers = getSuppliers();
-    gs.innerHTML = '<option value="">-- Pilih --</option>' + suppliers.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
-  }
+  loadInvoiceSku().then(()=>renderInvoiceItems()).catch(()=>{});
 }
 
 function handleBranchSelect(val){
@@ -5342,8 +5329,29 @@ function handleBranchSelect(val){
 }
 
 function addInvoiceItem(){
-  invoiceItems.push({desc:'',unit:'kg',qty:'',rate:'',amount:''});
+  invoiceItems.push({desc:'',qty:'',rate:'',amount:''});
   renderInvoiceItems();
+}
+// ===== Invoice sale-SKU list (from the 'SKU' tab in the sheet: Nama | Harga) =====
+window._invSku = window._invSku || [];
+async function loadInvoiceSku(){
+  const tok=getValidToken()||accessToken||currentToken; if(!tok) return;
+  try{
+    const r=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/SKU!A2:B500`,{headers:{Authorization:'Bearer '+tok}});
+    const d=await r.json();
+    if(d.error){ await ensureInvoiceSkuTab(); return; }
+    window._invSku=(d.values||[]).filter(x=>x[0]).map(x=>({name:(x[0]||'').trim(),price:parseFloat((x[1]||'').toString().replace(/[, ]/g,''))||0}));
+  }catch(e){ console.warn('loadInvoiceSku:',e); }
+}
+async function ensureInvoiceSkuTab(){
+  const tok=getValidToken()||accessToken||currentToken; if(!tok) return;
+  try{
+    const cr=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/SKU!A1:A1`,{headers:{Authorization:'Bearer '+tok}});
+    if((await cr.json()).error){
+      await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}:batchUpdate`,{method:'POST',headers:{Authorization:'Bearer '+tok,'Content-Type':'application/json'},body:JSON.stringify({requests:[{addSheet:{properties:{title:'SKU'}}}]})});
+      await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/SKU!A1?valueInputOption=USER_ENTERED`,{method:'PUT',headers:{Authorization:'Bearer '+tok,'Content-Type':'application/json'},body:JSON.stringify({values:[['Nama','Harga']]})});
+    }
+  }catch(e){ console.warn('ensureInvoiceSkuTab:',e); }
 }
 
 function removeInvoiceItem(idx){
@@ -5371,47 +5379,35 @@ function recalcInvoiceTotal(){
 function renderInvoiceItems(){
   const wrap = $id('invItemsWrap');
   if(!wrap) return;
-  const suppliers = getSuppliers();
-  const supOpts = suppliers.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
-  const skuOpts = skuList.length ? skuList.map(s=>`<option value="${s.jenis||s.no}">${s.jenis||s.no}</option>`).join('') : '';
+  const skus = window._invSku||[];
+  const skuOpts = skus.map(s=>`<option value="${(s.name||'').replace(/"/g,'&quot;')}">${s.name}</option>`).join('');
 
   wrap.innerHTML = invoiceItems.map((it,i)=>`
     <div style="border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:8px;background:var(--light)">
       <div style="display:flex;gap:6px;margin-bottom:6px;align-items:center">
-        ${skuOpts ? `<select class="form-input" style="flex:2" onchange="applySkuToInvItem(${i},this.value)">
-          <option value="">-- SKU --</option>${skuOpts}
-        </select>` : ''}
-        <input class="form-input" style="flex:3" placeholder="Deskripsi" value="${it.desc||''}" oninput="updateInvoiceItem(${i},'desc',this.value)">
+        ${skuOpts ? `<select class="form-input" style="flex:1" onchange="applySkuToInvItem(${i},this.value)">
+          <option value="">-- Pilih SKU --</option>${skuOpts}
+        </select>` : `<span style="flex:1;font-size:11px;color:var(--amber)">⚠️ Tab 'SKU' kosong — isi produk di Google Sheet</span>`}
         <button onclick="removeInvoiceItem(${i})" style="background:none;border:none;font-size:18px;cursor:pointer;color:#ef4444;padding:0 4px">×</button>
       </div>
-      <div style="margin-bottom:6px">
-        <label style="font-size:10px;color:var(--mid)">Supplier</label>
-        <select class="form-input" onchange="updateInvoiceItem(${i},'supplier',this.value)">
-          <option value="">-- Supplier --</option>
-          ${suppliers.map(s=>`<option value="${s.id}" ${it.supplier===s.id?'selected':''}>${s.name}</option>`).join('')}
-        </select>
-      </div>
+      <input class="form-input" style="margin-bottom:6px" placeholder="Nama item" value="${(it.desc||'').replace(/"/g,'&quot;')}" oninput="updateInvoiceItem(${i},'desc',this.value)">
       <div style="display:flex;gap:6px">
         <div style="flex:1"><label style="font-size:10px;color:var(--mid)">Qty</label><input id="invQty-${i}" class="form-input" type="number" placeholder="0" value="${it.qty||''}" oninput="updateInvoiceItem(${i},'qty',this.value)"></div>
-        <div style="flex:1"><label style="font-size:10px;color:var(--mid)">Unit</label><input class="form-input" placeholder="kg" value="${it.unit||'kg'}" oninput="updateInvoiceItem(${i},'unit',this.value)"></div>
-        <div style="flex:1"><label style="font-size:10px;color:var(--mid)">Rate (RM)</label><input id="invRate-${i}" class="form-input" type="number" placeholder="0.00" value="${it.rate||''}" oninput="updateInvoiceItem(${i},'rate',this.value)"></div>
+        <div style="flex:1"><label style="font-size:10px;color:var(--mid)">Harga (RM)</label><input id="invRate-${i}" class="form-input" type="number" placeholder="0.00" value="${it.rate||''}" oninput="updateInvoiceItem(${i},'rate',this.value)"></div>
         <div style="flex:1"><label style="font-size:10px;color:var(--mid)">Amount</label><input id="invAmt-${i}" class="form-input" type="number" placeholder="0.00" value="${it.amount||''}" readonly style="background:#fff"></div>
       </div>
     </div>`).join('');
   recalcInvoiceTotal();
 }
 
-function applyGlobalSupplier(supplierId){
-  if(!supplierId) return;
-  invoiceItems.forEach((it,i)=>{ it.supplier = supplierId; });
-  renderInvoiceItems();
-}
-
 function applySkuToInvItem(idx, val){
   if(!val) return;
-  const sku = skuList.find(s=>(s.jenis||s.no)===val);
-  if(sku){ invoiceItems[idx].desc = sku.jenis||val; }
-  else { invoiceItems[idx].desc = val; }
+  invoiceItems[idx].desc = val;
+  const sku = (window._invSku||[]).find(s=>s.name===val);
+  if(sku && sku.price>0){
+    invoiceItems[idx].rate = sku.price;
+    invoiceItems[idx].amount = ((parseFloat(invoiceItems[idx].qty)||0)*sku.price).toFixed(2);
+  }
   renderInvoiceItems();
 }
 
@@ -5536,25 +5532,21 @@ function viewInvoice(id){
         <thead>
           <tr style="background:var(--dark);color:#fff">
             <th style="padding:8px;text-align:left">#</th>
-            <th style="padding:8px;text-align:left">Item & Description</th>
-            <th style="padding:8px;text-align:left">Supplier</th>
+            <th style="padding:8px;text-align:left">Item</th>
             <th style="padding:8px;text-align:right">Qty</th>
-            <th style="padding:8px;text-align:right">Rate</th>
+            <th style="padding:8px;text-align:right">Harga</th>
             <th style="padding:8px;text-align:right">Amount</th>
           </tr>
         </thead>
         <tbody>
-          ${(inv.items||[]).map((it,i)=>{
-            const supName = it.supplier ? (getSuppliers().find(s=>s.id===it.supplier)||{}).name||it.supplier : '-';
-            return `
+          ${(inv.items||[]).map((it,i)=>`
             <tr style="border-bottom:1px solid var(--border)">
               <td style="padding:8px">${i+1}</td>
-              <td style="padding:8px"><strong>${it.desc}</strong><br><span style="color:var(--mid);font-size:11px">${supName!=='-'?supName:it.unit||''}</span></td>
-              <td style="padding:8px;color:var(--mid);font-size:11px">${supName}</td>
+              <td style="padding:8px"><strong>${it.desc}</strong></td>
               <td style="padding:8px;text-align:right">${it.qty}</td>
               <td style="padding:8px;text-align:right">${parseFloat(it.rate||0).toFixed(2)}</td>
               <td style="padding:8px;text-align:right">${parseFloat(it.amount||0).toFixed(2)}</td>
-            </tr>`;}).join('')}
+            </tr>`).join('')}
         </tbody>
       </table>
 
@@ -5619,15 +5611,15 @@ async function generateInvoiceImage(id){
     <table style="width:100%;border-collapse:collapse;font-size:13px">
       <thead><tr style="background:#111;color:#fff">
         <th style="padding:8px;text-align:left">#</th>
-        <th style="padding:8px;text-align:left">Item & Description</th>
+        <th style="padding:8px;text-align:left">Item</th>
         <th style="padding:8px;text-align:right">Qty</th>
-        <th style="padding:8px;text-align:right">Rate</th>
+        <th style="padding:8px;text-align:right">Harga</th>
         <th style="padding:8px;text-align:right">Amount</th>
       </tr></thead>
       <tbody>${(inv.items||[]).map((it,i)=>`
         <tr style="border-bottom:1px solid #eee">
           <td style="padding:8px">${i+1}</td>
-          <td style="padding:8px"><strong>${it.desc}</strong><br><span style="color:#888;font-size:11px">${(()=>{const s=getSuppliers().find(x=>x.id===it.supplier);return s?s.name:it.unit||'';})()}</span></td>
+          <td style="padding:8px"><strong>${it.desc}</strong></td>
           <td style="padding:8px;text-align:right">${it.qty}</td>
           <td style="padding:8px;text-align:right">${parseFloat(it.rate||0).toFixed(2)}</td>
           <td style="padding:8px;text-align:right">${parseFloat(it.amount||0).toFixed(2)}</td>
@@ -5690,29 +5682,23 @@ async function generateInvoiceImage(id){
     ctx.fillStyle='#fff';
     ctx.font='bold 13px Arial';
     ctx.fillText('#',48,y+21);
-    ctx.fillText('Item & Description',88,y+21);
-    ctx.fillText('Supplier',388,y+21);
+    ctx.fillText('Item',88,y+21);
     ctx.textAlign='center';
     ctx.fillText('Qty',620,y+21);
     ctx.textAlign='left';
-    ctx.fillText('Rate',668,y+21);
+    ctx.fillText('Harga',668,y+21);
     ctx.fillText('Amount',768,y+21);
 
     // Table rows
     (inv.items||[]).forEach((it,i)=>{
       y+=32;
-      const supName = it.supplier ? (getSuppliers().find(s=>s.id===it.supplier)||{}).name||'' : '';
       ctx.fillStyle= i%2===0?'#f9fafb':'#fff';
       ctx.fillRect(40,y,820,36);
       ctx.fillStyle='#111';
       ctx.font='13px Arial';
       ctx.fillText(i+1,48,y+23);
       ctx.font='bold 13px Arial';
-      ctx.fillText(it.desc.substring(0,28),88,y+23);
-      ctx.font='11px Arial';
-      ctx.fillStyle='#888';
-      ctx.fillText(supName.substring(0,22),388,y+23);
-      ctx.fillStyle='#111';
+      ctx.fillText((it.desc||'').substring(0,44),88,y+23);
       ctx.font='13px Arial';
       ctx.textAlign='center';
       ctx.fillText(it.qty,620,y+23);
