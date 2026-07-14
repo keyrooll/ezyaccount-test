@@ -205,7 +205,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
   <label class="kekal-row">
     <input type="checkbox" id="kekalCheck"> Kekal Log Masuk
   </label>
-  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v3.33-1407/1601</div>
+  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v3.34-1407/1737</div>
 </div>
 
 <!-- PENDING SCREEN -->
@@ -233,7 +233,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
     <div class="header-left">
       <img id="headerCompanyLogo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD7HY4Un0Ga8+stR1y50XTtVu/FF1bNqFstyIbXQTOkYYA7cqrHjOOTk9a9Ak/1bf7p/lXl9jY3t/4I8Ita6fLcj+yYQzrbeaEJVev+kRY9eh+vavRwPJyvmtuuifR90znrXurf1t2Lth4p8SaL8Qz4b8Q2F7e6PeeUthrS2XlIJnX/AFT7eOSMA9QevByPRa8l8Y+J7PTtTsvDtnol3cWuiXMd3cXMUnlxq0Q8xlBfPA3jOWzlgB2r1SxuYbyxt7y3YtDPEssZIxlWAI/Q1zYnEUa8k6as1o7K17dbba9baE4eom5QUr2/r5kxGQRjINcPZ+E/EemWNvp+m+K9UjtLWNYoI/KtfkRRtUZMRJwvc9Ww3sb/AIv8INr+t6Zqa6rLbCxDDyCpZHJYMDwy4Py4PUFSR3rkk+Ft8IV0cat5VmdMuYp7uBTH5tzIHWKTytxwY/NlbIYA5QADbXXh1RjSb9qr72cb7X6v+tfJjqOblbl073/r+kaMvw0h1S7kn1++1K8890e4VZ0iS42cL5iRqAxA4yAD/TuNLvdMnQ22nXNs4twYzFEwzGFZo8Y6gBkZfqpHavKtV+BkFzcao1l4luLSC7hhit4TFI6W3liLAx5oDoDFuVWBALtndk56XwH8OI/C3iu58QnVEv7m7tJLeeSW0Cykm5knUhw3AAl2lcYOxSNuMVwSUG3JbvsrF06UYNtLc//Z" alt="" class="header-logo" style="width:32px;height:32px;border-radius:6px;object-fit:contain">
       <span class="header-title" id="headerCompanyName">EzyAccount</span>
-      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v3.33-1407/1601</span>
+      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v3.34-1407/1737</span>
     </div>
     <div class="header-right"><button onclick="window.location.href='../index.html'" title="Tukar Syarikat" style="background:none;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;padding:5px 10px;margin-right:4px">🏢 Tukar</button>
       <button id="btnRefresh" onclick="refreshAllData()" title="Refresh Data" style="background:none;border:none;font-size:18px;cursor:pointer;padding:4px;line-height:1">🔄</button>
@@ -460,6 +460,8 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
     </div>
 
     <!-- ===== INVOICE MODULE ===== -->
+    <div class="screen" id="screen-request"><div class="screen-inner" id="requestContent"></div></div>
+
     <div class="screen" id="screen-invoice">
       <div class="screen-inner" id="invoiceContent"></div>
     </div>
@@ -942,6 +944,187 @@ function getStaffBranches(email){
   return BRANCHES; // default all
 }
 
+// ================= REQUEST MODULE (branch -> HQ goods request) =================
+const REQ_HQ_BRANCH='Batu Caves';
+function reqUserName(){ const u=currentUser; if(!u) return ''; return (getUserProfile(u.email).fullname)||u.name||u.email; }
+function reqMyBranches(){ const em=currentUser&&currentUser.email; const b=em?getStaffBranches(em):BRANCHES; return (b&&b.length)?b:BRANCHES; }
+// EXPLICIT assignment only (no default-all) — used to decide HQ status.
+function reqAssignedBranches(){ const em=currentUser&&currentUser.email; const p=getStaffProfiles()[em]; return (p&&p.branches&&p.branches.length)?p.branches:[]; }
+function reqIsHQ(){ return reqAssignedBranches().includes(REQ_HQ_BRANCH) || currentRole==='super_admin'; }
+function reqSafeJson(s){ try{return JSON.parse(s||'[]');}catch(e){return [];} }
+
+// --- data: Request tab ---
+function getRequests(){ return lsGet('ezy_requests_'+COMPANY_CONFIG.id,[]); }
+function setRequests(l){ lsSet('ezy_requests_'+COMPANY_CONFIG.id,l); }
+async function loadRequestsFromSheet(){
+  const tok=getValidToken()||accessToken||currentToken; if(!tok) return;
+  try{
+    const r=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Request!A2:K`,{headers:{Authorization:'Bearer '+tok}});
+    const d=await r.json(); if(d.error) return;
+    setRequests((d.values||[]).filter(x=>x[0]).map(x=>({id:x[0],date:x[1]||'',branch:x[2]||'',email:x[3]||'',nama:x[4]||'',items:reqSafeJson(x[5]),nota:x[6]||'',status:x[7]||'Pending',invoiceId:x[8]||'',fulfilledBy:x[9]||'',fulfilledAt:x[10]||''})));
+  }catch(e){ console.warn('loadRequests:',e); }
+}
+async function syncRequestsToSheet(){
+  const tok=getValidToken()||accessToken||currentToken; if(!tok) return;
+  try{
+    const cr=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Request!A1:A1`,{headers:{Authorization:'Bearer '+tok}});
+    if((await cr.json()).error) await ensureSheetTab(tok,SHEET_ID,'Request');
+    await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Request!A1:K100000:clear`,{method:'POST',headers:{Authorization:'Bearer '+tok,'Content-Type':'application/json'}});
+    const rows=[['ID','Tarikh','Branch','Email','Nama','Items','Nota','Status','InvoiceID','FulfilledOleh','FulfilledAt']];
+    getRequests().forEach(r=>rows.push([r.id,r.date,r.branch,r.email,r.nama,JSON.stringify(r.items||[]),r.nota||'',r.status||'Pending',r.invoiceId||'',r.fulfilledBy||'',r.fulfilledAt||'']));
+    await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Request!A1?valueInputOption=USER_ENTERED`,{method:'PUT',headers:{Authorization:'Bearer '+tok,'Content-Type':'application/json'},body:JSON.stringify({values:rows})});
+  }catch(e){ console.warn('syncRequests:',e); }
+}
+
+// --- data: SKU Request tab (ID, Nama, Harga) ---
+window._reqSku = window._reqSku || [];
+function reqSkuRange(a1){ return encodeURIComponent("'SKU Request'!"+a1); }
+async function loadReqSku(){
+  const tok=getValidToken()||accessToken||currentToken; if(!tok) return;
+  try{
+    const r=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${reqSkuRange('A2:C500')}`,{headers:{Authorization:'Bearer '+tok}});
+    const d=await r.json(); if(d.error){ await ensureReqSkuTab(); return; }
+    window._reqSku=(d.values||[]).filter(x=>x[1]).map(x=>({id:x[0]||'',name:(x[1]||'').trim(),price:parseFloat((x[2]||'').toString().replace(/[, ]/g,''))||0}));
+  }catch(e){ console.warn('loadReqSku:',e); }
+}
+async function ensureReqSkuTab(){
+  const tok=getValidToken()||accessToken||currentToken; if(!tok) return;
+  try{
+    const cr=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${reqSkuRange('A1:A1')}`,{headers:{Authorization:'Bearer '+tok}});
+    if((await cr.json()).error){
+      await ensureSheetTab(tok,SHEET_ID,'SKU Request');
+      await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${reqSkuRange('A1')}?valueInputOption=USER_ENTERED`,{method:'PUT',headers:{Authorization:'Bearer '+tok,'Content-Type':'application/json'},body:JSON.stringify({values:[['ID','Nama','Harga']]})});
+    }
+  }catch(e){ console.warn('ensureReqSkuTab:',e); }
+}
+async function growReqSku(items){
+  const tok=getValidToken()||accessToken||currentToken; if(!tok) return;
+  if(!window._reqSku) window._reqSku=[];
+  const existing=new Set(window._reqSku.map(s=>(s.name||'').trim().toLowerCase()));
+  const rows=[];
+  (items||[]).forEach(it=>{ const nm=(it.name||'').trim(); if(!nm) return; const k=nm.toLowerCase(); if(existing.has(k)) return; existing.add(k); const id='SKR-'+Date.now()+Math.random().toString(36).substr(2,3); const pr=parseFloat(it.price)||0; rows.push([id,nm,pr]); window._reqSku.push({id,name:nm,price:pr}); });
+  if(!rows.length) return;
+  try{ await ensureReqSkuTab(); await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${reqSkuRange('A:C')}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,{method:'POST',headers:{Authorization:'Bearer '+tok,'Content-Type':'application/json'},body:JSON.stringify({values:rows})}); }catch(e){ console.warn('growReqSku:',e); }
+}
+
+// --- render ---
+function renderRequestScreen(){
+  _renderRequestInner();
+  Promise.all([loadRequestsFromSheet().catch(()=>{}),loadReqSku().catch(()=>{})]).then(()=>_renderRequestInner()).catch(()=>{});
+}
+function reqPendingCount(){ return getRequests().filter(r=>r.status==='Pending').length; }
+function _renderRequestInner(){
+  const el=document.getElementById('requestContent'); if(!el) return;
+  const hq=reqIsHQ();
+  let list=getRequests().slice().sort((a,b)=>(dateSortKey(b.date)||'').localeCompare(dateSortKey(a.date)||''));
+  if(!hq){ const em=currentUser&&currentUser.email; const mine=reqMyBranches(); list=list.filter(r=>r.email===em||mine.includes(r.branch)); }
+  const pending=list.filter(r=>r.status==='Pending');
+  let html=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+    <div style="font-size:18px;font-weight:700">📦 Request${hq?' — HQ':''}</div>
+    <button class="btn btn-sm btn-secondary" onclick="renderRequestScreen()">🔄</button></div>
+    <button class="btn btn-primary btn-block" style="margin-bottom:12px" onclick="showRequestForm()">+ Buat Request</button>`;
+  if(hq) html+=`<div class="kpi-card" style="margin-bottom:12px"><div class="kpi-label">Request Pending</div><div class="kpi-value" style="color:${pending.length?'var(--amber)':'var(--green)'}">${pending.length}</div></div>`;
+  if(!list.length){ html+='<div class="empty-state"><div class="empty-icon">📦</div><div>Tiada request</div></div>'; el.innerHTML=html; return; }
+  html+=list.map(r=>reqCard(r,hq)).join('');
+  el.innerHTML=html;
+}
+function reqBadge(s){ const c={Pending:'var(--amber)',Invoiced:'#2563eb',Fulfilled:'var(--green)',Rejected:'var(--red)'}[s]||'var(--mid)'; return `<span style="font-size:11px;font-weight:700;color:${c}">${s}</span>`; }
+function reqCard(r,hq){
+  const itemsTxt=(r.items||[]).map(it=>`${it.name} ×${it.qty}`).join(', ');
+  return `<div class="card mb-8" style="padding:12px">
+    <div style="display:flex;justify-content:space-between;align-items:center"><div style="font-weight:700">${r.branch}</div>${reqBadge(r.status)}</div>
+    <div style="font-size:11px;color:var(--mid);margin:2px 0">${fmtDate(r.date)} · ${r.nama||r.email}</div>
+    <div style="font-size:12px;margin-bottom:6px">${itemsTxt}</div>
+    ${r.nota?`<div style="font-size:11px;color:var(--mid);font-style:italic">"${r.nota}"</div>`:''}
+    ${r.invoiceId?`<div style="font-size:10px;color:#2563eb">🧾 Invoice: ${r.invoiceId}</div>`:''}
+    ${r.fulfilledBy?`<div style="font-size:10px;color:var(--mid)">${r.status==='Rejected'?'✕ Ditolak':'✓ Fulfilled'} oleh ${r.fulfilledBy}${r.fulfilledAt?' · '+r.fulfilledAt:''}</div>`:''}
+    ${hq&&r.status!=='Rejected'&&r.status!=='Fulfilled'?`<div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+      ${r.status==='Pending'?`<button class="btn btn-sm btn-primary" onclick="convertRequestToInvoice('${r.id}')">Convert → Invoice</button>`:''}
+      ${r.invoiceId?`<button class="btn btn-sm" style="background:#059669;color:#fff" onclick="fulfilRequest('${r.id}')">Fulfil</button>`:''}
+      <button class="btn btn-sm btn-danger" onclick="rejectRequest('${r.id}')">Reject</button>
+    </div>`:''}
+  </div>`;
+}
+
+// --- create request form ---
+function showRequestForm(){
+  window._reqDraft={branch:reqMyBranches()[0]||BRANCHES[0],items:[{name:'',price:0,qty:1}],nota:''};
+  const branchOpts=reqMyBranches().map(b=>`<option value="${b}">${b}</option>`).join('');
+  showModal('+ Buat Request',`
+    <div class="form-group"><label class="form-label">Untuk Branch</label><select class="form-input" onchange="window._reqDraft.branch=this.value">${branchOpts}</select></div>
+    <div class="form-group"><label class="form-label">Item</label><div id="reqItemsWrap"></div>
+      <button class="btn btn-outline btn-block" style="margin-top:6px" onclick="reqAddItem()">+ Tambah Item</button></div>
+    <div class="form-group"><label class="form-label">Nota (pilihan)</label><textarea class="form-input" rows="2" oninput="window._reqDraft.nota=this.value" placeholder="Catatan"></textarea></div>
+    <button class="btn btn-primary btn-block" onclick="saveRequest()">Hantar Request</button>`);
+  renderReqItems();
+  loadReqSku().then(()=>renderReqItems()).catch(()=>{});
+}
+function renderReqItems(){
+  const wrap=document.getElementById('reqItemsWrap'); if(!wrap) return;
+  const skus=window._reqSku||[];
+  const opts=skus.map(s=>`<option value="${(s.name||'').replace(/"/g,'&quot;')}">${s.name} (RM${(s.price||0).toFixed(2)})</option>`).join('');
+  wrap.innerHTML=window._reqDraft.items.map((it,i)=>`
+    <div style="display:flex;gap:6px;margin-bottom:6px;align-items:center">
+      ${opts?`<select class="form-input" style="flex:2" onchange="applyReqSku(${i},this.value)"><option value="">— SKU —</option>${opts}<option value="__new__">➕ SKU Baru</option></select>`:''}
+      <input class="form-input" style="flex:2" placeholder="Nama item" value="${(it.name||'').replace(/"/g,'&quot;')}" oninput="reqUpdateItem(${i},'name',this.value)">
+      <input class="form-input" style="width:56px" type="number" min="1" placeholder="Qty" value="${it.qty||''}" oninput="reqUpdateItem(${i},'qty',this.value)">
+      <button onclick="reqRemoveItem(${i})" style="background:none;border:none;color:#ef4444;font-size:18px;cursor:pointer">×</button>
+    </div>`).join('');
+}
+function reqUpdateItem(i,f,v){ if(window._reqDraft.items[i]) window._reqDraft.items[i][f]=v; }
+function reqAddItem(){ window._reqDraft.items.push({name:'',price:0,qty:1}); renderReqItems(); }
+function reqRemoveItem(i){ window._reqDraft.items.splice(i,1); renderReqItems(); }
+function applyReqSku(i,val){
+  const it=window._reqDraft.items[i]; if(!it) return;
+  if(val==='__new__'){ const nm=(prompt('Nama SKU baru:')||'').trim(); if(nm){ const pr=parseFloat(prompt('Harga (RM):','0'))||0; it.name=nm; it.price=pr; } renderReqItems(); return; }
+  if(!val) return;
+  it.name=val; const s=(window._reqSku||[]).find(x=>x.name===val); if(s) it.price=s.price;
+  renderReqItems();
+}
+function saveRequest(){
+  const d=window._reqDraft; const items=(d.items||[]).filter(it=>(it.name||'').trim());
+  if(!items.length){ showToast('Sila tambah sekurang-kurangnya 1 item ⚠️'); return; }
+  const em=currentUser&&currentUser.email;
+  const req={id:'REQ-'+Date.now(),date:fmtDate(new Date().toISOString().split('T')[0]),branch:d.branch,email:em,nama:reqUserName(),
+    items:items.map(it=>({name:(it.name||'').trim(),price:parseFloat(it.price)||0,qty:parseFloat(it.qty)||1})),
+    nota:d.nota||'',status:'Pending',invoiceId:'',fulfilledBy:'',fulfilledAt:''};
+  const list=getRequests(); list.push(req); setRequests(list); syncRequestsToSheet().catch(()=>{});
+  growReqSku(items).catch(()=>{});
+  hideModal(); showToast('Request dihantar ✅'); renderRequestScreen();
+}
+
+// --- HQ actions ---
+function convertRequestToInvoice(reqId){
+  const req=getRequests().find(r=>r.id===reqId); if(!req) return;
+  window._convertReqId=reqId;
+  switchTab('invoice', renderInvoiceScreen);
+  showInvoiceForm();
+  invoiceItems=(req.items||[]).map(it=>({desc:it.name||'',unit:'',qty:it.qty||'',rate:it.price||'',amount:((parseFloat(it.qty)||0)*(parseFloat(it.price)||0)).toFixed(2)}));
+  const addr=(getBranchAddresses()[req.branch])||req.branch;
+  const bt=document.getElementById('invBillTo'); if(bt) bt.value=addr;
+  const bs=document.getElementById('invBranchSel'); if(bs) bs.value=req.branch;
+  if(typeof renderInvoiceItems==='function') renderInvoiceItems();
+  if(typeof recalcInvoiceTotal==='function') recalcInvoiceTotal();
+  showToast('Semak item + letak harga, kemudian Simpan invoice');
+}
+function linkRequestInvoice(reqId,invId){
+  const list=getRequests(); const r=list.find(x=>x.id===reqId); if(!r) return;
+  r.invoiceId=invId; if(r.status==='Pending') r.status='Invoiced';
+  setRequests(list); syncRequestsToSheet().catch(()=>{});
+}
+function fulfilRequest(reqId){
+  const list=getRequests(); const r=list.find(x=>x.id===reqId); if(!r) return;
+  if(!confirm('Tandakan request ini sebagai FULFILLED?')) return;
+  r.status='Fulfilled'; r.fulfilledBy=reqUserName(); r.fulfilledAt=new Date().toLocaleString('en-GB');
+  setRequests(list); syncRequestsToSheet().catch(()=>{}); renderRequestScreen();
+}
+function rejectRequest(reqId){
+  const list=getRequests(); const r=list.find(x=>x.id===reqId); if(!r) return;
+  if(!confirm('Reject request ini?')) return;
+  r.status='Rejected'; r.fulfilledBy=reqUserName(); r.fulfilledAt=new Date().toLocaleString('en-GB');
+  setRequests(list); syncRequestsToSheet().catch(()=>{}); renderRequestScreen();
+}
+
 // =====================
 // AUTH
 // =====================
@@ -1164,6 +1347,7 @@ function setupAppForRole(){
       setupTabs([
         {id:'dashboard',label:'Dashboard',fn:renderBranchDashboard},
         {id:'invoice',label:'Invoice',fn:renderInvoiceScreen},
+        {id:'request',label:'Request',fn:renderRequestScreen},
         {id:'onpay',label:'Onpay',fn:renderOnpayScreen},
         {id:'payment',label:'Payment',fn:renderPaymentScreen},
         {id:'branch',label:'Branch',fn:renderBranchScreen}
@@ -1185,6 +1369,7 @@ function setupAppForRole(){
       setupTabs([
         {id:'dashboard',label:'Dashboard',fn:renderBranchDashboard},
         {id:'invoice',label:'Invoice',fn:renderInvoiceScreen},
+        {id:'request',label:'Request',fn:renderRequestScreen},
         {id:'onpay',label:'Onpay',fn:renderOnpayScreen},
         {id:'payment',label:'Payment',fn:renderPaymentScreen},
         {id:'branch',label:'Branch',fn:renderBranchScreen}
@@ -1206,6 +1391,7 @@ function setupAppForRole(){
       setupTabs([
         {id:'dashboard',label:'Dashboard',fn:renderBranchDashboard},
         {id:'invoice',label:'Invoice',fn:renderInvoiceScreen},
+        {id:'request',label:'Request',fn:renderRequestScreen},
         {id:'onpay',label:'Onpay',fn:renderOnpayScreen},
         {id:'payment',label:'Payment',fn:renderPaymentScreen},
         {id:'branch',label:'Branch',fn:renderBranchScreen},
@@ -3119,6 +3305,7 @@ function _renderBranchDashboardInner(){
       <button onclick="renderBranchDashboard()" class="btn btn-sm btn-secondary" style="margin-left:auto;white-space:nowrap">🔄</button>
     </div>
     <div class="kpi-grid" id="branchKpi"></div>
+    <div id="reqPendingBanner"></div>
     <div class="chart-wrap" style="margin-bottom:12px">
       <div class="chart-title">Trend Stock IN</div>
       <canvas id="bchart-trend" height="200"></canvas>
@@ -3143,6 +3330,14 @@ function _renderBranchDashboardInner(){
     <div class="card"><div class="card-title mb-12">Rekod Stock IN Terbaru</div><div class="table-wrap" id="blatest-tx"></div></div>
   `;
   setBranchPeriod('Bulan', document.getElementById('bperiod-Bulan'));
+  renderReqBanner();
+  loadRequestsFromSheet().then(()=>renderReqBanner()).catch(()=>{});
+}
+function renderReqBanner(){
+  const el=document.getElementById('reqPendingBanner'); if(!el) return;
+  if(!reqIsHQ()){ el.innerHTML=''; return; }
+  const n=reqPendingCount();
+  el.innerHTML=`<div class="kpi-card" style="cursor:pointer;margin-bottom:12px;border:1px solid ${n?'var(--amber)':'var(--border)'}" onclick="switchTab('request',renderRequestScreen)"><div class="kpi-label">📦 Request Pending (klik untuk lihat)</div><div class="kpi-value" style="color:${n?'var(--amber)':'var(--green)'}">${n}</div></div>`;
 }
 
 function setBranchPeriod(period, btn){
@@ -4659,7 +4854,8 @@ function saveInvoice(status){
   }
   window._invoiceCache = cache;
   lsSet('ezy_invoices_'+COMPANY_CONFIG.id, cache);
-  showToast(status==='Sent'?'Invoice dihantar ✅':'Draft disimpan ✅');
+  if(window._convertReqId){ linkRequestInvoice(window._convertReqId, inv.id); window._convertReqId=null; }
+  showToast(status==='Sent'?'Invoice disimpan ✅':'Draft disimpan ✅');
   cancelInvoiceForm();
   renderInvoiceScreen();
 }
