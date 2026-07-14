@@ -205,7 +205,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
   <label class="kekal-row">
     <input type="checkbox" id="kekalCheck"> Kekal Log Masuk
   </label>
-  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v3.34-1407/1737</div>
+  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v3.35-1407/1914</div>
 </div>
 
 <!-- PENDING SCREEN -->
@@ -233,7 +233,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
     <div class="header-left">
       <img id="headerCompanyLogo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD7HY4Un0Ga8+stR1y50XTtVu/FF1bNqFstyIbXQTOkYYA7cqrHjOOTk9a9Ak/1bf7p/lXl9jY3t/4I8Ita6fLcj+yYQzrbeaEJVev+kRY9eh+vavRwPJyvmtuuifR90znrXurf1t2Lth4p8SaL8Qz4b8Q2F7e6PeeUthrS2XlIJnX/AFT7eOSMA9QevByPRa8l8Y+J7PTtTsvDtnol3cWuiXMd3cXMUnlxq0Q8xlBfPA3jOWzlgB2r1SxuYbyxt7y3YtDPEssZIxlWAI/Q1zYnEUa8k6as1o7K17dbba9baE4eom5QUr2/r5kxGQRjINcPZ+E/EemWNvp+m+K9UjtLWNYoI/KtfkRRtUZMRJwvc9Ww3sb/AIv8INr+t6Zqa6rLbCxDDyCpZHJYMDwy4Py4PUFSR3rkk+Ft8IV0cat5VmdMuYp7uBTH5tzIHWKTytxwY/NlbIYA5QADbXXh1RjSb9qr72cb7X6v+tfJjqOblbl073/r+kaMvw0h1S7kn1++1K8890e4VZ0iS42cL5iRqAxA4yAD/TuNLvdMnQ22nXNs4twYzFEwzGFZo8Y6gBkZfqpHavKtV+BkFzcao1l4luLSC7hhit4TFI6W3liLAx5oDoDFuVWBALtndk56XwH8OI/C3iu58QnVEv7m7tJLeeSW0Cykm5knUhw3AAl2lcYOxSNuMVwSUG3JbvsrF06UYNtLc//Z" alt="" class="header-logo" style="width:32px;height:32px;border-radius:6px;object-fit:contain">
       <span class="header-title" id="headerCompanyName">EzyAccount</span>
-      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v3.34-1407/1737</span>
+      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v3.35-1407/1914</span>
     </div>
     <div class="header-right"><button onclick="window.location.href='../index.html'" title="Tukar Syarikat" style="background:none;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;padding:5px 10px;margin-right:4px">🏢 Tukar</button>
       <button id="btnRefresh" onclick="refreshAllData()" title="Refresh Data" style="background:none;border:none;font-size:18px;cursor:pointer;padding:4px;line-height:1">🔄</button>
@@ -952,6 +952,7 @@ function reqMyBranches(){ const em=currentUser&&currentUser.email; const b=em?ge
 function reqAssignedBranches(){ const em=currentUser&&currentUser.email; const p=getStaffProfiles()[em]; return (p&&p.branches&&p.branches.length)?p.branches:[]; }
 function reqIsHQ(){ return reqAssignedBranches().includes(REQ_HQ_BRANCH) || currentRole==='super_admin'; }
 function reqSafeJson(s){ try{return JSON.parse(s||'[]');}catch(e){return [];} }
+function reqDateKey(d){ const f=fmtDate(d); if(!f||f==='-') return ''; const p=f.split('/'); return p.length===3?(p[2]+'-'+p[1]+'-'+p[0]):''; }
 
 // --- data: Request tab ---
 function getRequests(){ return lsGet('ezy_requests_'+COMPANY_CONFIG.id,[]); }
@@ -1016,13 +1017,11 @@ function reqPendingCount(){ return getRequests().filter(r=>r.status==='Pending')
 function _renderRequestInner(){
   const el=document.getElementById('requestContent'); if(!el) return;
   const hq=reqIsHQ();
-  let list=getRequests().slice().sort((a,b)=>(dateSortKey(b.date)||'').localeCompare(dateSortKey(a.date)||''));
+  let list=getRequests().slice().sort((a,b)=>(reqDateKey(b.date)||'').localeCompare(reqDateKey(a.date)||''));
   if(!hq){ const em=currentUser&&currentUser.email; const mine=reqMyBranches(); list=list.filter(r=>r.email===em||mine.includes(r.branch)); }
   const pending=list.filter(r=>r.status==='Pending');
-  let html=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-    <div style="font-size:18px;font-weight:700">📦 Request${hq?' — HQ':''}</div>
-    <button class="btn btn-sm btn-secondary" onclick="renderRequestScreen()">🔄</button></div>
-    <button class="btn btn-primary btn-block" style="margin-bottom:12px" onclick="showRequestForm()">+ Buat Request</button>`;
+  let html=`<div style="font-size:18px;font-weight:700;margin-bottom:12px">📦 Request${hq?' — HQ':''}</div>
+    <button class="btn btn-primary btn-block" style="margin-bottom:12px" onclick="showRequestForm()">Request item dari HQ</button>`;
   if(hq) html+=`<div class="kpi-card" style="margin-bottom:12px"><div class="kpi-label">Request Pending</div><div class="kpi-value" style="color:${pending.length?'var(--amber)':'var(--green)'}">${pending.length}</div></div>`;
   if(!list.length){ html+='<div class="empty-state"><div class="empty-icon">📦</div><div>Tiada request</div></div>'; el.innerHTML=html; return; }
   html+=list.map(r=>reqCard(r,hq)).join('');
@@ -1030,11 +1029,11 @@ function _renderRequestInner(){
 }
 function reqBadge(s){ const c={Pending:'var(--amber)',Invoiced:'#2563eb',Fulfilled:'var(--green)',Rejected:'var(--red)'}[s]||'var(--mid)'; return `<span style="font-size:11px;font-weight:700;color:${c}">${s}</span>`; }
 function reqCard(r,hq){
-  const itemsTxt=(r.items||[]).map(it=>`${it.name} ×${it.qty}`).join(', ');
+  const itemsHtml=(r.items||[]).map(it=>`<div style="display:flex;justify-content:space-between;padding:2px 0;border-top:1px solid var(--border)"><span>${it.name}</span><span style="color:var(--mid);font-weight:600">×${it.qty}</span></div>`).join('');
   return `<div class="card mb-8" style="padding:12px">
     <div style="display:flex;justify-content:space-between;align-items:center"><div style="font-weight:700">${r.branch}</div>${reqBadge(r.status)}</div>
     <div style="font-size:11px;color:var(--mid);margin:2px 0">${fmtDate(r.date)} · ${r.nama||r.email}</div>
-    <div style="font-size:12px;margin-bottom:6px">${itemsTxt}</div>
+    <div style="font-size:12px;margin-bottom:6px">${itemsHtml}</div>
     ${r.nota?`<div style="font-size:11px;color:var(--mid);font-style:italic">"${r.nota}"</div>`:''}
     ${r.invoiceId?`<div style="font-size:10px;color:#2563eb">🧾 Invoice: ${r.invoiceId}</div>`:''}
     ${r.fulfilledBy?`<div style="font-size:10px;color:var(--mid)">${r.status==='Rejected'?'✕ Ditolak':'✓ Fulfilled'} oleh ${r.fulfilledBy}${r.fulfilledAt?' · '+r.fulfilledAt:''}</div>`:''}
