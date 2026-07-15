@@ -205,7 +205,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
   <label class="kekal-row">
     <input type="checkbox" id="kekalCheck"> Kekal Log Masuk
   </label>
-  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v1.1-1407/1601</div>
+  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v2.0-1607/0113</div>
 </div>
 
 <!-- PENDING SCREEN -->
@@ -233,7 +233,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
     <div class="header-left">
       <img id="headerCompanyLogo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD7HY4Un0Ga8+stR1y50XTtVu/FF1bNqFstyIbXQTOkYYA7cqrHjOOTk9a9Ak/1bf7p/lXl9jY3t/4I8Ita6fLcj+yYQzrbeaEJVev+kRY9eh+vavRwPJyvmtuuifR90znrXurf1t2Lth4p8SaL8Qz4b8Q2F7e6PeeUthrS2XlIJnX/AFT7eOSMA9QevByPRa8l8Y+J7PTtTsvDtnol3cWuiXMd3cXMUnlxq0Q8xlBfPA3jOWzlgB2r1SxuYbyxt7y3YtDPEssZIxlWAI/Q1zYnEUa8k6as1o7K17dbba9baE4eom5QUr2/r5kxGQRjINcPZ+E/EemWNvp+m+K9UjtLWNYoI/KtfkRRtUZMRJwvc9Ww3sb/AIv8INr+t6Zqa6rLbCxDDyCpZHJYMDwy4Py4PUFSR3rkk+Ft8IV0cat5VmdMuYp7uBTH5tzIHWKTytxwY/NlbIYA5QADbXXh1RjSb9qr72cb7X6v+tfJjqOblbl073/r+kaMvw0h1S7kn1++1K8890e4VZ0iS42cL5iRqAxA4yAD/TuNLvdMnQ22nXNs4twYzFEwzGFZo8Y6gBkZfqpHavKtV+BkFzcao1l4luLSC7hhit4TFI6W3liLAx5oDoDFuVWBALtndk56XwH8OI/C3iu58QnVEv7m7tJLeeSW0Cykm5knUhw3AAl2lcYOxSNuMVwSUG3JbvsrF06UYNtLc//Z" alt="" class="header-logo" style="width:32px;height:32px;border-radius:6px;object-fit:contain">
       <span class="header-title" id="headerCompanyName">EzyAccount</span>
-      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v1.1-1407/1601</span>
+      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v2.0-1607/0113</span>
     </div>
     <div class="header-right"><button onclick="window.location.href='../index.html'" title="Tukar Syarikat" style="background:none;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;padding:5px 10px;margin-right:4px">🏢 Tukar</button>
       <button id="btnRefresh" onclick="refreshAllData()" title="Refresh Data" style="background:none;border:none;font-size:18px;cursor:pointer;padding:4px;line-height:1">🔄</button>
@@ -1550,8 +1550,10 @@ function setupAppForRole(){
 // ============================================================
 const CASH_METHODS = COMPANY_CONFIG.payMethods; // [{key,label,expectedDays}]
 function cashMethod(k){ return CASH_METHODS.find(m=>m.key===k)||{key:k,label:k,expectedDays:1}; }
-const CLOSING_FIELDS=['id','date','branch','cashier','gross','net','refunds','discounts','cash','card','qr','grab','transfer','float','expectedCash','actualCash','cashToBank','shortExtra','cardSettlement','mismatch','shiftImg','settleImg','cashImg','note','createdBy','createdAt'];
-const NUM_FIELDS=new Set(['gross','net','refunds','discounts','cash','card','qr','grab','transfer','float','expectedCash','actualCash','cashToBank','shortExtra','cardSettlement']);
+// 'gross' and 'net' were replaced by a single 'totalSales' (= Loyverse Net Sales). Old sheets still
+// have gross/net columns; cashParseRows matches by name and backfills totalSales from net.
+const CLOSING_FIELDS=['id','date','branch','cashier','totalSales','refunds','discounts','cash','card','qr','grab','transfer','float','expectedCash','actualCash','cashToBank','shortExtra','cardSettlement','mismatch','shiftImg','settleImg','cashImg','note','createdBy','createdAt'];
+const NUM_FIELDS=new Set(['totalSales','gross','net','refunds','discounts','cash','card','qr','grab','transfer','float','expectedCash','actualCash','cashToBank','shortExtra','cardSettlement']);
 
 // ---------- data layer ----------
 function cashGet(tab){ return lsGet('ezycash_'+tab+'_'+COMPANY_CONFIG.id,[]); }
@@ -1559,14 +1561,18 @@ function cashSet(tab,list){ lsSet('ezycash_'+tab+'_'+COMPANY_CONFIG.id,list); }
 function cashHeaders(tab){ return ({
   Closing:CLOSING_FIELDS,
   BankIn:['id','date','branch','amount','bank','slip','by','status','closingId','createdAt'],
-  Reconcile:['id','closingId','date','branch','method','amount','expectedDate','status','actualDate','by'],
+  Reconcile:['id','closingId','date','branch','method','amount','expectedDate','status','actualDate','by','approvedBy'],
   Audit:['ts','user','action','detail']
 })[tab]; }
 async function cashReadSheet(tab){
   const tok=getValidToken()||accessToken||currentToken; if(!tok) return null;
   try{
-    const r=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${tab}!A2:AZ`,{headers:{Authorization:'Bearer '+tok}});
-    const d=await r.json(); if(d.error) return null; return d.values||[];
+    // Read the header row too. Columns are matched by NAME (see cashParseRows), so a sheet still
+    // written in an older field layout keeps loading into the right keys instead of shifting.
+    const r=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${tab}!A1:AZ`,{headers:{Authorization:'Bearer '+tok}});
+    const d=await r.json(); if(d.error) return null;
+    const all=d.values||[];
+    return {header:all[0]||[], data:all.slice(1)};
   }catch(e){ console.warn('cashReadSheet',tab,e); return null; }
 }
 async function cashWriteSheet(tab){
@@ -1585,15 +1591,34 @@ async function cashWriteSheet(tab){
     await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${tab}!A1?valueInputOption=USER_ENTERED`,{method:'PUT',headers:{Authorization:'Bearer '+tok,'Content-Type':'application/json'},body:JSON.stringify({values:rows})});
   }catch(e){ console.warn('cashWriteSheet',tab,e); }
 }
-function cashParseRows(tab,rows){
+function cashParseRows(tab,rows,sheetHdr){
   const hdr=cashHeaders(tab);
-  return (rows||[]).filter(r=>r[0]).map(r=>{ const o={}; hdr.forEach((h,i)=>{ let v=r[i]; if(NUM_FIELDS.has(h)) v=parseFloat((v||'').toString().replace(/,/g,''))||0; else v=(v===undefined?'':v); o[h]=v; }); return o; });
+  // Match columns by the sheet's own header names when they are present. Positional mapping breaks
+  // the moment a field is added or removed — every old row shifts by one and silently corrupts.
+  const idx={};
+  (sheetHdr||[]).forEach((h,i)=>{ const k=(h||'').toString().trim(); if(k) idx[k]=i; });
+  const byName=hdr.some(h=>idx[h]!==undefined);
+  const idCol=(byName&&idx[hdr[0]]!==undefined)?idx[hdr[0]]:0;
+  const num=v=>parseFloat((v||'').toString().replace(/,/g,''))||0;
+  return (rows||[]).filter(r=>r[idCol]).map(r=>{
+    const o={};
+    hdr.forEach((h,i)=>{
+      const col=byName?idx[h]:i;
+      let v=(col===undefined)?'':r[col];
+      if(NUM_FIELDS.has(h)) v=num(v); else v=(v===undefined?'':v);
+      o[h]=v;
+    });
+    // Legacy Closing rows carried Gross/Net Sales; totalSales replaced them. Net is the right
+    // match (the payment methods sum to Net), so old closings still report a figure.
+    if(tab==='Closing' && !o.totalSales && idx['net']!==undefined) o.totalSales=num(r[idx['net']]);
+    return o;
+  });
 }
 async function cashLoadAll(){
   const map={Closing:'closing',BankIn:'bankin',Reconcile:'reconcile',Audit:'audit'};
   for(const tab of Object.keys(map)){
-    const rows=await cashReadSheet(tab);
-    if(rows!==null) cashSet(map[tab], cashParseRows(tab,rows));
+    const res=await cashReadSheet(tab);
+    if(res!==null) cashSet(map[tab], cashParseRows(tab,res.data,res.header));
   }
 }
 async function cashEnsureSheets(){
@@ -1672,7 +1697,7 @@ function renderClosingScreen(){
       <div id="cl-scan-status" style="font-size:11px;color:var(--mid);margin-bottom:10px"></div>
 
       <div style="font-size:12px;font-weight:700;color:var(--mid);margin:6px 0 6px">💰 JUALAN & BAYARAN</div>
-      <div style="display:flex;gap:8px;margin-bottom:8px">${numRow('gross','Gross Sales')}${numRow('net','Net Sales')}</div>
+      <div style="display:flex;gap:8px;margin-bottom:8px">${numRow('totalSales','Total Sales')}</div>
       <div style="display:flex;gap:8px;margin-bottom:8px">${numRow('cash','Cash')}${numRow('card','Card (+ApplePay)')}</div>
       <div style="display:flex;gap:8px;margin-bottom:8px">${numRow('qr','QR Pay')}${numRow('grab','Grab')}</div>
       <div style="display:flex;gap:8px;margin-bottom:8px">${numRow('transfer','Transfer')}${numRow('cardSettlement','Card (Settlement Bank)')}</div>
@@ -1693,7 +1718,7 @@ function renderClosingScreen(){
 }
 function clNum(id){ return parseFloat((document.getElementById('cl-'+id)||{}).value)||0; }
 function clRecalc(){
-  const cash=clNum('cash'),card=clNum('card'),qr=clNum('qr'),grab=clNum('grab'),transfer=clNum('transfer'),net=clNum('net');
+  const cash=clNum('cash'),card=clNum('card'),qr=clNum('qr'),grab=clNum('grab'),transfer=clNum('transfer'),net=clNum('totalSales');
   const expected=clNum('expectedCash'),actual=clNum('actualCash'),float=clNum('float'),settle=clNum('cardSettlement');
   const cashToBank=Math.round((actual-float)*100)/100;
   const shortExtra=Math.round((actual-expected)*100)/100;
@@ -1705,7 +1730,7 @@ function clRecalc(){
   el.innerHTML=
     line('Cash to Bank (Actual − Float)',formatRM(cashToBank))+
     line('Cash Short/Extra',formatRM(shortExtra),Math.abs(shortExtra)>0.01?'var(--red)':'var(--green)')+
-    line('Jumlah Bayaran vs Net',formatRM(payTotal)+' / '+formatRM(net),Math.abs(reconDiff)>0.5?'var(--red)':'var(--green)')+
+    line('Jumlah Bayaran vs Total Sales',formatRM(payTotal)+' / '+formatRM(net),Math.abs(reconDiff)>0.5?'var(--red)':'var(--green)')+
     (Math.abs(reconDiff)>0.5?`<div style="color:var(--red);font-size:11px">⚠️ Tak padan: ${formatRM(reconDiff)}</div>`:'')+
     (settle>0&&Math.abs(cardDiff)>0.5?`<div style="color:var(--red);font-size:11px">⚠️ Card Loyverse vs Settlement beza ${formatRM(cardDiff)}</div>`:'');
 }
@@ -1716,7 +1741,8 @@ async function clScan(ev,kind){
     const b64=await fileToBase64(f);
     if(kind==='shift'){ window._closingDraft.shiftImg64=b64;
       const j=await cashAiScan(b64,SHIFT_PROMPT);
-      if(j){ $val('cl-gross',j.gross||''); $val('cl-net',j.net||''); $val('cl-cash',j.cash||''); $val('cl-card',(parseFloat(j.card||0)+parseFloat(j.applepay||0))||''); $val('cl-qr',j.qr||''); $val('cl-expectedCash',j.expected_cash||''); if(j.actual_cash) $val('cl-actualCash',j.actual_cash); if(st) st.textContent='✅ Shift report dibaca'; }
+      // Loyverse reports Gross and Net; Total Sales tracks Net (what the payment methods sum to).
+      if(j){ $val('cl-totalSales',j.net||''); $val('cl-cash',j.cash||''); $val('cl-card',(parseFloat(j.card||0)+parseFloat(j.applepay||0))||''); $val('cl-qr',j.qr||''); $val('cl-expectedCash',j.expected_cash||''); if(j.actual_cash) $val('cl-actualCash',j.actual_cash); if(st) st.textContent='✅ Shift report dibaca'; }
       else if(st) st.textContent='⚠️ Gagal baca — isi manual';
     } else if(kind==='settle'){ window._closingDraft.settleImg64=b64;
       const j=await cashAiScan(b64,SETTLE_PROMPT);
@@ -1736,20 +1762,20 @@ async function saveClosing(){
   const c={
     id:'CL-'+Date.now()+Math.random().toString(36).substr(2,4),
     date,branch,cashier,
-    gross:g('gross'),net:g('net'),refunds:0,discounts:0,
+    totalSales:g('totalSales'),refunds:0,discounts:0,
     cash:g('cash'),card:g('card'),qr:g('qr'),grab:g('grab'),transfer:g('transfer'),
     float,expectedCash:expected,actualCash:actual,
     cashToBank:Math.round((actual-float)*100)/100,
     shortExtra:Math.round((actual-expected)*100)/100,
     cardSettlement:g('cardSettlement'),
-    mismatch:(Math.abs((g('cash')+g('card')+g('qr')+g('grab')+g('transfer'))-g('net'))>0.5)?'YA':'',
+    mismatch:(Math.abs((g('cash')+g('card')+g('qr')+g('grab')+g('transfer'))-g('totalSales'))>0.5)?'YA':'',
     shiftImg:'',settleImg:'',cashImg:'',
     note:(document.getElementById('cl-note').value||'').trim(),
     createdBy:(currentUser&&currentUser.email)||'',createdAt:new Date().toLocaleString('en-GB')
   };
   // upload images to Drive
   try{
-    if(window._closingDraft.shiftImg64){ const u=await uploadToDrive(window._closingDraft.shiftImg64,'Shift-'+branch,date,c.net); c.shiftImg=u.link||''; }
+    if(window._closingDraft.shiftImg64){ const u=await uploadToDrive(window._closingDraft.shiftImg64,'Shift-'+branch,date,c.totalSales); c.shiftImg=u.link||''; }
     if(window._closingDraft.settleImg64){ const u=await uploadToDrive(window._closingDraft.settleImg64,'Settle-'+branch,date,c.cardSettlement); c.settleImg=u.link||''; }
     if(window._closingDraft.cashImg64){ const u=await uploadToDrive(window._closingDraft.cashImg64,'Cash-'+branch,date,c.actualCash); c.cashImg=u.link||''; }
   }catch(e){ console.warn('closing img upload',e); }
@@ -1764,7 +1790,7 @@ async function saveClosing(){
   cashSet('reconcile',rec);
   cashWriteSheet('Closing').catch(()=>{});
   cashWriteSheet('Reconcile').catch(()=>{});
-  cashAudit('CREATE_CLOSING', branch+' '+date+' net '+c.net);
+  cashAudit('CREATE_CLOSING', branch+' '+date+' total '+c.totalSales);
   if(btn){btn.disabled=false;btn.textContent='Simpan Closing';}
   showToast('Closing disimpan ✅');
   renderClosingScreen();
@@ -1776,7 +1802,7 @@ function renderClosingList(){
   if(!list.length){ el.innerHTML='<div class="empty-state"><div class="empty-icon">🧾</div><div>Tiada closing lagi</div></div>'; return; }
   el.innerHTML=`<div style="font-size:12px;font-weight:600;color:var(--mid);margin-bottom:8px">CLOSING TERKINI</div>`+
     list.slice(0,30).map(c=>`<div class="card mb-8" style="padding:12px;cursor:pointer" onclick="showClosingDetail('${c.id}')">
-      <div style="display:flex;justify-content:space-between"><div style="font-weight:700">${c.branch}${c.mismatch?' ⚠️':''}</div><div style="font-weight:700;color:var(--green)">${formatRM(c.net)}</div></div>
+      <div style="display:flex;justify-content:space-between"><div style="font-weight:700">${c.branch}${c.mismatch?' ⚠️':''}</div><div style="font-weight:700;color:var(--green)">${formatRM(c.totalSales)}</div></div>
       <div style="font-size:11px;color:var(--mid)">${fmtDate(c.date)} · ${c.cashier||'-'} · Cash bank ${formatRM(c.cashToBank)}${Math.abs(c.shortExtra)>0.01?' · Short/Extra '+formatRM(c.shortExtra):''}</div>
     </div>`).join('');
 }
@@ -1785,7 +1811,7 @@ function showClosingDetail(id){
   const row=(l,v)=>`<div style="display:flex;justify-content:space-between;padding:2px 0"><span style="color:var(--mid)">${l}</span><span style="font-weight:600">${v}</span></div>`;
   const img=(l,u)=>u?`<button class="btn btn-sm btn-secondary" onclick="showReceiptImageModal('${u}')">${l}</button>`:'';
   showModal(c.branch+' · '+fmtDate(c.date),
-    row('Cashier',c.cashier||'-')+row('Gross',formatRM(c.gross))+row('Net',formatRM(c.net))+
+    row('Cashier',c.cashier||'-')+row('Total Sales',formatRM(c.totalSales))+
     row('Cash',formatRM(c.cash))+row('Card',formatRM(c.card))+row('QR',formatRM(c.qr))+row('Grab',formatRM(c.grab))+row('Transfer',formatRM(c.transfer))+
     `<hr style="border:none;border-top:1px solid var(--border);margin:6px 0">`+
     row('Expected Cash',formatRM(c.expectedCash))+row('Actual Cash',formatRM(c.actualCash))+row('Float',formatRM(c.float))+
@@ -1872,32 +1898,109 @@ function renderReconcileScreen(){
 function _renderReconcile(){
   const el=document.getElementById('reconcileContent'); if(!el) return;
   const todayK=dateSortKey(new Date().toISOString().split('T')[0]);
-  const pend=cashGet('reconcile').filter(r=>r.status!=='Received').sort((a,b)=>(dateSortKey(a.expectedDate)||'9999').localeCompare(dateSortKey(b.expectedDate)||'9999'));
+  const all=cashGet('reconcile');
+  const pend=all.filter(r=>r.status!=='Received');
   let html=`<div style="font-size:18px;font-weight:700;margin-bottom:4px">Reconcile</div>
-    <div style="font-size:12px;color:var(--mid);margin-bottom:12px">Tick bila duit betul-betul masuk akaun bank.</div>`;
-  if(!pend.length){ html+='<div class="empty-state"><div class="empty-icon">✅</div><div>Semua sudah diterima</div></div>'; el.innerHTML=html; return; }
-  html+=`<div class="table-wrap"><table class="data-table"><thead><tr><th>Branch</th><th>Kaedah</th><th>Tarikh</th><th>Jangka</th><th>RM</th><th></th></tr></thead><tbody>`;
-  pend.forEach(r=>{
-    const ek=dateSortKey(r.expectedDate);
-    const overdue=ek&&ek<todayK;
-    html+=`<tr>
-      <td style="font-weight:600">${r.branch}</td>
-      <td>${cashMethod(r.method).label}</td>
-      <td>${fmtDate(r.date)}</td>
-      <td style="color:${overdue?'var(--red)':'var(--dark)'};font-weight:${overdue?'700':'400'}">${fmtDate(r.expectedDate)}${overdue?' ⚠️':''}</td>
-      <td style="font-weight:600">${formatRM(r.amount)}</td>
-      <td style="text-align:right"><button class="btn btn-sm btn-primary" onclick="tickReceived('${r.id}')">Received</button></td>
-    </tr>`;
-  });
-  html+=`</tbody></table></div>`;
+    <div style="font-size:12px;color:var(--mid);margin-bottom:12px">Tick bila duit masuk akaun bank, atau rekod satu bank-in lumpsum bagi setiap branch.</div>`;
+  if(!pend.length){
+    html+='<div class="empty-state"><div class="empty-icon">✅</div><div>Semua sudah diterima</div></div>';
+  } else {
+    const grand=pend.reduce((a,r)=>a+parseFloat(r.amount||0),0);
+    html+=`<div class="card mb-12" style="padding:10px;border-left:4px solid var(--red)">
+      <div style="display:flex;justify-content:space-between"><div style="font-weight:600">Jumlah Tertunggak</div>
+      <div style="font-weight:700;color:var(--red)">${formatRM(grand)}</div></div></div>`;
+    const branches=[...new Set(pend.map(r=>r.branch))].sort();
+    branches.forEach(br=>{
+      const items=pend.filter(r=>r.branch===br)
+        .sort((a,b)=>(dateSortKey(a.expectedDate)||'9999').localeCompare(dateSortKey(b.expectedDate)||'9999'));
+      const total=items.reduce((a,r)=>a+parseFloat(r.amount||0),0);
+      html+=`<div class="card mb-12" style="padding:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div><div style="font-weight:700">${br}</div><div style="font-size:11px;color:var(--mid)">${items.length} item tertunggak</div></div>
+          <div style="font-weight:700;color:var(--red)">${formatRM(total)}</div>
+        </div>
+        <button class="btn btn-sm btn-primary btn-block" style="margin-bottom:8px" onclick="showLumpsumModal('${br.replace(/'/g,"\\'")}')">💰 Bank In Lumpsum</button>
+        <div class="table-wrap"><table class="data-table">
+          <thead><tr><th>Kaedah</th><th>Tarikh</th><th>Jangka</th><th style="text-align:right">RM</th><th></th></tr></thead><tbody>`;
+      items.forEach(r=>{
+        const ek=dateSortKey(r.expectedDate);
+        const overdue=ek&&ek<todayK;
+        html+=`<tr>
+          <td>${cashMethod(r.method).label}</td>
+          <td style="font-size:11px">${fmtDate(r.date)}</td>
+          <td style="font-size:11px;color:${overdue?'var(--red)':'var(--dark)'};font-weight:${overdue?'700':'400'}">${fmtDate(r.expectedDate)}${overdue?' ⚠️':''}</td>
+          <td style="text-align:right;font-weight:600">${formatRM(r.amount)}</td>
+          <td style="text-align:right"><button class="btn btn-sm btn-primary" onclick="tickReceived('${r.id}')">Received</button></td>
+        </tr>`;
+      });
+      html+=`</tbody></table></div></div>`;
+    });
+  }
+  const done=all.filter(r=>r.status==='Received')
+    .sort((a,b)=>(dateSortKey(b.actualDate)||'').localeCompare(dateSortKey(a.actualDate)||'')).slice(0,10);
+  if(done.length){
+    html+=`<div style="font-size:12px;font-weight:600;color:var(--mid);margin:14px 0 6px">TERKINI DITERIMA</div>
+      <div class="table-wrap"><table class="data-table">
+        <thead><tr><th>Branch</th><th>Kaedah</th><th style="text-align:right">RM</th><th>Tarikh</th><th>Diluluskan oleh</th></tr></thead><tbody>
+        ${done.map(r=>`<tr><td>${r.branch}</td><td>${cashMethod(r.method).label}</td><td style="text-align:right">${formatRM(r.amount)}</td><td style="font-size:11px">${fmtDate(r.actualDate)}</td><td style="font-size:11px">${r.approvedBy||r.by||'-'}</td></tr>`).join('')}
+      </tbody></table></div>`;
+  }
   el.innerHTML=html;
+}
+// Reconcile is accountant/super_admin only (see setupTabs), and every approval records WHO did it
+// by name — 'by' keeps the email for audit, 'approvedBy' is the human name shown in the UI.
+function cashUserName(){
+  const u=currentUser||{};
+  const p=(getStaffProfiles()||{})[u.email]||{};
+  return p.fullname||u.name||u.email||'';
 }
 function tickReceived(id){
   const list=cashGet('reconcile'); const r=list.find(x=>x.id===id); if(!r) return;
-  r.status='Received'; r.actualDate=fmtDate(new Date().toISOString().split('T')[0]); r.by=(currentUser&&currentUser.email)||'';
+  const who=cashUserName();
+  r.status='Received'; r.actualDate=fmtDate(new Date().toISOString().split('T')[0]);
+  r.by=(currentUser&&currentUser.email)||''; r.approvedBy=who;
   cashSet('reconcile',list);
   cashWriteSheet('Reconcile').catch(()=>{});
-  cashAudit('RECEIVED', r.branch+' '+cashMethod(r.method).label+' '+formatRM(r.amount));
+  cashAudit('RECEIVED', r.branch+' '+cashMethod(r.method).label+' '+formatRM(r.amount)+' oleh '+who);
+  _renderReconcile();
+}
+
+// Staff often bank several days' takings in ONE transfer. Enter that lump sum against the branch
+// and it closes the outstanding items oldest-expected-first, stopping at the first item the
+// remaining amount cannot fully cover (no partial settlement in this model).
+function showLumpsumModal(branch){
+  const pend=cashGet('reconcile').filter(r=>r.branch===branch&&r.status!=='Received');
+  const total=pend.reduce((a,r)=>a+parseFloat(r.amount||0),0);
+  showModal('💰 Bank In Lumpsum — '+branch, `
+    <div style="font-size:12px;color:var(--mid);margin-bottom:10px">Tertunggak: <strong style="color:var(--red)">${formatRM(total)}</strong> (${pend.length} item).<br>Jumlah akan ditolak dari item <strong>paling lama dahulu</strong>.</div>
+    <div class="form-group"><label class="form-label">Tarikh masuk bank</label><input type="date" class="form-input" id="ls-date" value="${new Date().toISOString().split('T')[0]}"></div>
+    <div class="form-group"><label class="form-label">Jumlah (RM)</label><input type="number" step="0.01" class="form-input" id="ls-amount" placeholder="0.00" value="${total.toFixed(2)}"></div>
+    <div class="form-group"><label class="form-label">Nota (pilihan)</label><input class="form-input" id="ls-note" placeholder="Cth: 1 transfer untuk 3 hari"></div>
+    <button class="btn btn-primary btn-block" onclick="applyLumpsum('${branch.replace(/'/g,"\\'")}')">Sahkan Bank In</button>`);
+}
+function applyLumpsum(branch){
+  const dateRaw=document.getElementById('ls-date').value;
+  let pool=parseFloat(document.getElementById('ls-amount').value)||0;
+  const note=(document.getElementById('ls-note').value||'').trim();
+  if(!dateRaw||pool<=0){ showToast('Sila lengkapkan tarikh & jumlah ⚠️'); return; }
+  const date=fmtDate(dateRaw);
+  const list=cashGet('reconcile');
+  const items=list.filter(r=>r.branch===branch&&r.status!=='Received')
+    .sort((a,b)=>(dateSortKey(a.expectedDate)||'9999').localeCompare(dateSortKey(b.expectedDate)||'9999'));
+  const who=cashUserName();
+  let n=0, used=0;
+  for(const r of items){
+    const amt=parseFloat(r.amount||0);
+    if(pool+0.005 < amt) break; // FIFO — stop once the remainder can't fully cover this item
+    pool-=amt; used+=amt; n++;
+    r.status='Received'; r.actualDate=date; r.by=(currentUser&&currentUser.email)||''; r.approvedBy=who;
+  }
+  if(!n){ showToast('Jumlah tak cukup tutup mana-mana item ⚠️'); return; }
+  cashSet('reconcile',list);
+  cashWriteSheet('Reconcile').catch(()=>{});
+  cashAudit('LUMPSUM_BANKIN', branch+' '+formatRM(used)+' ('+n+' item) oleh '+who+(note?' — '+note:''));
+  hideModal();
+  showToast(n+' item ditutup ✅'+(pool>0.005?' · baki '+formatRM(pool)+' tak digunakan':''));
   _renderReconcile();
 }
 
@@ -1910,6 +2013,105 @@ function renderCashDashboard(){
   cashLoadAll().then(()=>_renderCashDash()).catch(()=>_renderCashDash());
   _renderCashDash();
 }
+// ===== Sales report (table + donut + bar) and 7-day submission tracker =====
+window._salesView = window._salesView || 'day';   // day | week | month
+window._salesDate = window._salesDate || new Date().toISOString().split('T')[0];
+function setSalesView(v){ window._salesView=v; _renderCashDash(); }
+function setSalesDate(d){ window._salesDate=d||new Date().toISOString().split('T')[0]; _renderCashDash(); }
+const SALES_DAY_NAMES=['Ahad','Isnin','Selasa','Rabu','Khamis','Jumaat','Sabtu'];
+const SALES_MONTHS=['Januari','Februari','Mac','April','Mei','Jun','Julai','Ogos','September','Oktober','November','Disember'];
+
+// Selected period as yyyy-mm-dd bounds — the same shape dateSortKey() returns, so closing dates
+// (stored dd/mm/yyyy) can be compared directly.
+function salesRange(){
+  const iso=x=>{ const p=new Date(x.getTime()-x.getTimezoneOffset()*60000); return p.toISOString().split('T')[0]; };
+  const d=new Date(window._salesDate+'T00:00:00');
+  if(window._salesView==='week'){
+    const off=(d.getDay()+6)%7; // week starts Monday
+    const from=new Date(d); from.setDate(d.getDate()-off);
+    const to=new Date(from); to.setDate(from.getDate()+6);
+    return {from:iso(from),to:iso(to),label:fmtDate(iso(from))+' – '+fmtDate(iso(to))};
+  }
+  if(window._salesView==='month'){
+    const from=new Date(d.getFullYear(),d.getMonth(),1);
+    const to=new Date(d.getFullYear(),d.getMonth()+1,0);
+    return {from:iso(from),to:iso(to),label:SALES_MONTHS[d.getMonth()]+' '+d.getFullYear()};
+  }
+  return {from:iso(d),to:iso(d),label:fmtDate(iso(d))};
+}
+function salesRowsFor(branches){
+  const {from,to}=salesRange();
+  const cls=cashGet('closing').filter(c=>{ const k=dateSortKey(c.date); return k && k>=from && k<=to; });
+  return branches.map(br=>({br, total:cls.filter(c=>c.branch===br).reduce((a,c)=>a+parseFloat(c.totalSales||0),0)}));
+}
+function salesReportHtml(branches){
+  const r=salesRange();
+  const rows=salesRowsFor(branches);
+  const grand=rows.reduce((a,x)=>a+x.total,0);
+  let h=`<div class="card mb-12" style="padding:12px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div style="font-weight:700;font-size:14px">Report Jualan</div>
+      <div style="font-size:11px;color:var(--mid)">${r.label}</div>
+    </div>
+    <div style="display:flex;gap:6px;margin-bottom:8px">
+      ${[['day','Hari'],['week','Minggu'],['month','Bulan']].map(([v,l])=>`<button class="btn btn-sm ${window._salesView===v?'btn-primary':'btn-secondary'}" style="flex:1" onclick="setSalesView('${v}')">${l}</button>`).join('')}
+    </div>
+    <input type="date" class="form-input" value="${window._salesDate}" onchange="setSalesDate(this.value)" style="margin-bottom:10px">
+    <div class="table-wrap"><table class="data-table">
+      <thead><tr><th>Branch</th><th style="text-align:right">Total Sales</th><th style="text-align:right">%</th></tr></thead><tbody>
+      ${rows.map(x=>`<tr><td style="font-weight:600">${x.br}</td><td style="text-align:right">${formatRM(x.total)}</td><td style="text-align:right;color:var(--mid)">${grand>0?((x.total/grand)*100).toFixed(1):'0.0'}%</td></tr>`).join('')}
+      <tr style="border-top:2px solid var(--border)"><td style="font-weight:700">Total Amount</td><td style="text-align:right;font-weight:700">${formatRM(grand)}</td><td></td></tr>
+    </tbody></table></div>`;
+  if(grand>0){
+    h+=`<div style="position:relative;height:200px;margin-top:14px"><canvas id="salesDonut"></canvas></div>
+        <div style="position:relative;height:200px;margin-top:14px"><canvas id="salesBar"></canvas></div>`;
+  } else {
+    h+=`<div style="text-align:center;color:var(--mid);font-size:12px;padding:14px">Tiada jualan direkod untuk tempoh ini</div>`;
+  }
+  return h+`</div>`;
+}
+function renderSalesCharts(branches){
+  if(typeof Chart==='undefined') return;
+  destroyChart('salesDonut'); destroyChart('salesBar');
+  const rows=salesRowsFor(branches).filter(x=>x.total>0);
+  if(!rows.length) return;
+  const colors=COMPANY_CONFIG.branchColors||['#16a34a','#3b82f6','#f59e0b'];
+  const c1=document.getElementById('salesDonut');
+  if(c1) charts['salesDonut']=new Chart(c1,{type:'doughnut',
+    data:{labels:rows.map(x=>x.br),datasets:[{data:rows.map(x=>x.total),backgroundColor:colors}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{position:'right',labels:{boxWidth:12,font:{size:10}}},tooltip:{callbacks:{label:c=>c.label+': '+formatRM(c.parsed)}}}}});
+  const c2=document.getElementById('salesBar');
+  if(c2) charts['salesBar']=new Chart(c2,{type:'bar',
+    data:{labels:rows.map(x=>x.br),datasets:[{label:'Total Sales',data:rows.map(x=>x.total),backgroundColor:colors}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>formatRM(c.parsed.y)}}},scales:{y:{beginAtZero:true}}}});
+}
+// Who has / hasn't submitted a closing for each of the last 7 days.
+function tracker7Html(branches){
+  const iso=x=>{ const p=new Date(x.getTime()-x.getTimezoneOffset()*60000); return p.toISOString().split('T')[0]; };
+  const submitted=new Set(cashGet('closing').map(c=>c.branch+'|'+dateSortKey(c.date)));
+  let missing=0;
+  let body='';
+  for(let i=6;i>=0;i--){
+    const d=new Date(); d.setDate(d.getDate()-i);
+    const k=iso(d);
+    body+=`<tr><td style="font-weight:600">${SALES_DAY_NAMES[d.getDay()]}</td><td style="font-size:11px">${fmtDate(k)}</td>`;
+    branches.forEach(b=>{
+      const ok=submitted.has(b+'|'+k);
+      if(!ok) missing++;
+      body+=`<td style="text-align:center">${ok?'✅':'<span style="color:var(--red);font-weight:700">❌</span>'}</td>`;
+    });
+    body+=`</tr>`;
+  }
+  return `<div class="card mb-12" style="padding:12px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div style="font-weight:700;font-size:14px">Report Harian — 7 Hari</div>
+      <div style="font-size:11px;color:${missing?'var(--red)':'var(--green)'}">${missing?missing+' belum hantar':'Semua lengkap ✅'}</div>
+    </div>
+    <div class="table-wrap"><table class="data-table">
+      <thead><tr><th>Hari</th><th>Tarikh</th>${branches.map(b=>`<th style="text-align:center;font-size:11px">${b}</th>`).join('')}</tr></thead>
+      <tbody>${body}</tbody></table></div></div>`;
+}
+
 function _renderCashDash(){
   const el=document.getElementById('cashDashContent'); if(!el) return;
   const todayK=dateSortKey(new Date().toISOString().split('T')[0]);
@@ -1942,6 +2144,9 @@ function _renderCashDash(){
       <button class="btn btn-sm btn-secondary" onclick="renderCashDashboard()">🔄</button></div>`;
   // alerts
   if(alerts.length){ html+=`<div class="card mb-12" style="padding:10px;border-left:4px solid var(--red)"><div style="font-weight:700;color:var(--red);margin-bottom:6px">🚨 ALERT (${alerts.length})</div>${alerts.slice(0,12).map(a=>`<div style="font-size:12px;margin-bottom:3px">${a}</div>`).join('')}</div>`; }
+  // sales report + 7-day submission tracker
+  html+=salesReportHtml(branches);
+  html+=tracker7Html(branches);
   // per-branch pending table
   html+=`<div class="table-wrap"><table class="data-table"><thead><tr><th>Branch</th><th>Cash</th>${CASH_METHODS.map(m=>`<th>${m.label}</th>`).join('')}<th>Total Pending</th></tr></thead><tbody>`;
   let g={cash:0,total:0}; CASH_METHODS.forEach(m=>g[m.key]=0);
@@ -1951,8 +2156,9 @@ function _renderCashDash(){
   });
   if(branches.length>1){ html+=`<tr style="border-top:2px solid var(--border)"><td style="font-weight:700">JUMLAH</td><td style="font-weight:700">${formatRM(g.cash)}</td>${CASH_METHODS.map(m=>`<td style="font-weight:700">${formatRM(g[m.key])}</td>`).join('')}<td style="font-weight:700;color:var(--red)">${formatRM(g.total)}</td></tr>`; }
   html+=`</tbody></table></div>`;
-  if(mismatches.length){ html+=`<div style="font-size:12px;font-weight:600;color:var(--mid);margin:14px 0 6px">CLOSING TAK PADAN</div>`+mismatches.map(c=>`<div class="card mb-8" style="padding:10px;cursor:pointer" onclick="showClosingDetail('${c.id}')"><div style="font-size:12px">⚠️ ${c.branch} · ${fmtDate(c.date)} · Net ${formatRM(c.net)}</div></div>`).join(''); }
+  if(mismatches.length){ html+=`<div style="font-size:12px;font-weight:600;color:var(--mid);margin:14px 0 6px">CLOSING TAK PADAN</div>`+mismatches.map(c=>`<div class="card mb-8" style="padding:10px;cursor:pointer" onclick="showClosingDetail('${c.id}')"><div style="font-size:12px">⚠️ ${c.branch} · ${fmtDate(c.date)} · Total ${formatRM(c.totalSales)}</div></div>`).join(''); }
   el.innerHTML=html;
+  renderSalesCharts(branches); // canvases only exist once html is in the DOM
 }
 
 // ============================================================
