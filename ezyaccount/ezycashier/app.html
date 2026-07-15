@@ -205,7 +205,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
   <label class="kekal-row">
     <input type="checkbox" id="kekalCheck"> Kekal Log Masuk
   </label>
-  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v2.0-1607/0113</div>
+  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v2.1-1607/0152</div>
 </div>
 
 <!-- PENDING SCREEN -->
@@ -233,7 +233,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
     <div class="header-left">
       <img id="headerCompanyLogo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD7HY4Un0Ga8+stR1y50XTtVu/FF1bNqFstyIbXQTOkYYA7cqrHjOOTk9a9Ak/1bf7p/lXl9jY3t/4I8Ita6fLcj+yYQzrbeaEJVev+kRY9eh+vavRwPJyvmtuuifR90znrXurf1t2Lth4p8SaL8Qz4b8Q2F7e6PeeUthrS2XlIJnX/AFT7eOSMA9QevByPRa8l8Y+J7PTtTsvDtnol3cWuiXMd3cXMUnlxq0Q8xlBfPA3jOWzlgB2r1SxuYbyxt7y3YtDPEssZIxlWAI/Q1zYnEUa8k6as1o7K17dbba9baE4eom5QUr2/r5kxGQRjINcPZ+E/EemWNvp+m+K9UjtLWNYoI/KtfkRRtUZMRJwvc9Ww3sb/AIv8INr+t6Zqa6rLbCxDDyCpZHJYMDwy4Py4PUFSR3rkk+Ft8IV0cat5VmdMuYp7uBTH5tzIHWKTytxwY/NlbIYA5QADbXXh1RjSb9qr72cb7X6v+tfJjqOblbl073/r+kaMvw0h1S7kn1++1K8890e4VZ0iS42cL5iRqAxA4yAD/TuNLvdMnQ22nXNs4twYzFEwzGFZo8Y6gBkZfqpHavKtV+BkFzcao1l4luLSC7hhit4TFI6W3liLAx5oDoDFuVWBALtndk56XwH8OI/C3iu58QnVEv7m7tJLeeSW0Cykm5knUhw3AAl2lcYOxSNuMVwSUG3JbvsrF06UYNtLc//Z" alt="" class="header-logo" style="width:32px;height:32px;border-radius:6px;object-fit:contain">
       <span class="header-title" id="headerCompanyName">EzyAccount</span>
-      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v2.0-1607/0113</span>
+      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v2.1-1607/0152</span>
     </div>
     <div class="header-right"><button onclick="window.location.href='../index.html'" title="Tukar Syarikat" style="background:none;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;padding:5px 10px;margin-right:4px">🏢 Tukar</button>
       <button id="btnRefresh" onclick="refreshAllData()" title="Refresh Data" style="background:none;border:none;font-size:18px;cursor:pointer;padding:4px;line-height:1">🔄</button>
@@ -677,7 +677,9 @@ function lsSet(k,v){localStorage.setItem(k,JSON.stringify(v))}
 function formatRM(val){
   const n=parseFloat(val)||0;
   const str='RM '+Math.abs(n).toLocaleString('en-MY',{minimumFractionDigits:2,maximumFractionDigits:2});
-  return n<0?`<span style="color:var(--red)">${str}</span>`:str;
+  // Keep the sign: red alone made a negative read as a positive (e.g. Actual 0 − Float 500 showed
+  // as "RM 500.00" instead of −RM 500.00).
+  return n<0?`<span style="color:var(--red)">−${str}</span>`:str;
 }
 function fmtDate(d){
   if(!d) return '-';
@@ -1583,12 +1585,16 @@ async function cashWriteSheet(tab){
     if((await cr.json()).error){
       await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}:batchUpdate`,{method:'POST',headers:{Authorization:'Bearer '+tok,'Content-Type':'application/json'},body:JSON.stringify({requests:[{addSheet:{properties:{title:tab}}}]})});
     }
-    await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${tab}!A1:AZ100000:clear`,{method:'POST',headers:{Authorization:'Bearer '+tok,'Content-Type':'application/json'}});
     const rows=[hdr.map(h=>h)];
     cashGet(tab.toLowerCase()==='closing'?'closing':tab.toLowerCase()).forEach(o=>rows.push(hdr.map(h=>{
       let v=o[h]; if(h==='date'||h==='expectedDate'||h==='actualDate'){ v=v?toSheetDateText(v):''; } return v===undefined||v===null?'':v;
     })));
+    // Overwrite in place FIRST, then trim only the rows past the new data. Clearing the whole tab
+    // before writing left it empty for a moment, and a concurrent read (saveClosing ->
+    // renderClosingScreen -> cashLoadAll, which reads Closing first) saw zero rows and overwrote
+    // localStorage with an empty list — destroying the closing that had just been saved.
     await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${tab}!A1?valueInputOption=USER_ENTERED`,{method:'PUT',headers:{Authorization:'Bearer '+tok,'Content-Type':'application/json'},body:JSON.stringify({values:rows})});
+    await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${tab}!A${rows.length+1}:AZ100000:clear`,{method:'POST',headers:{Authorization:'Bearer '+tok,'Content-Type':'application/json'}});
   }catch(e){ console.warn('cashWriteSheet',tab,e); }
 }
 function cashParseRows(tab,rows,sheetHdr){
@@ -1722,7 +1728,10 @@ function clRecalc(){
   const expected=clNum('expectedCash'),actual=clNum('actualCash'),float=clNum('float'),settle=clNum('cardSettlement');
   const cashToBank=Math.round((actual-float)*100)/100;
   const shortExtra=Math.round((actual-expected)*100)/100;
-  const payTotal=Math.round((cash+card+qr+grab+transfer)*100)/100;
+  // Grab orders are never punched into Loyverse, so Total Sales does not include them. Counting
+  // Grab here flagged a false mismatch exactly equal to the Grab amount. Grab is still tracked in
+  // full as a Reconcile receivable — it just has nothing to reconcile against Total Sales.
+  const payTotal=Math.round((cash+card+qr+transfer)*100)/100;
   const reconDiff=Math.round((payTotal-net)*100)/100;
   const cardDiff=Math.round((card-settle)*100)/100;
   const el=document.getElementById('cl-calc'); if(!el) return;
@@ -1731,6 +1740,7 @@ function clRecalc(){
     line('Cash to Bank (Actual − Float)',formatRM(cashToBank))+
     line('Cash Short/Extra',formatRM(shortExtra),Math.abs(shortExtra)>0.01?'var(--red)':'var(--green)')+
     line('Jumlah Bayaran vs Total Sales',formatRM(payTotal)+' / '+formatRM(net),Math.abs(reconDiff)>0.5?'var(--red)':'var(--green)')+
+    (grab>0?line('Grab (luar Loyverse)',formatRM(grab),'var(--mid)'):'')+
     (Math.abs(reconDiff)>0.5?`<div style="color:var(--red);font-size:11px">⚠️ Tak padan: ${formatRM(reconDiff)}</div>`:'')+
     (settle>0&&Math.abs(cardDiff)>0.5?`<div style="color:var(--red);font-size:11px">⚠️ Card Loyverse vs Settlement beza ${formatRM(cardDiff)}</div>`:'');
 }
@@ -1768,7 +1778,8 @@ async function saveClosing(){
     cashToBank:Math.round((actual-float)*100)/100,
     shortExtra:Math.round((actual-expected)*100)/100,
     cardSettlement:g('cardSettlement'),
-    mismatch:(Math.abs((g('cash')+g('card')+g('qr')+g('grab')+g('transfer'))-g('totalSales'))>0.5)?'YA':'',
+    // Grab excluded — it is not punched into Loyverse, so it is not part of Total Sales (see clRecalc)
+    mismatch:(Math.abs((g('cash')+g('card')+g('qr')+g('transfer'))-g('totalSales'))>0.5)?'YA':'',
     shiftImg:'',settleImg:'',cashImg:'',
     note:(document.getElementById('cl-note').value||'').trim(),
     createdBy:(currentUser&&currentUser.email)||'',createdAt:new Date().toLocaleString('en-GB')
@@ -1788,8 +1799,10 @@ async function saveClosing(){
     rec.push({id:'RC-'+Date.now()+m.key+Math.random().toString(36).substr(2,3),closingId:c.id,date,branch,method:m.key,amount:amt,expectedDate:fmtDate(ed.toISOString().split('T')[0]),status:'Pending',actualDate:'',by:''});
   });
   cashSet('reconcile',rec);
-  cashWriteSheet('Closing').catch(()=>{});
-  cashWriteSheet('Reconcile').catch(()=>{});
+  // Await both writes: renderClosingScreen() reloads from the Sheet, so firing these off without
+  // waiting let the reload race the write and read back a tab that wasn't written yet.
+  await cashWriteSheet('Closing').catch(e=>console.warn('write Closing',e));
+  await cashWriteSheet('Reconcile').catch(e=>console.warn('write Reconcile',e));
   cashAudit('CREATE_CLOSING', branch+' '+date+' total '+c.totalSales);
   if(btn){btn.disabled=false;btn.textContent='Simpan Closing';}
   showToast('Closing disimpan ✅');
@@ -1835,23 +1848,73 @@ function renderBankInScreen(){
   const owed=cashCashPending(branch);
   el.innerHTML=`<div style="font-size:18px;font-weight:700;margin-bottom:12px">Bank In</div>
     <div class="card mb-12" style="padding:14px">
-      <div style="font-size:12px;color:var(--mid);margin-bottom:8px">Cash belum bank in (${branch}): <b style="color:${owed>0.01?'var(--red)':'var(--green)'}">${formatRM(owed)}</b></div>
+      <div style="text-align:center;padding:10px 0 14px;border-bottom:1px solid var(--border);margin-bottom:12px">
+        <div style="font-size:12px;color:var(--mid);margin-bottom:2px">Cash belum bank in — ${branch}</div>
+        <div style="font-size:28px;font-weight:800;color:${owed>0.01?'var(--red)':'var(--green)'}">${formatRM(owed)}</div>
+      </div>
+
+      <div style="font-size:12px;font-weight:700;color:var(--mid);margin-bottom:6px">📄 SCAN SLIP</div>
+      <button class="btn btn-secondary btn-block" style="margin-bottom:6px" onclick="document.getElementById('bi-slip').click()">📄 Upload Slip Bank</button>
+      <input type="file" id="bi-slip" accept="image/*" style="display:none" onchange="biSlip(event)">
+      <div id="bi-scan-status" style="font-size:11px;color:var(--mid);margin-bottom:12px">AI akan cuba baca jumlah &amp; tarikh dari slip.</div>
+
+      <div style="font-size:12px;font-weight:700;color:var(--mid);margin-bottom:6px">✍️ MASUKKAN MANUAL</div>
       <div style="display:flex;gap:8px;margin-bottom:8px">
         <div style="flex:1"><label class="form-label">Tarikh</label><input type="date" id="bi-date" class="form-input" value="${today}"></div>
         <div style="flex:1"><label class="form-label">Branch</label><select id="bi-branch" class="form-input" onchange="setCashBranch(this.value)">${branchOptions(branch)}</select></div>
       </div>
       <div style="display:flex;gap:8px;margin-bottom:8px">
-        <div style="flex:1"><label class="form-label">Jumlah (RM)</label><input type="number" step="0.01" id="bi-amount" class="form-input" value="${owed>0.01?owed.toFixed(2):''}"></div>
+        <div style="flex:1"><label class="form-label">Jumlah (RM)</label><input type="number" step="0.01" id="bi-amount" class="form-input" value="${owed>0.01?owed.toFixed(2):''}" oninput="biRecalc()"></div>
         <div style="flex:1"><label class="form-label">Bank</label><input id="bi-bank" class="form-input" placeholder="cth: Maybank"></div>
       </div>
-      <div class="form-group"><label class="form-label">Slip Bank (gambar)</label><input type="file" id="bi-slip" accept="image/*" class="form-input" onchange="biSlip(event)"></div>
+      <div id="bi-calc" style="background:var(--surface2,#f8f9fa);border-radius:8px;padding:10px;font-size:12px;margin-bottom:10px"></div>
       <button class="btn btn-primary btn-block" id="bi-save" onclick="saveBankIn()">Rekod Bank In</button>
     </div>
     <div id="bankinList"></div>`;
+  biRecalc();
   renderBankInList();
   cashLoadAll().then(()=>{ renderBankInList(); }).catch(()=>{});
 }
-async function biSlip(ev){ const f=ev.target.files&&ev.target.files[0]; if(f) window._bankSlip64=await fileToBase64(f); }
+const SLIP_PROMPT='You are reading a Malaysian bank transfer / cash deposit slip or receipt. Return ONLY valid JSON, no markdown: {"amount":0,"date":"YYYY-MM-DD","bank":"string"}. "amount" = the transaction amount in Ringgit (numbers only, strip RM and commas; if several amounts appear use the one labelled Amount / Jumlah / Total). "date" = the transaction date; year "26" means 2026, "25" means 2025. "bank" = the bank name if shown (e.g. Maybank, CIMB, Public Bank, RHB, Bank Islam). If a field is absent use 0 for amount and "" for text.';
+
+// A bank-in is inherently a lump sum: the amount entered is subtracted from the branch's
+// outstanding cash (cashCashPending = total cashToBank - total banked), so several days can be
+// banked in one transaction. biRecalc shows that subtraction live.
+function biRecalc(){
+  const el=document.getElementById('bi-calc'); if(!el) return;
+  const branch=(document.getElementById('bi-branch')||{}).value||cashBranch();
+  const owed=cashCashPending(branch);
+  const amt=Math.round((parseFloat((document.getElementById('bi-amount')||{}).value)||0)*100)/100;
+  const left=Math.round((owed-amt)*100)/100;
+  const line=(l,v,c)=>`<div style="display:flex;justify-content:space-between"><span>${l}</span><span style="font-weight:600;color:${c||'var(--dark)'}">${v}</span></div>`;
+  el.innerHTML=
+    line('Cash belum bank in',formatRM(owed))+
+    line('Bank in kali ini',amt?('− '+formatRM(amt)):formatRM(0))+
+    line('Baki selepas ini',formatRM(left),Math.abs(left)<=0.01?'var(--green)':(left<0?'var(--amber)':'var(--red)'))+
+    (left<-0.01?`<div style="color:var(--amber);font-size:11px">⚠️ Lebih dari baki sebanyak ${formatRM(Math.abs(left))}</div>`:'');
+}
+
+async function biSlip(ev){
+  const f=ev.target.files&&ev.target.files[0]; if(!f) return;
+  const st=document.getElementById('bi-scan-status');
+  if(st) st.textContent='⏳ Membaca slip bank...';
+  try{
+    const b64=await fileToBase64(f);
+    window._bankSlip64=b64;
+    const j=await cashAiScan(b64,SLIP_PROMPT);
+    if(j&&(j.amount||j.date)){
+      if(j.amount) $val('bi-amount',j.amount);
+      if(j.date) $val('bi-date',j.date);
+      if(j.bank) $val('bi-bank',j.bank);
+      const bits=[];
+      if(j.amount) bits.push(formatRM(j.amount));
+      if(j.date) bits.push(fmtDate(j.date));
+      if(j.bank) bits.push(j.bank);
+      if(st) st.innerHTML='✅ Slip dibaca: '+bits.join(' · ');
+    } else if(st) st.textContent='⚠️ Gagal baca slip — isi manual (gambar tetap disimpan)';
+    biRecalc();
+  }catch(e){ console.warn('biSlip',e); if(st) st.textContent='⚠️ Ralat: '+(e.message||e); }
+}
 function cashCashPending(branch){
   const closings=cashGet('closing').filter(c=>c.branch===branch);
   const banked=cashGet('bankin').filter(b=>b.branch===branch).reduce((a,b)=>a+parseFloat(b.amount||0),0);
@@ -1870,7 +1933,8 @@ async function saveBankIn(){
   const list=cashGet('bankin');
   list.push({id:'BK-'+Date.now()+Math.random().toString(36).substr(2,4),date,branch,amount,bank,slip,by:(currentUser&&currentUser.email)||'',status:'Banked',closingId:'',createdAt:new Date().toLocaleString('en-GB')});
   cashSet('bankin',list);
-  cashWriteSheet('BankIn').catch(()=>{});
+  // Await: renderBankInScreen() reloads from the Sheet and would otherwise race this write.
+  await cashWriteSheet('BankIn').catch(e=>console.warn('write BankIn',e));
   cashAudit('BANK_IN', branch+' '+formatRM(amount)+' '+bank);
   if(btn){btn.disabled=false;btn.textContent='Rekod Bank In';}
   showToast('Bank in direkod ✅');
@@ -1919,7 +1983,6 @@ function _renderReconcile(){
           <div><div style="font-weight:700">${br}</div><div style="font-size:11px;color:var(--mid)">${items.length} item tertunggak</div></div>
           <div style="font-weight:700;color:var(--red)">${formatRM(total)}</div>
         </div>
-        <button class="btn btn-sm btn-primary btn-block" style="margin-bottom:8px" onclick="showLumpsumModal('${br.replace(/'/g,"\\'")}')">💰 Bank In Lumpsum</button>
         <div class="table-wrap"><table class="data-table">
           <thead><tr><th>Kaedah</th><th>Tarikh</th><th>Jangka</th><th style="text-align:right">RM</th><th></th></tr></thead><tbody>`;
       items.forEach(r=>{
@@ -1965,44 +2028,6 @@ function tickReceived(id){
   _renderReconcile();
 }
 
-// Staff often bank several days' takings in ONE transfer. Enter that lump sum against the branch
-// and it closes the outstanding items oldest-expected-first, stopping at the first item the
-// remaining amount cannot fully cover (no partial settlement in this model).
-function showLumpsumModal(branch){
-  const pend=cashGet('reconcile').filter(r=>r.branch===branch&&r.status!=='Received');
-  const total=pend.reduce((a,r)=>a+parseFloat(r.amount||0),0);
-  showModal('💰 Bank In Lumpsum — '+branch, `
-    <div style="font-size:12px;color:var(--mid);margin-bottom:10px">Tertunggak: <strong style="color:var(--red)">${formatRM(total)}</strong> (${pend.length} item).<br>Jumlah akan ditolak dari item <strong>paling lama dahulu</strong>.</div>
-    <div class="form-group"><label class="form-label">Tarikh masuk bank</label><input type="date" class="form-input" id="ls-date" value="${new Date().toISOString().split('T')[0]}"></div>
-    <div class="form-group"><label class="form-label">Jumlah (RM)</label><input type="number" step="0.01" class="form-input" id="ls-amount" placeholder="0.00" value="${total.toFixed(2)}"></div>
-    <div class="form-group"><label class="form-label">Nota (pilihan)</label><input class="form-input" id="ls-note" placeholder="Cth: 1 transfer untuk 3 hari"></div>
-    <button class="btn btn-primary btn-block" onclick="applyLumpsum('${branch.replace(/'/g,"\\'")}')">Sahkan Bank In</button>`);
-}
-function applyLumpsum(branch){
-  const dateRaw=document.getElementById('ls-date').value;
-  let pool=parseFloat(document.getElementById('ls-amount').value)||0;
-  const note=(document.getElementById('ls-note').value||'').trim();
-  if(!dateRaw||pool<=0){ showToast('Sila lengkapkan tarikh & jumlah ⚠️'); return; }
-  const date=fmtDate(dateRaw);
-  const list=cashGet('reconcile');
-  const items=list.filter(r=>r.branch===branch&&r.status!=='Received')
-    .sort((a,b)=>(dateSortKey(a.expectedDate)||'9999').localeCompare(dateSortKey(b.expectedDate)||'9999'));
-  const who=cashUserName();
-  let n=0, used=0;
-  for(const r of items){
-    const amt=parseFloat(r.amount||0);
-    if(pool+0.005 < amt) break; // FIFO — stop once the remainder can't fully cover this item
-    pool-=amt; used+=amt; n++;
-    r.status='Received'; r.actualDate=date; r.by=(currentUser&&currentUser.email)||''; r.approvedBy=who;
-  }
-  if(!n){ showToast('Jumlah tak cukup tutup mana-mana item ⚠️'); return; }
-  cashSet('reconcile',list);
-  cashWriteSheet('Reconcile').catch(()=>{});
-  cashAudit('LUMPSUM_BANKIN', branch+' '+formatRM(used)+' ('+n+' item) oleh '+who+(note?' — '+note:''));
-  hideModal();
-  showToast(n+' item ditutup ✅'+(pool>0.005?' · baki '+formatRM(pool)+' tak digunakan':''));
-  _renderReconcile();
-}
 
 // ============================================================
 // DASHBOARD HQ (pending per branch + alerts)
