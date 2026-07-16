@@ -205,7 +205,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
   <label class="kekal-row">
     <input type="checkbox" id="kekalCheck"> Kekal Log Masuk
   </label>
-  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v2.1-1607/0152</div>
+  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v2.3-1607/1706</div>
 </div>
 
 <!-- PENDING SCREEN -->
@@ -233,7 +233,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
     <div class="header-left">
       <img id="headerCompanyLogo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD7HY4Un0Ga8+stR1y50XTtVu/FF1bNqFstyIbXQTOkYYA7cqrHjOOTk9a9Ak/1bf7p/lXl9jY3t/4I8Ita6fLcj+yYQzrbeaEJVev+kRY9eh+vavRwPJyvmtuuifR90znrXurf1t2Lth4p8SaL8Qz4b8Q2F7e6PeeUthrS2XlIJnX/AFT7eOSMA9QevByPRa8l8Y+J7PTtTsvDtnol3cWuiXMd3cXMUnlxq0Q8xlBfPA3jOWzlgB2r1SxuYbyxt7y3YtDPEssZIxlWAI/Q1zYnEUa8k6as1o7K17dbba9baE4eom5QUr2/r5kxGQRjINcPZ+E/EemWNvp+m+K9UjtLWNYoI/KtfkRRtUZMRJwvc9Ww3sb/AIv8INr+t6Zqa6rLbCxDDyCpZHJYMDwy4Py4PUFSR3rkk+Ft8IV0cat5VmdMuYp7uBTH5tzIHWKTytxwY/NlbIYA5QADbXXh1RjSb9qr72cb7X6v+tfJjqOblbl073/r+kaMvw0h1S7kn1++1K8890e4VZ0iS42cL5iRqAxA4yAD/TuNLvdMnQ22nXNs4twYzFEwzGFZo8Y6gBkZfqpHavKtV+BkFzcao1l4luLSC7hhit4TFI6W3liLAx5oDoDFuVWBALtndk56XwH8OI/C3iu58QnVEv7m7tJLeeSW0Cykm5knUhw3AAl2lcYOxSNuMVwSUG3JbvsrF06UYNtLc//Z" alt="" class="header-logo" style="width:32px;height:32px;border-radius:6px;object-fit:contain">
       <span class="header-title" id="headerCompanyName">EzyAccount</span>
-      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v2.1-1607/0152</span>
+      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v2.3-1607/1706</span>
     </div>
     <div class="header-right"><button onclick="window.location.href='../index.html'" title="Tukar Syarikat" style="background:none;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;padding:5px 10px;margin-right:4px">🏢 Tukar</button>
       <button id="btnRefresh" onclick="refreshAllData()" title="Refresh Data" style="background:none;border:none;font-size:18px;cursor:pointer;padding:4px;line-height:1">🔄</button>
@@ -667,6 +667,25 @@ let wizardItems = [];
 let activeTab = '';
 let activeResitTab = 'Pending';
 let charts = {};
+
+// Surface any uncaught error/promise rejection as an on-screen banner. Without this, a JS error on
+// a staff/manager device (different data or permissions than the owner) just freezes mid-screen
+// with no clue — "sangkut kat dalam". This makes the failure readable and screenshot-able.
+(function(){
+  function showErr(msg){
+    try{
+      let b=document.getElementById('globalErrBanner');
+      if(!b){ b=document.createElement('div'); b.id='globalErrBanner';
+        b.style.cssText='position:fixed;left:8px;right:8px;bottom:8px;z-index:99999;background:#7f1d1d;color:#fff;font-size:12px;padding:10px 12px;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.3);max-height:40vh;overflow:auto';
+        b.onclick=()=>b.remove();
+        document.body.appendChild(b);
+      }
+      b.innerHTML='<b>⚠️ Ralat (tap untuk tutup)</b><br>'+String(msg);
+    }catch(_){}
+  }
+  window.addEventListener('error', e=>showErr((e.message||'Error')+(e.filename?(' @ '+String(e.lineno||'')):'')));
+  window.addEventListener('unhandledrejection', e=>showErr('Promise: '+((e.reason&&e.reason.message)||e.reason||'unknown')));
+})();
 
 // =====================
 // STORAGE HELPERS
@@ -1554,8 +1573,8 @@ const CASH_METHODS = COMPANY_CONFIG.payMethods; // [{key,label,expectedDays}]
 function cashMethod(k){ return CASH_METHODS.find(m=>m.key===k)||{key:k,label:k,expectedDays:1}; }
 // 'gross' and 'net' were replaced by a single 'totalSales' (= Loyverse Net Sales). Old sheets still
 // have gross/net columns; cashParseRows matches by name and backfills totalSales from net.
-const CLOSING_FIELDS=['id','date','branch','cashier','totalSales','refunds','discounts','cash','card','qr','grab','transfer','float','expectedCash','actualCash','cashToBank','shortExtra','cardSettlement','mismatch','shiftImg','settleImg','cashImg','note','createdBy','createdAt'];
-const NUM_FIELDS=new Set(['totalSales','gross','net','refunds','discounts','cash','card','qr','grab','transfer','float','expectedCash','actualCash','cashToBank','shortExtra','cardSettlement']);
+const CLOSING_FIELDS=['id','date','branch','cashier','totalSales','tax','cashRounding','refunds','discounts','cash','card','qr','grab','transfer','float','expectedCash','actualCash','cashToBank','shortExtra','cardSettlement','mismatch','shiftImg','settleImg','cashImg','note','createdBy','createdAt'];
+const NUM_FIELDS=new Set(['totalSales','tax','cashRounding','gross','net','refunds','discounts','cash','card','qr','grab','transfer','float','expectedCash','actualCash','cashToBank','shortExtra','cardSettlement']);
 
 // ---------- data layer ----------
 function cashGet(tab){ return lsGet('ezycash_'+tab+'_'+COMPANY_CONFIG.id,[]); }
@@ -1664,7 +1683,7 @@ async function cashAiScan(base64, promptText){
   const txt=d.choices&&d.choices[0]&&d.choices[0].message&&d.choices[0].message.content||'';
   try{ return JSON.parse(txt.replace(/```json|```/g,'').trim()); }catch(e){ console.warn('cashAiScan parse',txt); return null; }
 }
-const SHIFT_PROMPT='You are reading a Loyverse POS "Shift report" / "Sales summary" receipt. Return ONLY valid JSON, no markdown: {"gross":0,"net":0,"refunds":0,"discounts":0,"cash":0,"card":0,"applepay":0,"qr":0,"expected_cash":0,"actual_cash":0}. Mapping: "Gross sales"->gross, "Net sales"->net, Refunds->refunds, Discounts->discounts, under Sales summary "Cash"->cash, "Card"->card, "Card - APPLEPAY"->applepay, "QR Pay"->qr; under Cash drawer "Expected cash amount"->expected_cash, "Actual cash amount"->actual_cash. Numbers only, strip RM and commas. If a field is absent use 0.';
+const SHIFT_PROMPT='You are reading a Loyverse POS "Shift report" / "Sales summary" receipt. Return ONLY valid JSON, no markdown: {"gross":0,"net":0,"taxes":0,"cash_rounding":0,"total_tendered":0,"refunds":0,"discounts":0,"cash":0,"card":0,"applepay":0,"qr":0,"expected_cash":0,"actual_cash":0}. Mapping: "Gross sales"->gross, "Net sales"->net, "Taxes"->taxes, "Cash rounding"->cash_rounding, "Total tendered"->total_tendered, Refunds->refunds, Discounts->discounts, under Sales summary "Cash"->cash, "Card"->card, "Card - APPLEPAY"->applepay, "QR Pay"->qr; under Cash drawer "Expected cash amount"->expected_cash, "Actual cash amount"->actual_cash. Numbers only, strip RM and commas. If a field is absent use 0.';
 const SETTLE_PROMPT='You are reading a bank credit-card SETTLEMENT report (e.g. Public Bank MYDBT). Return ONLY valid JSON: {"total":0}. Use the grand TOTAL settled amount in MYR (the "TOTAL" row or the amount handwritten/circled). Numbers only, no commas.';
 
 // ============================================================
@@ -1674,6 +1693,7 @@ window._closingDraft = window._closingDraft || {};
 function renderClosingScreen(){
   const el=document.getElementById('closingContent'); if(!el) return;
   window._closingDraft={ shiftImg64:'',settleImg64:'',cashImg64:'' };
+  window._editingClosingId=null; // fresh form; editClosing() re-arms this after this render runs
   const today=new Date().toISOString().split('T')[0];
   const cashier=(currentUser&&(getUserProfile(currentUser.email).fullname||currentUser.name))||'';
   const canPickBranch=(currentRole==='accountant'||currentRole==='super_admin');
@@ -1703,7 +1723,8 @@ function renderClosingScreen(){
       <div id="cl-scan-status" style="font-size:11px;color:var(--mid);margin-bottom:10px"></div>
 
       <div style="font-size:12px;font-weight:700;color:var(--mid);margin:6px 0 6px">💰 JUALAN & BAYARAN</div>
-      <div style="display:flex;gap:8px;margin-bottom:8px">${numRow('totalSales','Total Sales')}</div>
+      <div style="display:flex;gap:8px;margin-bottom:8px">${numRow('totalSales','Total Sales (Net)')}</div>
+      <div style="display:flex;gap:8px;margin-bottom:8px">${numRow('tax','Tax (kalau ada)')}${numRow('cashRounding','Cash Rounding')}</div>
       <div style="display:flex;gap:8px;margin-bottom:8px">${numRow('cash','Cash')}${numRow('card','Card (+ApplePay)')}</div>
       <div style="display:flex;gap:8px;margin-bottom:8px">${numRow('qr','QR Pay')}${numRow('grab','Grab')}</div>
       <div style="display:flex;gap:8px;margin-bottom:8px">${numRow('transfer','Transfer')}${numRow('cardSettlement','Card (Settlement Bank)')}</div>
@@ -1732,14 +1753,20 @@ function clRecalc(){
   // Grab here flagged a false mismatch exactly equal to the Grab amount. Grab is still tracked in
   // full as a Reconcile receivable — it just has nothing to reconcile against Total Sales.
   const payTotal=Math.round((cash+card+qr+transfer)*100)/100;
-  const reconDiff=Math.round((payTotal-net)*100)/100;
+  // Loyverse: Total tendered = Net sales + Taxes, and the payment lines sum to
+  // Total tendered − Cash rounding. So for a tax-collecting branch the payments legitimately
+  // exceed Total Sales by the tax — comparing against Total Sales alone flagged a false mismatch.
+  const tax=clNum('tax'), rounding=clNum('cashRounding');
+  const expectedPay=Math.round((net+tax-rounding)*100)/100;
+  const reconDiff=Math.round((payTotal-expectedPay)*100)/100;
   const cardDiff=Math.round((card-settle)*100)/100;
   const el=document.getElementById('cl-calc'); if(!el) return;
   const line=(l,v,c)=>`<div style="display:flex;justify-content:space-between"><span>${l}</span><span style="font-weight:600;color:${c||'var(--dark)'}">${v}</span></div>`;
   el.innerHTML=
     line('Cash to Bank (Actual − Float)',formatRM(cashToBank))+
     line('Cash Short/Extra',formatRM(shortExtra),Math.abs(shortExtra)>0.01?'var(--red)':'var(--green)')+
-    line('Jumlah Bayaran vs Total Sales',formatRM(payTotal)+' / '+formatRM(net),Math.abs(reconDiff)>0.5?'var(--red)':'var(--green)')+
+    line('Jumlah Bayaran vs Dijangka',formatRM(payTotal)+' / '+formatRM(expectedPay),Math.abs(reconDiff)>0.5?'var(--red)':'var(--green)')+
+    ((tax>0||rounding!==0)?line('  ↳ Total Sales + Tax − Rounding',formatRM(net)+' + '+formatRM(tax)+' − '+formatRM(rounding),'var(--mid)'):'')+
     (grab>0?line('Grab (luar Loyverse)',formatRM(grab),'var(--mid)'):'')+
     (Math.abs(reconDiff)>0.5?`<div style="color:var(--red);font-size:11px">⚠️ Tak padan: ${formatRM(reconDiff)}</div>`:'')+
     (settle>0&&Math.abs(cardDiff)>0.5?`<div style="color:var(--red);font-size:11px">⚠️ Card Loyverse vs Settlement beza ${formatRM(cardDiff)}</div>`:'');
@@ -1752,7 +1779,7 @@ async function clScan(ev,kind){
     if(kind==='shift'){ window._closingDraft.shiftImg64=b64;
       const j=await cashAiScan(b64,SHIFT_PROMPT);
       // Loyverse reports Gross and Net; Total Sales tracks Net (what the payment methods sum to).
-      if(j){ $val('cl-totalSales',j.net||''); $val('cl-cash',j.cash||''); $val('cl-card',(parseFloat(j.card||0)+parseFloat(j.applepay||0))||''); $val('cl-qr',j.qr||''); $val('cl-expectedCash',j.expected_cash||''); if(j.actual_cash) $val('cl-actualCash',j.actual_cash); if(st) st.textContent='✅ Shift report dibaca'; }
+      if(j){ $val('cl-totalSales',j.net||''); $val('cl-tax',j.taxes||''); $val('cl-cashRounding',j.cash_rounding||''); $val('cl-cash',j.cash||''); $val('cl-card',(parseFloat(j.card||0)+parseFloat(j.applepay||0))||''); $val('cl-qr',j.qr||''); $val('cl-expectedCash',j.expected_cash||''); if(j.actual_cash) $val('cl-actualCash',j.actual_cash); if(st) st.textContent='✅ Shift report dibaca'; }
       else if(st) st.textContent='⚠️ Gagal baca — isi manual';
     } else if(kind==='settle'){ window._closingDraft.settleImg64=b64;
       const j=await cashAiScan(b64,SETTLE_PROMPT);
@@ -1762,6 +1789,29 @@ async function clScan(ev,kind){
     clRecalc();
   }catch(e){ console.warn('clScan',e); if(st) st.textContent='⚠️ Ralat: '+(e.message||e); }
 }
+// Keeps the Reconcile receivables in step with a closing, for both create and edit. Editing must
+// not push a second set of rows for the same closing, and an amount that changed must follow —
+// but a receivable already ticked Received is left alone (the money really did arrive).
+function syncReconcileForClosing(c, dateInputVal){
+  const rec=cashGet('reconcile');
+  CASH_METHODS.forEach(m=>{
+    const amt=c[m.key]||0;
+    const existing=rec.find(r=>r.closingId===c.id && r.method===m.key);
+    if(amt>0.001){
+      if(existing){
+        if(existing.status!=='Received'){ existing.amount=amt; existing.date=c.date; existing.branch=c.branch; }
+      } else {
+        const ed=new Date(dateInputVal); ed.setDate(ed.getDate()+(m.expectedDays||0));
+        rec.push({id:'RC-'+Date.now()+m.key+Math.random().toString(36).substr(2,3),closingId:c.id,date:c.date,branch:c.branch,method:m.key,amount:amt,
+          expectedDate:fmtDate(ed.toISOString().split('T')[0]),status:'Pending',actualDate:'',by:'',approvedBy:''});
+      }
+    } else if(existing && existing.status!=='Received'){
+      rec.splice(rec.indexOf(existing),1); // method zeroed out on edit — drop the stale receivable
+    }
+  });
+  cashSet('reconcile',rec);
+}
+
 async function saveClosing(){
   const btn=document.getElementById('cl-save'); if(btn){btn.disabled=true;btn.textContent='Menyimpan...';}
   const date=fmtDate(document.getElementById('cl-date').value);
@@ -1769,20 +1819,25 @@ async function saveClosing(){
   const cashier=(document.getElementById('cl-cashier').value||'').trim();
   const g=k=>clNum(k);
   const actual=g('actualCash'),expected=g('expectedCash'),float=g('float');
+  const editId=window._editingClosingId||'';
+  const prev=editId?cashGet('closing').find(x=>x.id===editId):null;
   const c={
-    id:'CL-'+Date.now()+Math.random().toString(36).substr(2,4),
+    id:editId||('CL-'+Date.now()+Math.random().toString(36).substr(2,4)),
     date,branch,cashier,
-    totalSales:g('totalSales'),refunds:0,discounts:0,
+    totalSales:g('totalSales'),tax:g('tax'),cashRounding:g('cashRounding'),refunds:0,discounts:0,
     cash:g('cash'),card:g('card'),qr:g('qr'),grab:g('grab'),transfer:g('transfer'),
     float,expectedCash:expected,actualCash:actual,
     cashToBank:Math.round((actual-float)*100)/100,
     shortExtra:Math.round((actual-expected)*100)/100,
     cardSettlement:g('cardSettlement'),
-    // Grab excluded — it is not punched into Loyverse, so it is not part of Total Sales (see clRecalc)
-    mismatch:(Math.abs((g('cash')+g('card')+g('qr')+g('transfer'))-g('totalSales'))>0.5)?'YA':'',
-    shiftImg:'',settleImg:'',cashImg:'',
+    // Same equation as clRecalc: Grab excluded (not in Loyverse), tax added and cash rounding
+    // removed, so tax-collecting branches are not flagged as mismatched.
+    mismatch:(Math.abs((g('cash')+g('card')+g('qr')+g('transfer'))-(g('totalSales')+g('tax')-g('cashRounding')))>0.5)?'YA':'',
+    // On edit, keep whatever was uploaded before unless a new image is scanned this time.
+    shiftImg:prev?prev.shiftImg||'':'',settleImg:prev?prev.settleImg||'':'',cashImg:prev?prev.cashImg||'':'',
     note:(document.getElementById('cl-note').value||'').trim(),
-    createdBy:(currentUser&&currentUser.email)||'',createdAt:new Date().toLocaleString('en-GB')
+    createdBy:prev?prev.createdBy:((currentUser&&currentUser.email)||''),
+    createdAt:prev?prev.createdAt:new Date().toLocaleString('en-GB')
   };
   // upload images to Drive
   try{
@@ -1790,22 +1845,19 @@ async function saveClosing(){
     if(window._closingDraft.settleImg64){ const u=await uploadToDrive(window._closingDraft.settleImg64,'Settle-'+branch,date,c.cardSettlement); c.settleImg=u.link||''; }
     if(window._closingDraft.cashImg64){ const u=await uploadToDrive(window._closingDraft.cashImg64,'Cash-'+branch,date,c.actualCash); c.cashImg=u.link||''; }
   }catch(e){ console.warn('closing img upload',e); }
-  const list=cashGet('closing'); list.push(c); cashSet('closing',list);
-  // create reconcile receivables for each non-cash method with amount>0
-  const rec=cashGet('reconcile');
-  CASH_METHODS.forEach(m=>{
-    const amt=c[m.key]||0; if(amt<=0.001) return;
-    const ed=new Date(document.getElementById('cl-date').value); ed.setDate(ed.getDate()+(m.expectedDays||0));
-    rec.push({id:'RC-'+Date.now()+m.key+Math.random().toString(36).substr(2,3),closingId:c.id,date,branch,method:m.key,amount:amt,expectedDate:fmtDate(ed.toISOString().split('T')[0]),status:'Pending',actualDate:'',by:''});
-  });
-  cashSet('reconcile',rec);
+  const list=cashGet('closing');
+  const at=editId?list.findIndex(x=>x.id===editId):-1;
+  if(at>=0) list[at]=c; else list.push(c);
+  cashSet('closing',list);
+  syncReconcileForClosing(c, document.getElementById('cl-date').value);
   // Await both writes: renderClosingScreen() reloads from the Sheet, so firing these off without
   // waiting let the reload race the write and read back a tab that wasn't written yet.
   await cashWriteSheet('Closing').catch(e=>console.warn('write Closing',e));
   await cashWriteSheet('Reconcile').catch(e=>console.warn('write Reconcile',e));
-  cashAudit('CREATE_CLOSING', branch+' '+date+' total '+c.totalSales);
+  cashAudit(editId?'EDIT_CLOSING':'CREATE_CLOSING', branch+' '+date+' total '+c.totalSales+(editId?' (diedit oleh '+cashUserName()+')':''));
   if(btn){btn.disabled=false;btn.textContent='Simpan Closing';}
-  showToast('Closing disimpan ✅');
+  showToast(editId?'Closing dikemas kini ✅':'Closing disimpan ✅');
+  window._editingClosingId=null;
   renderClosingScreen();
 }
 function renderClosingList(){
@@ -1825,14 +1877,36 @@ function showClosingDetail(id){
   const img=(l,u)=>u?`<button class="btn btn-sm btn-secondary" onclick="showReceiptImageModal('${u}')">${l}</button>`:'';
   showModal(c.branch+' · '+fmtDate(c.date),
     row('Cashier',c.cashier||'-')+row('Total Sales',formatRM(c.totalSales))+
+    ((c.tax||0)>0?row('Tax',formatRM(c.tax)):'')+((c.cashRounding||0)!==0?row('Cash Rounding',formatRM(c.cashRounding)):'')+
     row('Cash',formatRM(c.cash))+row('Card',formatRM(c.card))+row('QR',formatRM(c.qr))+row('Grab',formatRM(c.grab))+row('Transfer',formatRM(c.transfer))+
     `<hr style="border:none;border-top:1px solid var(--border);margin:6px 0">`+
     row('Expected Cash',formatRM(c.expectedCash))+row('Actual Cash',formatRM(c.actualCash))+row('Float',formatRM(c.float))+
     row('Cash to Bank',formatRM(c.cashToBank))+row('Short/Extra',formatRM(c.shortExtra))+
     row('Card (Settlement)',formatRM(c.cardSettlement))+
-    (c.mismatch?`<div style="color:var(--red);font-size:12px;margin-top:4px">⚠️ Closing tak padan (bayaran ≠ net)</div>`:'')+
+    (c.mismatch?`<div style="color:var(--red);font-size:12px;margin-top:4px">⚠️ Closing tak padan (bayaran ≠ Total Sales + Tax − Rounding)</div>`:'')+
     (c.note?`<div style="font-style:italic;margin-top:4px">"${c.note}"</div>`:'')+
-    `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px">${img('📄 Shift',c.shiftImg)}${img('💳 Settlement',c.settleImg)}${img('💵 Tunai',c.cashImg)}</div>`);
+    `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px">${img('📄 Shift',c.shiftImg)}${img('💳 Settlement',c.settleImg)}${img('💵 Tunai',c.cashImg)}</div>`+
+    ((currentRole==='accountant'||currentRole==='super_admin')
+      ? `<button class="btn btn-primary btn-block" style="margin-top:10px" onclick="editClosing('${c.id}')">✏️ Edit Closing</button>` : ''));
+}
+
+// Editing is accountant/admin only. Loads the record back into the Closing form; saveClosing()
+// then updates that row instead of pushing a new one.
+function editClosing(id){
+  const c=cashGet('closing').find(x=>x.id===id); if(!c) return;
+  hideModal();
+  switchTab('closing'); // re-renders the form, which clears edit mode — re-arm it after that
+  setTimeout(()=>{
+    window._editingClosingId=id;
+    const iso=d=>{ const k=dateSortKey(d); return k||''; };
+    $val('cl-date',iso(c.date)); $val('cl-cashier',c.cashier||'');
+    const sel=document.getElementById('cl-branch'); if(sel) sel.value=c.branch;
+    ['totalSales','tax','cashRounding','cash','card','qr','grab','transfer','cardSettlement','expectedCash','actualCash','float'].forEach(k=>$val('cl-'+k,c[k]||''));
+    $val('cl-note',c.note||'');
+    const btn=document.getElementById('cl-save'); if(btn) btn.textContent='Kemas Kini Closing';
+    clRecalc();
+    showToast('Mengedit closing '+c.branch+' · '+fmtDate(c.date));
+  },60);
 }
 
 // ============================================================
@@ -2035,34 +2109,43 @@ function tickReceived(id){
 function renderCashDashboard(){
   const el=document.getElementById('cashDashContent'); if(!el) return;
   el.innerHTML='<div style="text-align:center;padding:30px;color:var(--mid)">⏳ Memuatkan...</div>';
-  cashLoadAll().then(()=>_renderCashDash()).catch(()=>_renderCashDash());
-  _renderCashDash();
+  // Show render errors on screen instead of leaving the spinner stuck forever ("sangkut").
+  const safe=()=>{ try{ _renderCashDash(); }catch(e){ console.error('renderCashDashboard',e);
+    el.innerHTML=`<div style="padding:20px;color:var(--red);font-size:13px"><b>⚠️ Ralat paparan dashboard</b><br><br>${(e&&e.message)||e}<br><br><button class="btn btn-sm btn-secondary" onclick="renderCashDashboard()">Cuba lagi</button></div>`; } };
+  cashLoadAll().then(safe).catch(safe);
+  safe();
 }
 // ===== Sales report (table + donut + bar) and 7-day submission tracker =====
-window._salesView = window._salesView || 'day';   // day | week | month
-window._salesDate = window._salesDate || new Date().toISOString().split('T')[0];
-function setSalesView(v){ window._salesView=v; _renderCashDash(); }
-function setSalesDate(d){ window._salesDate=d||new Date().toISOString().split('T')[0]; _renderCashDash(); }
+// Range is the source of truth; Hari/Minggu/Bulan are shortcuts that fill it, and the two date
+// inputs stay editable for any custom span (e.g. 1–10 July).
+const _isoDay=x=>{ const p=new Date(x.getTime()-x.getTimezoneOffset()*60000); return p.toISOString().split('T')[0]; };
+window._salesView = window._salesView || 'day';   // day | week | month | custom
+window._salesFrom = window._salesFrom || _isoDay(new Date());
+window._salesTo   = window._salesTo   || _isoDay(new Date());
+function setSalesView(v){
+  const d=new Date();
+  if(v==='day'){ window._salesFrom=_isoDay(d); window._salesTo=_isoDay(d); }
+  else if(v==='week'){
+    const off=(d.getDay()+6)%7; // week starts Monday
+    const f=new Date(d); f.setDate(d.getDate()-off);
+    const t=new Date(f); t.setDate(f.getDate()+6);
+    window._salesFrom=_isoDay(f); window._salesTo=_isoDay(t);
+  } else if(v==='month'){
+    window._salesFrom=_isoDay(new Date(d.getFullYear(),d.getMonth(),1));
+    window._salesTo=_isoDay(new Date(d.getFullYear(),d.getMonth()+1,0));
+  }
+  window._salesView=v; _renderCashDash();
+}
+function setSalesFrom(d){ if(d){ window._salesFrom=d; if(d>window._salesTo) window._salesTo=d; window._salesView='custom'; _renderCashDash(); } }
+function setSalesTo(d){ if(d){ window._salesTo=d; if(d<window._salesFrom) window._salesFrom=d; window._salesView='custom'; _renderCashDash(); } }
 const SALES_DAY_NAMES=['Ahad','Isnin','Selasa','Rabu','Khamis','Jumaat','Sabtu'];
 const SALES_MONTHS=['Januari','Februari','Mac','April','Mei','Jun','Julai','Ogos','September','Oktober','November','Disember'];
 
 // Selected period as yyyy-mm-dd bounds — the same shape dateSortKey() returns, so closing dates
 // (stored dd/mm/yyyy) can be compared directly.
 function salesRange(){
-  const iso=x=>{ const p=new Date(x.getTime()-x.getTimezoneOffset()*60000); return p.toISOString().split('T')[0]; };
-  const d=new Date(window._salesDate+'T00:00:00');
-  if(window._salesView==='week'){
-    const off=(d.getDay()+6)%7; // week starts Monday
-    const from=new Date(d); from.setDate(d.getDate()-off);
-    const to=new Date(from); to.setDate(from.getDate()+6);
-    return {from:iso(from),to:iso(to),label:fmtDate(iso(from))+' – '+fmtDate(iso(to))};
-  }
-  if(window._salesView==='month'){
-    const from=new Date(d.getFullYear(),d.getMonth(),1);
-    const to=new Date(d.getFullYear(),d.getMonth()+1,0);
-    return {from:iso(from),to:iso(to),label:SALES_MONTHS[d.getMonth()]+' '+d.getFullYear()};
-  }
-  return {from:iso(d),to:iso(d),label:fmtDate(iso(d))};
+  const from=window._salesFrom, to=window._salesTo;
+  return {from,to,label:(from===to)?fmtDate(from):(fmtDate(from)+' – '+fmtDate(to))};
 }
 function salesRowsFor(branches){
   const {from,to}=salesRange();
@@ -2081,7 +2164,10 @@ function salesReportHtml(branches){
     <div style="display:flex;gap:6px;margin-bottom:8px">
       ${[['day','Hari'],['week','Minggu'],['month','Bulan']].map(([v,l])=>`<button class="btn btn-sm ${window._salesView===v?'btn-primary':'btn-secondary'}" style="flex:1" onclick="setSalesView('${v}')">${l}</button>`).join('')}
     </div>
-    <input type="date" class="form-input" value="${window._salesDate}" onchange="setSalesDate(this.value)" style="margin-bottom:10px">
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <div style="flex:1"><label style="font-size:10px;color:var(--mid);display:block">Tarikh Mula</label><input type="date" class="form-input" value="${window._salesFrom}" onchange="setSalesFrom(this.value)"></div>
+      <div style="flex:1"><label style="font-size:10px;color:var(--mid);display:block">Tarikh Akhir</label><input type="date" class="form-input" value="${window._salesTo}" onchange="setSalesTo(this.value)"></div>
+    </div>
     <div class="table-wrap"><table class="data-table">
       <thead><tr><th>Branch</th><th style="text-align:right">Total Sales</th><th style="text-align:right">%</th></tr></thead><tbody>
       ${rows.map(x=>`<tr><td style="font-weight:600">${x.br}</td><td style="text-align:right">${formatRM(x.total)}</td><td style="text-align:right;color:var(--mid)">${grand>0?((x.total/grand)*100).toFixed(1):'0.0'}%</td></tr>`).join('')}
@@ -2164,9 +2250,8 @@ function _renderCashDash(){
     if(cls.length){ const age=daysSince(cls[0].date); if(age>COMPANY_CONFIG.alerts.cashDays) alerts.push(`⚠️ ${br}: Cash ${formatRM(cp)} belum bank in (${age} hari)`); }
   });
   const mismatches=cashGet('closing').filter(c=>c.mismatch).slice(-5).reverse();
-  let html=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-      <div style="font-size:18px;font-weight:700">${(currentRole==='staff'||currentRole==='manager')?'Dashboard':'Dashboard HQ'}</div>
-      <button class="btn btn-sm btn-secondary" onclick="renderCashDashboard()">🔄</button></div>`;
+  // Refresh lives only in the top header (#btnRefresh) — no per-page duplicate.
+  let html=`<div style="font-size:18px;font-weight:700;margin-bottom:12px">${(currentRole==='staff'||currentRole==='manager')?'Dashboard':'Dashboard HQ'}</div>`;
   // alerts
   if(alerts.length){ html+=`<div class="card mb-12" style="padding:10px;border-left:4px solid var(--red)"><div style="font-weight:700;color:var(--red);margin-bottom:6px">🚨 ALERT (${alerts.length})</div>${alerts.slice(0,12).map(a=>`<div style="font-size:12px;margin-bottom:3px">${a}</div>`).join('')}</div>`; }
   // sales report + 7-day submission tracker
@@ -7570,23 +7655,18 @@ async function refreshAllData(){
   const btn=document.getElementById('btnRefresh');
   if(btn){btn.style.animation='spin 1s linear infinite';btn.style.display='inline-block';}
   try{
-    await loadAllFromSheets();
-    // Re-render current screen
-    const screens=['upload','payment','resit','dashboard','staff'];
-    screens.forEach(s=>{
-      const el=document.querySelector('.screen.active');
-      if(el&&el.id===s+'Screen'){
-        if(s==='payment') renderPaymentScreen();
-        else if(s==='resit') renderResitContent(activeResitTab||'pending');
-        else if(s==='dashboard') renderDashboard();
-        else if(s==='staff') renderStaffList();
-      }
-    });
-    // Also render whichever is active
-    renderPaymentScreen();
-    renderResitContent(activeResitTab||'pending');
-    if(typeof renderDashboard==='function') renderDashboard();
-  }catch(e){showToast('Gagal refresh ⚠️');}
+    // EzyCashier stores everything in the cash tabs (Closing/BankIn/Reconcile/Audit), not the
+    // generic receipt sheets. The inherited body reloaded receipts and re-rendered payment/resit/
+    // dashboard screens that don't exist here, so this button never actually refreshed anything.
+    await cashLoadAll();
+    const active=(document.querySelector('.screen.active')||{}).id||'';
+    if(active==='screen-cashdash') _renderCashDash();
+    else if(active==='screen-reconcile') _renderReconcile();
+    else if(active==='screen-closing') renderClosingList();
+    else if(active==='screen-bankin'){ renderBankInList(); biRecalc(); }
+    else if(active==='screen-audit'&&typeof renderAuditScreen==='function') renderAuditScreen();
+    showToast('Data dikemas kini ✅');
+  }catch(e){ console.warn('refreshAllData',e); showToast('Gagal refresh ⚠️'); }
   finally{if(btn){btn.style.animation='';}}
 }
 

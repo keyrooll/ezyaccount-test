@@ -268,7 +268,7 @@
   </div>
 </div>
 
-<div class="footer">EzyAccount · v3.4-1307/0112</div>
+<div class="footer">EzyAccount · v3.5-1607/1730</div>
 
 <script>
 const COMPANIES = [
@@ -372,13 +372,23 @@ function autoLogin(){
 
 // Roles this user has (from the loaded registry): {companyId: role} for non-empty roles only.
 function userRolesFor(email){
-  const header=_registry.header||[], rows=_registry.rows||[];
-  if(!header.length) return {};
-  const ei=Math.max(0,header.findIndex(h=>(h||'').toLowerCase()==='email'));
-  const row=rows.find(r=>(r[ei]||'').toString().trim().toLowerCase()===(email||'').toLowerCase());
-  if(!row) return {};
+  const rows=_registry.rows||[];            // rows are normalised to REGISTRY_HEADER order (Email = col 0)
+  const em=(email||'').toString().trim().toLowerCase();
+  const mine=rows.filter(r=>(r[0]||'').toString().trim().toLowerCase()===em);
+  if(!mine.length) return {};
+  // Merge across duplicate rows for the same email (a stray blank "pending" row must not shadow the
+  // real one) — take the first non-empty role per company.
+  const VALID=['staff','manager','accountant','super_admin'];
   const roles={};
-  GROUP_COMPANIES.forEach(c=>{ const ci=REGISTRY_HEADER.indexOf(c.id); const v=(row[ci]||'').toString().trim(); if(v&&v.toLowerCase()!=='pending') roles[c.id]=v; });
+  GROUP_COMPANIES.forEach(c=>{
+    const ci=REGISTRY_HEADER.indexOf(c.id);
+    for(const row of mine){
+      const v=(row[ci]||'').toString().trim();
+      // Only accept a real role value — this rejects a stray non-role cell (e.g. a JoinedAt date
+      // that leaked into a company column through some past misalignment) instead of granting access.
+      if(v && VALID.includes(v.toLowerCase())){ roles[c.id]=v; break; }
+    }
+  });
   return roles;
 }
 function _companyCard(c,role,dimmed){
@@ -403,10 +413,9 @@ function _companyCard(c,role,dimmed){
   </a>`;
 }
 function inRegistry(email){
-  const header=_registry.header||[], rows=_registry.rows||[];
-  if(!header.length) return false;
-  const ei=Math.max(0,header.findIndex(h=>(h||'').toLowerCase()==='email'));
-  return rows.some(r=>(r[ei]||'').toString().trim().toLowerCase()===(email||'').toLowerCase());
+  const rows=_registry.rows||[];            // normalised: Email = col 0
+  const em=(email||'').toString().trim().toLowerCase();
+  return rows.some(r=>(r[0]||'').toString().trim().toLowerCase()===em);
 }
 // Auto-add a not-yet-approved user to the registry (empty roles = pending) so the admin sees them.
 // Requires the registry sheet to be shared as EDITOR (Anyone with link).
@@ -477,7 +486,11 @@ async function showCompanyScreen(u){
     if(head) head.style.display='none';
     grid.innerHTML=pendingScreenHtml(u.email);
     const stEl=document.getElementById('pendingStatus');
-    if(inRegistry(u.email)){
+    if(_registry.readError){
+      // Couldn't read the registry at all — do NOT auto-append (would create duplicates once the
+      // read recovers). Tell the user it's a sharing problem.
+      if(stEl) stEl.innerHTML='⚠️ Tak dapat baca senarai staff. Sheet registry perlu dikongsi (Viewer) dengan email anda. Minta admin.';
+    } else if(inRegistry(u.email)){
       if(stEl) stEl.textContent='Permintaan anda sedang menunggu kelulusan admin.';
     } else {
       if(stEl) stEl.textContent='Merekod permintaan...';
@@ -510,8 +523,20 @@ function isSuperAdmin(){ const u=lsGet('ezy_user',{}); return (u.email||'').toLo
 async function loadRegistry(){
   const r=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${STAFF_REGISTRY_SHEET_ID}/values/Staff!A1:Z`,{headers:{Authorization:'Bearer '+currentToken}});
   const d=await r.json();
-  if(d.error||!d.values||!d.values.length){ _registry={header:REGISTRY_HEADER.slice(),rows:[]}; return _registry; }
-  _registry={header:d.values[0].map(h=>(h||'').toString()), rows:d.values.slice(1).filter(x=>x[0])};
+  // readError distinguishes "couldn't read the sheet" (permission/network) from "sheet is empty".
+  // Only the former should stop us from auto-registering a pending row.
+  if(d.error){ _registry={header:REGISTRY_HEADER.slice(),rows:[],readError:true}; return _registry; }
+  if(!d.values||!d.values.length){ _registry={header:REGISTRY_HEADER.slice(),rows:[],readError:false}; return _registry; }
+  // Remap every row from the sheet's OWN column order into canonical REGISTRY_HEADER order, matched
+  // by header NAME. Downstream code indexes by REGISTRY_HEADER; without this, adding companies
+  // (ezycashier/ezydurianhq) or any column reorder makes positional reads land on the wrong column
+  // and roles look empty. After the next save the sheet is rewritten in canonical order.
+  const actual=d.values[0].map(h=>(h||'').toString().trim());
+  const rows=d.values.slice(1).filter(x=>x[0]).map(rr=>REGISTRY_HEADER.map(col=>{
+    const i=actual.findIndex(h=>h.toLowerCase()===col.toLowerCase());
+    return (i>=0 && rr[i]!==undefined) ? rr[i] : '';
+  }));
+  _registry={header:REGISTRY_HEADER.slice(), rows, readError:false};
   return _registry;
 }
 async function saveRegistry(){
