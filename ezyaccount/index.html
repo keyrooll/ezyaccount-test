@@ -191,6 +191,25 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* Atom loader: 3 tilted orbits + 3 round glossy balls (offset-path keeps them round). */
+    .atomldr{width:120px;height:120px;position:relative}
+    .atomldr .orb{position:absolute;inset:0}
+    .atomldr .orb.o2{transform:rotate(60deg)}
+    .atomldr .orb.o3{transform:rotate(120deg)}
+    .atomldr .rng{position:absolute;top:50%;left:50%;width:104px;height:36px;margin:-18px 0 0 -52px;border:2px solid #cbd2cd;border-radius:50%}
+    .atomldr .el{position:absolute;width:20px;height:20px;border-radius:50%;
+      offset-path:path("M 8 60 A 52 18 0 1 1 112 60 A 52 18 0 1 1 8 60");offset-rotate:0deg;
+      background:radial-gradient(circle at 32% 27%, #ececec 0%, #8a8a8a 38%, #171717 100%);
+      box-shadow:inset -2px -2px 4px rgba(0,0,0,.5), 0 1px 2px rgba(0,0,0,.25);
+      animation:atomride 1.9s linear infinite, atomdepth 1.9s ease-in-out infinite}
+    .atomldr .orb.o2 .el{animation-delay:-.63s,-.63s}
+    .atomldr .orb.o3 .el{animation-delay:-1.26s,-1.26s}
+    @keyframes atomride{to{offset-distance:100%}}
+    @keyframes atomdepth{0%,100%{transform:scale(.62);z-index:1}50%{transform:scale(1.18);z-index:9}}
+    .atomldr .nuc{position:absolute;top:50%;left:50%;width:18px;height:18px;margin:-9px;border-radius:50%;z-index:5;
+      background:radial-gradient(circle at 32% 27%, #6fd39a 0%, #1a7a4a 55%, #0f4a2c 100%);
+      box-shadow:inset -2px -2px 4px rgba(0,0,0,.35)}
+
     .footer {
       margin-top: 36px;
       font-size: 11px;
@@ -224,7 +243,12 @@
 
 <!-- LOADING -->
 <div id="loadingScreen">
-  <div class="spinner"></div>
+  <div class="atomldr">
+    <div class="orb o1"><div class="rng"></div><div class="el"></div></div>
+    <div class="orb o2"><div class="rng"></div><div class="el"></div></div>
+    <div class="orb o3"><div class="rng"></div><div class="el"></div></div>
+    <div class="nuc"></div>
+  </div>
   <div>Memuat maklumat...</div>
 </div>
 
