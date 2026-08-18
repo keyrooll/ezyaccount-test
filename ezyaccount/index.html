@@ -196,24 +196,26 @@
     .atomldr .orb{position:absolute;inset:0}
     .atomldr .orb.o2{transform:rotate(60deg)}
     .atomldr .orb.o3{transform:rotate(120deg)}
-    .atomldr .rng{position:absolute;top:50%;left:50%;width:104px;height:36px;margin:-18px 0 0 -52px;border:2px solid #cbd2cd;border-radius:50%}
-    .atomldr .el{position:absolute;width:20px;height:20px;border-radius:50%;
+    .atomldr .rng{display:none}
+    .atomldr .el{position:absolute;width:14px;height:14px;border-radius:50%;
       offset-path:path("M 8 60 A 52 18 0 1 1 112 60 A 52 18 0 1 1 8 60");offset-rotate:0deg;
       background:radial-gradient(circle at 32% 27%, #ececec 0%, #8a8a8a 38%, #171717 100%);
       box-shadow:inset -2px -2px 4px rgba(0,0,0,.5), 0 1px 2px rgba(0,0,0,.25);
-      animation:atomride 1.9s linear infinite, atomdepth 1.9s ease-in-out infinite}
+      animation:atomride 1.9s linear infinite, atomdepth 1.9s linear infinite}
     .atomldr .orb.o2 .el{animation-delay:-.63s,-.63s}
     .atomldr .orb.o3 .el{animation-delay:-1.26s,-1.26s}
     @keyframes atomride{to{offset-distance:100%}}
-    @keyframes atomdepth{0%,100%{transform:scale(.62);z-index:1}50%{transform:scale(1.18);z-index:9}}
+    /* Depth only (no scaling — balls stay one size): front half of the orbit sits above the
+       logo (z-index 6 > logo's 5), back half sits behind it (z-index 4). Flip points are at the
+       ellipse's far left/right extremes, so the swap never happens over the logo. */
+    @keyframes atomdepth{0%,49.9%{z-index:6}50%,100%{z-index:4}}
     .atomldr .nuc{position:absolute;top:50%;left:50%;width:18px;height:18px;margin:-9px;border-radius:50%;z-index:5;
       background:radial-gradient(circle at 32% 27%, #6fd39a 0%, #1a7a4a 55%, #0f4a2c 100%);
       box-shadow:inset -2px -2px 4px rgba(0,0,0,.35)}
-    /* Login: the main logo sits in the centre of the atom, balls orbiting in front & behind it. */
+    /* Login: the main logo sits in the centre of the atom; balls stay one size and orbit in front of it. */
     .login-atom{transform:scale(.9);margin:2px 0 14px}
     .atomldr .main-logo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-      width:56px;height:56px;object-fit:contain;border-radius:50%;background:#fff;margin:0;z-index:5;
-      box-shadow:0 1px 4px rgba(0,0,0,.15)}
+      width:72px;height:72px;object-fit:contain;border-radius:50%;background:#f9fafb;margin:0;z-index:5}
 
     .footer {
       margin-top: 36px;
@@ -304,7 +306,7 @@
   </div>
 </div>
 
-<div class="footer">EzyAccount · v3.8-1607/2229</div>
+<div class="footer">EzyAccount · v3.9-2348/2348</div>
 
 <script>
 const COMPANIES = [
