@@ -205,7 +205,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
   <label class="kekal-row">
     <input type="checkbox" id="kekalCheck"> Kekal Log Masuk
   </label>
-  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v3.28-1607/2134</div>
+  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v3.30-1607/1211</div>
 </div>
 
 <!-- PENDING SCREEN -->
@@ -233,7 +233,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
     <div class="header-left">
       <img id="headerCompanyLogo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD7HY4Un0Ga8+stR1y50XTtVu/FF1bNqFstyIbXQTOkYYA7cqrHjOOTk9a9Ak/1bf7p/lXl9jY3t/4I8Ita6fLcj+yYQzrbeaEJVev+kRY9eh+vavRwPJyvmtuuifR90znrXurf1t2Lth4p8SaL8Qz4b8Q2F7e6PeeUthrS2XlIJnX/AFT7eOSMA9QevByPRa8l8Y+J7PTtTsvDtnol3cWuiXMd3cXMUnlxq0Q8xlBfPA3jOWzlgB2r1SxuYbyxt7y3YtDPEssZIxlWAI/Q1zYnEUa8k6as1o7K17dbba9baE4eom5QUr2/r5kxGQRjINcPZ+E/EemWNvp+m+K9UjtLWNYoI/KtfkRRtUZMRJwvc9Ww3sb/AIv8INr+t6Zqa6rLbCxDDyCpZHJYMDwy4Py4PUFSR3rkk+Ft8IV0cat5VmdMuYp7uBTH5tzIHWKTytxwY/NlbIYA5QADbXXh1RjSb9qr72cb7X6v+tfJjqOblbl073/r+kaMvw0h1S7kn1++1K8890e4VZ0iS42cL5iRqAxA4yAD/TuNLvdMnQ22nXNs4twYzFEwzGFZo8Y6gBkZfqpHavKtV+BkFzcao1l4luLSC7hhit4TFI6W3liLAx5oDoDFuVWBALtndk56XwH8OI/C3iu58QnVEv7m7tJLeeSW0Cykm5knUhw3AAl2lcYOxSNuMVwSUG3JbvsrF06UYNtLc//Z" alt="" class="header-logo" style="width:32px;height:32px;border-radius:6px;object-fit:contain">
       <span class="header-title" id="headerCompanyName">EzyAccount</span>
-      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v3.28-1607/2134</span>
+      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v3.30-1607/1211</span>
     </div>
     <div class="header-right"><button onclick="window.location.href='../index.html'" title="Tukar Syarikat" style="background:none;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;padding:5px 10px;margin-right:4px">🏢 Tukar</button>
       <button id="btnRefresh" onclick="refreshAllData()" title="Refresh Data" style="background:none;border:none;font-size:18px;cursor:pointer;padding:4px;line-height:1">🔄</button>
@@ -3981,16 +3981,26 @@ async function _loadSheetTab(tabName){
 }
 
 // Generic append — write one row to tab: A(empty), B=Date, C=InvoiceNo, D=Branch, E=Amount
-async function _appendSheetRow(tabName, row){
+async function _appendSheetRow(tabName, row, header){
   const tok=getValidToken()||accessToken||currentToken;
   if(!tok) return;
   try{
     const enc=encodeURIComponent(tabName);
+    await ensureSheetTab(tok, SHEET_ID, tabName); // create the tab if it doesn't exist yet
     // Read column B (Date) to find next empty row — column A is always blank
     const readRes=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${enc}!B:B`,{headers:{Authorization:'Bearer '+tok}});
     const readData=await readRes.json();
-    const nextRow=(readData.values||[]).length+1;
-    // Write to exact row starting at A (A=blank, B=Date, C=InvoiceNo, D=Branch, E=Amount)
+    let len=(readData.values||[]).length;
+    if(len===0){
+      // Fresh/empty tab — write a header row first so appends and B2-based reads stay aligned
+      const hdr=header||['','Tarikh','No','Rujukan','Jumlah'];
+      await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${enc}!A1:F1?valueInputOption=USER_ENTERED`,{
+        method:'PUT',headers:{Authorization:'Bearer '+tok,'Content-Type':'application/json'},
+        body:JSON.stringify({values:[hdr]})
+      });
+      len=1;
+    }
+    const nextRow=len+1;
     await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${enc}!A${nextRow}:F${nextRow}?valueInputOption=USER_ENTERED`,{
       method:'PUT',headers:{Authorization:'Bearer '+tok,'Content-Type':'application/json'},
       body:JSON.stringify({values:[['', ...row]]})
@@ -4065,9 +4075,37 @@ async function loadOnpayFromSheet(){
 }
 
 async function writeInvoiceToSheet(inv){
-  // Append to 'Stock in': Date, Invoice no, Branch, Amount
+  // Append summary to 'Stock in': Date, Invoice no, Branch, Amount
   const branch = inv.branch || inv.billTo?.split('\n')[0] || '';
-  await _appendSheetRow('Stock in', [inv.date, inv.invoiceNo, branch, inv.total]);
+  await _appendSheetRow('Stock in', [inv.date, inv.invoiceNo, branch, inv.total], ['','Tarikh','No Invoice','Cawangan','Jumlah']);
+}
+// Item-level detail per invoice → tab 'Invoice Items' so every line is traceable in the Sheet.
+// OVERWRITE model: drops any rows for this invoice (old + new no), then appends the current items.
+async function writeInvoiceItemsToSheet(inv, prevNo){
+  const tok=getValidToken()||accessToken||currentToken;
+  if(!tok) return;
+  const tab='Invoice Items';
+  const HEADER=['No Invoice','Tarikh','Cawangan','Nama Item','Qty','Harga','Jumlah'];
+  try{
+    await ensureSheetTab(tok, SHEET_ID, tab);
+    const enc=encodeURIComponent(tab);
+    const r=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${enc}!A1:G100000`,{headers:{Authorization:'Bearer '+tok}});
+    const d=await r.json();
+    const rows=d.values||[];
+    const data=(rows.length && rows[0][0]===HEADER[0]) ? rows.slice(1) : rows;
+    const drop=new Set([inv.invoiceNo, prevNo].filter(Boolean));
+    const kept=data.filter(row=>!drop.has(row[0]||''));
+    const branch=inv.branch || inv.billTo?.split('\n')[0] || '';
+    const mine=(inv.items||[]).filter(it=>(it.desc||'').trim()).map(it=>[
+      inv.invoiceNo, inv.date, branch, it.desc, it.qty||'', it.rate||'', it.amount||''
+    ]);
+    const finalRows=[HEADER, ...kept, ...mine];
+    await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${enc}!A1:G100000:clear`,{method:'POST',headers:{Authorization:'Bearer '+tok}});
+    await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${enc}!A1?valueInputOption=USER_ENTERED`,{
+      method:'PUT',headers:{Authorization:'Bearer '+tok,'Content-Type':'application/json'},
+      body:JSON.stringify({values:finalRows})
+    });
+  }catch(e){ console.warn('writeInvoiceItemsToSheet:',e); }
 }
 
 async function writePaymentToSheet(p){
@@ -4443,16 +4481,30 @@ function showBulkPaymentWaPrompt(supplierNames){
 let invoiceItems = [];
 let editingInvoiceId = null;
 
-function genInvoiceNo(){
+// Invoice no carries the recipient branch code, e.g. Bangi → BG/280726/01. Running number is per
+// branch, per day, derived from saved invoices (no localStorage counter → opening the form twice
+// doesn't skip numbers).
+const BRANCH_CODES = COMPANY_CONFIG.branchCodes || {'Bangi Durian':'BG','Shah Alam':'SA','Putrajaya':'PJ','TTDI':'TTDI','Batu Caves':'BC','Bakery':'BK'};
+function branchCode(branch){
+  if(!branch) return '';
+  if(BRANCH_CODES[branch]) return BRANCH_CODES[branch];
+  const k=Object.keys(BRANCH_CODES).find(x=>x.toLowerCase()===branch.toString().trim().toLowerCase());
+  return k?BRANCH_CODES[k]:'';
+}
+function genInvoiceNo(branch){
   const d = new Date();
   const dd = String(d.getDate()).padStart(2,'0');
   const mm = String(d.getMonth()+1).padStart(2,'0');
   const yy = String(d.getFullYear()).slice(2);
   const dateKey = `${dd}${mm}${yy}`;
-  const counterKey = `ezy_inv_counter_${COMPANY_CONFIG.id}_${dateKey}`;
-  let counter = parseInt(localStorage.getItem(counterKey)||'0') + 1;
-  localStorage.setItem(counterKey, counter);
-  return `${dateKey}/${String(counter).padStart(2,'0')}`;
+  const code = branchCode(branch);
+  const prefix = code ? `${code}/${dateKey}` : dateKey;   // "BG/280726" or "280726" (unknown branch)
+  let maxN = 0;
+  (window._invoiceCache||[]).forEach(x=>{
+    const no=(x.invoiceNo||'').toString();
+    if(no.startsWith(prefix+'/')){ const parts=no.split('/'); const n=parseInt(parts[parts.length-1])||0; if(n>maxN) maxN=n; }
+  });
+  return `${prefix}/${String(maxN+1).padStart(2,'0')}`;
 }
 
 function getBranchAddresses(){
@@ -4512,7 +4564,7 @@ function showInvoiceForm(invId=null){
   editingInvoiceId = invId;
   invoiceItems = inv ? JSON.parse(JSON.stringify(inv.items||[])) : [{desc:'',unit:'kg',qty:'',rate:'',amount:''}];
 
-  const addressOpts = branchKeys.map(k=>`<option value="${addresses[k]}" ${inv?.billTo===addresses[k]?'selected':''}>${k}</option>`).join('');
+  const addressOpts = branchKeys.map(k=>`<option value="${k}" ${addresses[k]===inv?.billTo?'selected':''}>${k}</option>`).join('');
 
   $id('invoiceFormWrap').style.display='block';
   $id('invoiceListWrap').style.display='none';
@@ -4577,8 +4629,10 @@ function handleBranchSelect(val){
   const ta = $id('invBillTo');
   if(!ta) return;
   if(val === '__manual__'){ ta.value=''; ta.readOnly=false; ta.focus(); }
-  else if(val){ ta.value=val; ta.readOnly=true; }
+  else if(val){ const addresses=getBranchAddresses(); ta.value=addresses[val]||val; ta.readOnly=true; }
   else { ta.value=''; ta.readOnly=false; }
+  // Put the branch code on the invoice no (new invoice only; editing keeps the original).
+  if(!editingInvoiceId){ const el=$id('invNo'); if(el) el.value=genInvoiceNo((val&&val!=='__manual__')?val:''); }
 }
 
 function addInvoiceItem(){
@@ -4671,12 +4725,14 @@ function saveInvoice(status){
   const inv={id:'inv_'+Date.now(),invoiceNo,date,billTo,branch,items:invoiceItems,total,status,createdBy:currentUser?.email,createdAt:now};
 
   if(editingInvoiceId){
-    // For edit: just update cache, no sheet rewrite (sheet is source of truth on reload)
     const idx = cache.findIndex(x=>x.id===editingInvoiceId);
+    const prevNo = idx>=0 ? cache[idx].invoiceNo : invoiceNo;
     if(idx>=0) cache[idx]={...cache[idx],...inv,id:editingInvoiceId};
+    writeInvoiceItemsToSheet(inv, prevNo); // keep this invoice's item rows in step on edit
   } else {
     cache.push(inv);
-    writeInvoiceToSheet(inv); // append to 'Stock in'
+    writeInvoiceToSheet(inv);      // summary → 'Stock in'
+    writeInvoiceItemsToSheet(inv); // item details → 'Invoice Items' (traceable)
   }
   window._invoiceCache = cache;
   lsSet('ezy_invoices_'+COMPANY_CONFIG.id, cache);
