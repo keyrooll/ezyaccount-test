@@ -205,7 +205,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
   <label class="kekal-row">
     <input type="checkbox" id="kekalCheck"> Kekal Log Masuk
   </label>
-  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v3.32-2259/2244</div>
+  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v3.33-1756/2244</div>
 </div>
 
 <!-- PENDING SCREEN -->
@@ -233,7 +233,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
     <div class="header-left">
       <img id="headerCompanyLogo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD7HY4Un0Ga8+stR1y50XTtVu/FF1bNqFstyIbXQTOkYYA7cqrHjOOTk9a9Ak/1bf7p/lXl9jY3t/4I8Ita6fLcj+yYQzrbeaEJVev+kRY9eh+vavRwPJyvmtuuifR90znrXurf1t2Lth4p8SaL8Qz4b8Q2F7e6PeeUthrS2XlIJnX/AFT7eOSMA9QevByPRa8l8Y+J7PTtTsvDtnol3cWuiXMd3cXMUnlxq0Q8xlBfPA3jOWzlgB2r1SxuYbyxt7y3YtDPEssZIxlWAI/Q1zYnEUa8k6as1o7K17dbba9baE4eom5QUr2/r5kxGQRjINcPZ+E/EemWNvp+m+K9UjtLWNYoI/KtfkRRtUZMRJwvc9Ww3sb/AIv8INr+t6Zqa6rLbCxDDyCpZHJYMDwy4Py4PUFSR3rkk+Ft8IV0cat5VmdMuYp7uBTH5tzIHWKTytxwY/NlbIYA5QADbXXh1RjSb9qr72cb7X6v+tfJjqOblbl073/r+kaMvw0h1S7kn1++1K8890e4VZ0iS42cL5iRqAxA4yAD/TuNLvdMnQ22nXNs4twYzFEwzGFZo8Y6gBkZfqpHavKtV+BkFzcao1l4luLSC7hhit4TFI6W3liLAx5oDoDFuVWBALtndk56XwH8OI/C3iu58QnVEv7m7tJLeeSW0Cykm5knUhw3AAl2lcYOxSNuMVwSUG3JbvsrF06UYNtLc//Z" alt="" class="header-logo" style="width:32px;height:32px;border-radius:6px;object-fit:contain">
       <span class="header-title" id="headerCompanyName">EzyAccount</span>
-      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v3.32-2259/2244</span>
+      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v3.33-1756/2244</span>
     </div>
     <div class="header-right"><button onclick="window.location.href='../index.html'" title="Tukar Syarikat" style="background:none;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;padding:5px 10px;margin-right:4px">🏢 Tukar</button>
       <button id="btnRefresh" onclick="refreshAllData()" title="Refresh Data" style="background:none;border:none;font-size:18px;cursor:pointer;padding:4px;line-height:1">🔄</button>
@@ -5679,8 +5679,9 @@ async function loadSuppliersFromSheet(){
   const tok=getValidToken()||accessToken||currentToken;
   if(!tok) return;
   try{
-    // Load suppliers from master EzyResit sheet (shared across all companies)
-    const r=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${MASTER_SHEET_ID}/values/Suppliers!A2:J`,{headers:{Authorization:'Bearer '+tok}});
+    // Load suppliers from THIS company's OWN sheet (independent per company — do not read the
+    // shared master sheet, or other companies' suppliers leak in).
+    const r=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Suppliers!A2:J`,{headers:{Authorization:'Bearer '+tok}});
     const d=await r.json();
     if(d.error) return;
     if(!d.values||!d.values.length){lsSet('ezy_suppliers_'+COMPANY_CONFIG.id,[]);return;}
@@ -5701,6 +5702,34 @@ async function loadSuppliersFromSheet(){
     if(localOnly.length) syncSuppliersToSheet().catch(()=>{});
     console.log('Loaded',sheetSuppliers.length,'suppliers from Sheets, merged',localOnly.length,'local-only');
   }catch(e){console.warn('Load suppliers:',e);}
+}
+
+// One-time cleanup. Older builds loaded suppliers from a shared master sheet, so other
+// companies' suppliers leaked into this one (and got written back to this sheet). Rebuild the
+// list from THIS company's own receipts and overwrite the sheet, making suppliers independent.
+// Runs once per device (guarded by a flag) and only after receipts are available.
+async function reconcileSuppliersOnce(){
+  if(localStorage.getItem('ezy_suppliers_reconciled_v1')) return;
+  try{
+    const receipts=getReceipts();
+    if(!receipts.length) return; // wait for receipts to load; retry next refresh (don't set flag)
+    const vendorKey=v=>(v||'').trim().toLowerCase();
+    const vendorNames=new Set(receipts.map(r=>vendorKey(r.vendor)).filter(Boolean));
+    // Keep only suppliers that actually appear on this company's receipts (drop leaked ones)
+    const kept=getSuppliers().filter(s=>vendorNames.has(vendorKey(s.name)));
+    const keptNames=new Set(kept.map(s=>vendorKey(s.name)));
+    // Add any receipt vendor missing from the kept list
+    receipts.forEach(r=>{
+      const nm=(r.vendor||'').trim(); const k=vendorKey(nm);
+      if(!k||keptNames.has(k)) return;
+      keptNames.add(k);
+      const cnt=receipts.filter(x=>vendorKey(x.vendor)===k).length;
+      kept.push({id:'sup_'+Date.now()+Math.floor(Math.random()*1e6),name:nm,category:r.category||'',account:'',waNum:'',bankName:'',bankAcc:'',regNo:'',count:cnt});
+    });
+    setSuppliers(kept); // writes local + overwrites this sheet's Suppliers tab with the clean list
+    localStorage.setItem('ezy_suppliers_reconciled_v1','1');
+    console.log('Suppliers reconciled to own receipts:',kept.length);
+  }catch(e){ console.warn('reconcileSuppliersOnce:',e); }
 }
 
 async function loadReceiptsFromSheet(){
@@ -5802,6 +5831,7 @@ async function loadAllFromSheets(){
       syncAllStaffFromSheet()
     ]);
   }
+  await reconcileSuppliersOnce(); // one-time: purge leaked cross-company suppliers, rebuild from own receipts
   showToast('Data dikemaskini ✓');
 }
 
