@@ -248,7 +248,7 @@
     Log Masuk dengan Google
   </button>
   <label class="kekal-row">
-    <input type="checkbox" id="kekalCheck"> Kekal Log Masuk
+    <input type="checkbox" id="kekalCheck" checked> Kekal Log Masuk
   </label>
   <div class="login-loading" id="loginLoading">⏳ Sedang log masuk...</div>
 </div>
@@ -306,7 +306,7 @@
   </div>
 </div>
 
-<div class="footer">EzyAccount · v3.9-2348/2348</div>
+<div class="footer">EzyAccount · v3.10-1612/1612</div>
 
 <script>
 const COMPANIES = [
@@ -392,11 +392,29 @@ function doLogin(){
   tokenClient.requestAccessToken({prompt:'select_account'});
 }
 
+// ===== Stay logged in: silently top up the 1-hour Google token so nobody re-authorises =====
+let _authPhase='entering';   // 'entering' = logging in, 'active' = already past login
+let _renewTimer=null, _renewInFlight=false;
+function scheduleSilentRenew(expiry){
+  if(_renewTimer) clearTimeout(_renewTimer);
+  const ms=Math.max(30000,(expiry-Date.now())-5*60000); // ~5 min before it expires
+  _renewTimer=setTimeout(()=>silentRenew(),ms);
+}
+function silentRenew(){
+  if(!gisReady||!tokenClient||_renewInFlight) return;
+  _renewInFlight=true;
+  try{ tokenClient.requestAccessToken({prompt:''}); }  // '' = no popup while a Google session exists
+  catch(e){ _renewInFlight=false; onRenewFail(); }
+}
+function onRenewFail(){ const l=document.getElementById('loginLoading'); if(l) l.style.display='none'; }
+
 async function handleTokenResponse(resp){
-  if(resp.error){document.getElementById('loginLoading').style.display='none';return;}
+  _renewInFlight=false;
+  if(resp.error){ onRenewFail(); return; }
   currentToken=resp.access_token;
   const expiry=Date.now()+(resp.expires_in||3599)*1000;
-  const kekal=document.getElementById('kekalCheck').checked;
+  const kekalEl=document.getElementById('kekalCheck');
+  const kekal=kekalEl?kekalEl.checked:true;
   // Always save token — localStorage if kekal, sessionStorage if not
   if(kekal){
     lsSet('ezy_landing_token',currentToken);
@@ -407,6 +425,9 @@ async function handleTokenResponse(resp){
     sessionStorage.setItem('ezy_sess_token',currentToken);
     sessionStorage.setItem('ezy_sess_expiry',String(expiry));
   }
+  scheduleSilentRenew(expiry);
+  if(_authPhase==='active') return; // background refresh — stay where we are
+  _authPhase='active';
   showScreen('loadingScreen');
   await fetchUser();
 }
@@ -436,11 +457,20 @@ function autoLogin(){
   const token2=sessionStorage.getItem('ezy_sess_token');
   const expiry2=Number(sessionStorage.getItem('ezy_sess_expiry')||0);
   
-  let token=null;
-  if(token1&&expiry1>Date.now()) token=token1;
-  else if(token2&&expiry2>Date.now()) token=token2;
-  
-  if(token&&user){currentToken=token;showCompanyScreen(user);}
+  let token=null, expiry=0;
+  if(token1&&expiry1>Date.now()){token=token1;expiry=expiry1;}
+  else if(token2&&expiry2>Date.now()){token=token2;expiry=expiry2;}
+
+  if(token&&user){
+    currentToken=token; _authPhase='active';
+    showCompanyScreen(user);
+    scheduleSilentRenew(expiry);
+    return;
+  }
+  // Token expired but the user is remembered → get a fresh one SILENTLY instead of a re-login.
+  _authPhase='entering';
+  if(gisReady&&tokenClient) silentRenew();
+  // else: onGISLoaded()/_doGISInit() calls autoLogin() again once GIS is ready.
 }
 
 // Roles this user has (from the loaded registry): {companyId: role} for non-empty roles only.

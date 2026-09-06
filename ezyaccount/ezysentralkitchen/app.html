@@ -205,7 +205,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
   <label class="kekal-row">
     <input type="checkbox" id="kekalCheck"> Kekal Log Masuk
   </label>
-  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v3.33-1756/2244</div>
+  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v3.34-1612/2244</div>
 </div>
 
 <!-- PENDING SCREEN -->
@@ -233,7 +233,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
     <div class="header-left">
       <img id="headerCompanyLogo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD7HY4Un0Ga8+stR1y50XTtVu/FF1bNqFstyIbXQTOkYYA7cqrHjOOTk9a9Ak/1bf7p/lXl9jY3t/4I8Ita6fLcj+yYQzrbeaEJVev+kRY9eh+vavRwPJyvmtuuifR90znrXurf1t2Lth4p8SaL8Qz4b8Q2F7e6PeeUthrS2XlIJnX/AFT7eOSMA9QevByPRa8l8Y+J7PTtTsvDtnol3cWuiXMd3cXMUnlxq0Q8xlBfPA3jOWzlgB2r1SxuYbyxt7y3YtDPEssZIxlWAI/Q1zYnEUa8k6as1o7K17dbba9baE4eom5QUr2/r5kxGQRjINcPZ+E/EemWNvp+m+K9UjtLWNYoI/KtfkRRtUZMRJwvc9Ww3sb/AIv8INr+t6Zqa6rLbCxDDyCpZHJYMDwy4Py4PUFSR3rkk+Ft8IV0cat5VmdMuYp7uBTH5tzIHWKTytxwY/NlbIYA5QADbXXh1RjSb9qr72cb7X6v+tfJjqOblbl073/r+kaMvw0h1S7kn1++1K8890e4VZ0iS42cL5iRqAxA4yAD/TuNLvdMnQ22nXNs4twYzFEwzGFZo8Y6gBkZfqpHavKtV+BkFzcao1l4luLSC7hhit4TFI6W3liLAx5oDoDFuVWBALtndk56XwH8OI/C3iu58QnVEv7m7tJLeeSW0Cykm5knUhw3AAl2lcYOxSNuMVwSUG3JbvsrF06UYNtLc//Z" alt="" class="header-logo" style="width:32px;height:32px;border-radius:6px;object-fit:contain">
       <span class="header-title" id="headerCompanyName">EzyAccount</span>
-      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v3.33-1756/2244</span>
+      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v3.34-1612/2244</span>
     </div>
     <div class="header-right"><button onclick="window.location.href='../index.html'" title="Tukar Syarikat" style="background:none;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;padding:5px 10px;margin-right:4px">🏢 Tukar</button>
       <button id="btnRefresh" onclick="refreshAllData()" title="Refresh Data" style="background:none;border:none;font-size:18px;cursor:pointer;padding:4px;line-height:1">🔄</button>
@@ -984,17 +984,50 @@ function initGIS(){
 
 // doLogin() defined in INIT section below
 
+// ===== Stay logged in: silently top up the 1-hour Google token so nobody re-authorises =====
+let _authPhase = 'entering';   // 'entering' = getting into the app, 'active' = already inside
+let _renewTimer = null;
+let _renewInFlight = false;
+function scheduleSilentRenew(expiry){
+  if(_renewTimer) clearTimeout(_renewTimer);
+  const ms = Math.max(30000, (expiry - Date.now()) - 5*60000); // ~5 min before it expires
+  _renewTimer = setTimeout(()=>silentRenew(), ms);
+}
+function silentRenew(){
+  if(!gisReady || !tokenClient || _renewInFlight) return;
+  _renewInFlight = true;
+  try{ tokenClient.requestAccessToken({prompt:''}); }   // '' = no popup while a Google session exists
+  catch(e){ _renewInFlight=false; console.warn('silentRenew',e); onRenewFail(); }
+}
+function onRenewFail(){
+  // Couldn't refresh silently (signed out of Google / cleared cookies).
+  if(_authPhase==='entering') window.location.href='../index.html'; // need a real login
+  else showReconnectBar();                                          // already inside — offer reconnect
+}
+function showReconnectBar(){
+  if(document.getElementById('reconnectBar')) return;
+  const b=document.createElement('div');
+  b.id='reconnectBar';
+  b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:#b91c1c;color:#fff;padding:10px 14px;text-align:center;font-size:14px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.25)';
+  b.innerHTML='Sesi Google tamat. <button onclick="doLogin()" style="margin-left:8px;background:#fff;color:#b91c1c;border:none;border-radius:6px;padding:6px 12px;font-weight:700;cursor:pointer">Sambung semula</button>';
+  document.body.appendChild(b);
+}
+function hideReconnectBar(){ const b=document.getElementById('reconnectBar'); if(b) b.remove(); }
+
 async function handleTokenResponse(resp){
-  if(resp.error){console.error(resp);return;}
+  _renewInFlight=false;
+  if(resp.error){ console.warn('token error',resp.error); onRenewFail(); return; }
   currentToken = resp.access_token;
   accessToken = resp.access_token;
   const expiry = Date.now() + (resp.expires_in||3599)*1000;
-  const kekal = document.getElementById('kekalCheck').checked;
-  if(kekal){
-    lsSet('ezy_token',currentToken);
-    lsSet('ezy_token_expiry',expiry);
-    lsSet('ezy_kekal',true);
-  }
+  // Always persist so login survives a browser restart — stay signed in until explicit Logout.
+  lsSet('ezy_token',currentToken);
+  lsSet('ezy_token_expiry',expiry);
+  lsSet('ezy_kekal',true);
+  hideReconnectBar();
+  scheduleSilentRenew(expiry);
+  if(_authPhase==='active' && currentUser) return; // background refresh only — don't re-init the app
+  _authPhase='active';
   await fetchAndSetUser();
 }
 
@@ -1071,41 +1104,54 @@ function autoLogin(){
   const token3 = sessionStorage.getItem('ezy_sess_token');  // index.html session
   const expiry3 = Number(sessionStorage.getItem('ezy_sess_expiry')||0);
 
-  let token = null;
-  if(token1 && expiry1 > Date.now()) token = token1;
-  else if(token2 && expiry2 > Date.now()) token = token2;
-  else if(token3 && expiry3 > Date.now()) token = token3;
+  let token = null, expiry = 0;
+  if(token1 && expiry1 > Date.now()){ token = token1; expiry = expiry1; }
+  else if(token2 && expiry2 > Date.now()){ token = token2; expiry = expiry2; }
+  else if(token3 && expiry3 > Date.now()){ token = token3; expiry = expiry3; }
 
   if(token && user){
     currentToken = token;
     accessToken = token;
-        fetchAndSetUser();
+    _authPhase = 'active';
+    fetchAndSetUser();
+    scheduleSilentRenew(expiry);
     return;
   }
 
-  // No valid token — redirect to index.html to login
+  // Token expired but we still remember the user → get a fresh one SILENTLY instead of
+  // forcing a re-login. Only fall back to the login page if that can't be done.
+  if(user){
+    _authPhase = 'entering';
+    if(gisReady && tokenClient){
+      silentRenew();
+      // Safety net: if no token arrives (Google session really gone), go log in.
+      setTimeout(()=>{ if(!currentToken && _authPhase==='entering') window.location.href='../index.html'; }, 6000);
+    }
+    // else: GIS not ready yet — onGISLoaded() calls autoLogin() again once it is.
+    return;
+  }
+
+  // No remembered user at all — go to the landing page to log in.
   window.location.href = '../index.html';
 }
 
-// Returns a valid token or null. Does NOT auto-refresh (avoid popup blocked errors).
+// Returns the current token. When it is within ~5 min of expiring, kick off a guarded silent
+// renewal in the background so API calls never hit an expired token (no popup, no re-login).
 function getValidToken(){
   if(!currentToken) return null;
-  // Check localStorage expiry first
-  const expiry = lsGet('ezy_token_expiry', 0);
-  if(expiry > Date.now() + 60000) return currentToken;
-  // Also check sessionStorage expiry (token from landing page)
-  const sessExpiry = Number(sessionStorage.getItem('ezy_sess_expiry')||0);
-  if(sessExpiry > Date.now() + 60000) return currentToken;
-  // Also check landing token expiry
-  const landingExpiry = lsGet('ezy_landing_expiry', 0);
-  if(landingExpiry > Date.now() + 60000) return currentToken;
-  // Token still in memory — trust it (Google token lasts 1hr from issue)
-  if(currentToken) return currentToken;
-  return null;
+  const exp = Math.max(
+    lsGet('ezy_token_expiry', 0),
+    Number(sessionStorage.getItem('ezy_sess_expiry')||0),
+    lsGet('ezy_landing_expiry', 0)
+  );
+  if(exp && exp - Date.now() < 5*60000) silentRenew(); // near/after expiry → refresh in background
+  return currentToken;
 }
 
 function logoutUser(){
   const tokenToRevoke=currentToken;
+  if(_renewTimer) clearTimeout(_renewTimer);   // stop silent renewal so logout really logs out
+  _authPhase='entering';
   currentToken=null;currentUser=null;currentRole=null;
   localStorage.removeItem('ezy_token');localStorage.removeItem('ezy_token_expiry');
   localStorage.removeItem('ezy_kekal');localStorage.removeItem('ezy_user');
