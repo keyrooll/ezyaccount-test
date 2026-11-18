@@ -301,7 +301,6 @@
       <input id="newStaffName" type="text" placeholder="Nama" style="flex:1;min-width:120px;padding:8px;border:1px solid #e5e7eb;border-radius:8px;font-size:13px">
       <button onclick="addStaffRow()" style="background:#1a7a4a;color:#fff;border:none;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:13px;font-weight:600">+ Tambah</button>
     </div>
-    <div id="emailStaffWrap" style="padding:4px 12px;max-height:240px;overflow:auto;border-bottom:1px solid #f0f0f0"></div>
     <div id="staffTableWrap" style="flex:1;overflow:auto;padding:8px 12px"></div>
     <div style="padding:12px 16px;border-top:1px solid #e5e7eb;display:flex;gap:8px;justify-content:flex-end">
       <button onclick="closeStaffManager()" style="background:#f3f4f6;border:none;border-radius:8px;padding:10px 16px;cursor:pointer;font-size:13px">Tutup</button>
@@ -310,7 +309,7 @@
   </div>
 </div>
 
-<div class="footer">EzyAccount · v3.11-2210/2210</div>
+<div class="footer">EzyAccount · v3.12-0002/0002</div>
 
 <script>
 const COMPANIES = [
@@ -680,7 +679,7 @@ async function ensureRegistryTab(){
 async function openStaffManager(){
   document.getElementById('staffOverlay').style.display='flex';
   document.getElementById('staffTableWrap').innerHTML='<div style="padding:30px;text-align:center;color:#6b7280">⏳ Memuatkan...</div>';
-  renderEmailStaff(); // email/password staff pending approval (ezyaccount-staff worker)
+  await fetchEmailStaff(); // email/password staff — rendered inside the main table
   try{ await ensureRegistryTab(); await loadRegistry(); renderStaffTable(); }
   catch(e){ document.getElementById('staffTableWrap').innerHTML='<div style="padding:20px;color:#dc2626">Gagal muat. Pastikan sheet dikongsi & anda super_admin.</div>'; }
 }
@@ -702,42 +701,36 @@ const STAFF_COMPANIES={
 const _coName=(id)=>(STAFF_COMPANIES[id]||{}).name||id||'';
 const _brOpts=(co,sel)=>((STAFF_COMPANIES[co]||{}).branches||[]).map(b=>`<option value="${b}"${b===sel?' selected':''}>${b}</option>`).join('');
 function _onEmCo(sel){ const em=sel.getAttribute('data-email'); const br=document.querySelector('.emBr[data-email="'+CSS.escape(em)+'"]'); if(br) br.innerHTML=_brOpts(sel.value,''); }
-async function renderEmailStaff(){
-  const wrap=document.getElementById('emailStaffWrap'); if(!wrap) return;
-  wrap.innerHTML='<div style="padding:10px;color:#6b7280;font-size:12px">⏳ Memuatkan staff email…</div>';
-  let list=[];
+let _emailStaff=[], _emailStaffErr='';
+async function fetchEmailStaff(){
+  _emailStaff=[]; _emailStaffErr='';
   try{
     const r=await fetch(STAFF_WORKER+'/staff/admin/list',{headers:{Authorization:'Bearer '+currentToken}});
-    if(r.status===401){ wrap.innerHTML='<div style="padding:10px;color:#b45309;font-size:12px">📧 Staff email: akaun Google ini bukan admin backend (hanya keyrooll@gmail.com dibenarkan). Log masuk sebagai admin untuk urus pendaftaran email.</div>'; return; }
-    list=((await r.json()).staff)||[];
-  }catch(e){ wrap.innerHTML='<div style="padding:10px;color:#6b7280;font-size:12px">📧 Staff email: gagal sambung backend.</div>'; return; }
-  const pending=list.filter(s=>s.status==='pending');
-  const others=list.filter(s=>s.status!=='pending');
-  let html=`<div style="font-size:12px;font-weight:700;color:#6b7280;margin:8px 2px 4px">📧 STAFF EMAIL/PASSWORD — PENDING (${pending.length})</div>`;
-  html+= pending.length ? pending.map(s=>emRow(s,true)).join('') : '<div style="padding:4px 2px;color:#6b7280;font-size:12px">Tiada pendaftaran baru.</div>';
-  if(others.length){
-    html+=`<div style="font-size:12px;font-weight:700;color:#6b7280;margin:10px 2px 4px">Email staff lain (${others.length})</div>`;
-    html+=others.map(s=>emRow(s,false)).join('');
-  }
-  wrap.innerHTML=html;
+    if(r.status===401){ _emailStaffErr='notadmin'; return; }
+    _emailStaff=((await r.json()).staff)||[];
+  }catch(e){ _emailStaffErr='conn'; }
 }
-function emRow(s, pending){
+// One email/password staff rendered as a row in the SAME table as Google staff: name +
+// a single company/branch assignment spanning the per-company columns + status + actions.
+function emailStaffRow(s){
   const em=(s.email||'').replace(/'/g,"\\'");
   const nm=(s.name||s.email||'').replace(/</g,'&lt;');
-  const st=s.status==='approved'?'<span style="color:#0f4a2c;font-size:11px;font-weight:700">✓ Lulus</span>':(s.status==='rejected'?'<span style="color:#b91c1c;font-size:11px;font-weight:700">✕ Tolak</span>':'<span style="color:#b45309;font-size:11px;font-weight:700">⏳ Menunggu</span>');
-  const meta=`${s.email}${s.company?(' · '+_coName(s.company)):''}${s.branch?(' · '+s.branch):''}`;
-  let ctrl='';
-  if(pending){
-    const co=`<select class="emCo" data-email="${s.email}" onchange="_onEmCo(this)" style="font-size:12px;padding:4px;border:1px solid #e5e7eb;border-radius:6px"><option value="">— syarikat —</option>${Object.keys(STAFF_COMPANIES).map(id=>`<option value="${id}"${s.company===id?' selected':''}>${_coName(id)}</option>`).join('')}</select>`;
-    const br=`<select class="emBr" data-email="${s.email}" style="font-size:12px;padding:4px;border:1px solid #e5e7eb;border-radius:6px">${_brOpts(s.company,s.branch)}</select>`;
-    ctrl=`${co}${br}<button onclick="approveEmailStaff('${em}','approved')" style="background:#1a7a4a;color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:12px;font-weight:600;cursor:pointer">Lulus</button><button onclick="approveEmailStaff('${em}','rejected')" style="background:#fff;color:#b91c1c;border:1px solid #b91c1c;border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer">Tolak</button>`;
+  const badge=s.status==='approved'?'<span style="color:#0f4a2c;font-weight:700;font-size:11px">✓ Lulus</span>':(s.status==='rejected'?'<span style="color:#b91c1c;font-weight:700;font-size:11px">✕ Tolak</span>':'<span style="color:#b45309;font-weight:700;font-size:11px">⏳ Pending</span>');
+  const co=`<select class="emCo" data-email="${s.email}" onchange="_onEmCo(this)" style="font-size:11px;padding:3px;border:1px solid #e5e7eb;border-radius:5px"><option value="">— syarikat —</option>${Object.keys(STAFF_COMPANIES).map(id=>`<option value="${id}"${s.company===id?' selected':''}>${_coName(id)}</option>`).join('')}</select>`;
+  const br=`<select class="emBr" data-email="${s.email}" style="font-size:11px;padding:3px;border:1px solid #e5e7eb;border-radius:5px">${_brOpts(s.company,s.branch)}</select>`;
+  let actions='';
+  if(s.status==='pending'){
+    actions=`<button onclick="approveEmailStaff('${em}','approved')" style="background:#1a7a4a;color:#fff;border:none;border-radius:5px;padding:4px 9px;font-size:11px;font-weight:600;cursor:pointer">Lulus</button><button onclick="approveEmailStaff('${em}','rejected')" style="background:#fff;color:#b91c1c;border:1px solid #b91c1c;border-radius:5px;padding:4px 9px;font-size:11px;cursor:pointer">Tolak</button>`;
   } else if(s.status==='approved'){
-    ctrl=`<button onclick="approveEmailStaff('${em}','rejected')" style="background:#fff;color:#b91c1c;border:1px solid #b91c1c;border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer">Tarik balik</button>`;
+    actions=`<button onclick="approveEmailStaff('${em}','approved')" style="background:#fff;color:#1a7a4a;border:1px solid #1a7a4a;border-radius:5px;padding:4px 9px;font-size:11px;font-weight:600;cursor:pointer">Kemaskini</button><button onclick="approveEmailStaff('${em}','rejected')" style="background:#fff;color:#b91c1c;border:1px solid #b91c1c;border-radius:5px;padding:4px 9px;font-size:11px;cursor:pointer">Tarik balik</button>`;
+  } else {
+    actions=`<button onclick="approveEmailStaff('${em}','approved')" style="background:#1a7a4a;color:#fff;border:none;border-radius:5px;padding:4px 9px;font-size:11px;font-weight:600;cursor:pointer">Lulus</button>`;
   }
-  return `<div style="padding:8px 2px;border-bottom:1px solid #f0f0f0">
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><div><div style="font-weight:600;font-size:13px">${nm}</div><div style="color:#6b7280;font-size:11px">${meta}</div></div>${st}</div>
-    ${ctrl?`<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;align-items:center">${ctrl}</div>`:''}
-  </div>`;
+  return `<tr style="border-bottom:1px solid #f0f0f0;background:#f0fdf4">
+    <td style="padding:6px 8px"><div style="font-weight:600">${nm} <span style="font-size:10px;color:#2563eb">📧 email</span></div><div style="color:#6b7280;font-size:11px">${s.email}</div></td>
+    <td colspan="${GROUP_COMPANIES.length}" style="padding:4px 8px"><div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center">${co}${br}${badge}${actions}</div></td>
+    <td></td>
+  </tr>`;
 }
 async function approveEmailStaff(email, status){
   let company='',branch='';
@@ -752,7 +745,7 @@ async function approveEmailStaff(email, status){
     const d=await r.json();
     if(!r.ok){ alert(d.error||'Gagal'); return; }
   }catch(e){ alert('Masalah sambungan'); return; }
-  renderEmailStaff();
+  await fetchEmailStaff(); renderStaffTable();
 }
 
 function renderStaffTable(){
@@ -772,6 +765,13 @@ function renderStaffTable(){
       <td style="padding:4px;text-align:center"><button onclick="removeStaff(${i})" style="background:none;border:none;color:#dc2626;cursor:pointer;font-size:14px">✕</button></td>
     </tr>`;
   });
+  // Email/password staff — rendered in the SAME table so they are managed together.
+  if(typeof _emailStaffErr!=='undefined' && _emailStaffErr==='notadmin'){
+    html+=`<tr><td colspan="${GROUP_COMPANIES.length+2}" style="padding:10px;color:#b45309;font-size:11px;background:#fffbeb">📧 Staff email: akaun Google ini bukan admin backend (keyrooll@gmail.com) — tak dapat urus staff email di sini.</td></tr>`;
+  } else if(typeof _emailStaff!=='undefined' && _emailStaff.length){
+    html+=`<tr><td colspan="${GROUP_COMPANIES.length+2}" style="padding:8px;font-size:11px;font-weight:700;color:#2563eb;background:#eff6ff">📧 STAFF EMAIL/PASSWORD (${_emailStaff.length}) — login guna email, assign syarikat di sini</td></tr>`;
+    _emailStaff.slice().sort((a,b)=>(a.status==='pending'?0:1)-(b.status==='pending'?0:1)).forEach(s=>{ html+=emailStaffRow(s); });
+  }
   html+=`</tbody></table>`;
   document.getElementById('staffTableWrap').innerHTML=html;
 }
