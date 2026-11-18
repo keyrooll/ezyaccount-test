@@ -84,13 +84,15 @@ function onGisLoad(){
   gisReady=true;
   tokenClient = google.accounts.oauth2.initTokenClient({
     client_id: CLIENT_ID,
-    scope: 'https://www.googleapis.com/auth/userinfo.email',
+    // Same scope as the main app so Google reuses the existing grant (no fresh consent that can hang).
+    scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive',
     callback: (resp)=>{
       if(resp && resp.access_token){
         try{ sessionStorage.setItem('ezy_admin_tok', resp.access_token); }catch(e){}
         enterAdmin();
-      } else { msg($('loginMsg'),'Log masuk dibatalkan','err'); }
-    }
+      } else { msg($('loginMsg'),'Log masuk gagal: '+((resp&&resp.error)||'tiada token')+'. Cuba lagi.','err'); }
+    },
+    error_callback: (err)=>{ msg($('loginMsg'),'Log masuk gagal: '+((err&&err.type)||'ralat')+'. Benarkan popup & cuba lagi.','err'); }
   });
   if(getTok()) enterAdmin(); // reuse token within the hour
 }
@@ -103,14 +105,13 @@ function fillFilter(){
   $('filterCompany').innerHTML = '<option value="">Semua syarikat</option>' +
     Object.keys(COMPANIES).map(id=>`<option value="${id}">${coName(id)}</option>`).join('');
 }
-async function enterAdmin(){
+function enterAdmin(){
   show($('loginCard'),false); show($('adminCard'),true);
   fillFilter();
-  try{
-    const r=await fetch('https://www.googleapis.com/oauth2/v2/userinfo',{headers:{Authorization:'Bearer '+getTok()}});
-    const u=await r.json(); meEmail=(u.email||'');
-  }catch(e){ meEmail=''; }
-  $('adminWho').textContent = meEmail ? ('Log masuk sebagai '+meEmail) : '';
+  // Show who's logged in — non-blocking so it can never hold up the list.
+  fetch('https://www.googleapis.com/oauth2/v2/userinfo',{headers:{Authorization:'Bearer '+getTok()}})
+    .then(r=>r.json()).then(u=>{ meEmail=(u&&u.email)||''; $('adminWho').textContent = meEmail?('Log masuk sebagai '+meEmail):''; })
+    .catch(()=>{});
   loadList();
 }
 function switchAccount(){ try{ sessionStorage.removeItem('ezy_admin_tok'); }catch(e){} location.reload(); }
