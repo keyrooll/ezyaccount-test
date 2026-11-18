@@ -62,8 +62,7 @@
       <label>Nama</label><input id="rgName" placeholder="Nama penuh">
       <label>Email</label><input id="rgEmail" type="email" autocomplete="username" placeholder="nama@email.com">
       <label>Password <span class="muted">(min 6 aksara)</span></label><input id="rgPass" type="password" autocomplete="new-password" placeholder="••••••">
-      <label>Syarikat</label><select id="rgCompany"></select>
-      <label>Cawangan</label><select id="rgBranch"></select>
+      <p class="muted" style="margin:12px 0 0">Admin akan tetapkan syarikat & cawangan anda selepas meluluskan akaun.</p>
       <button class="btn" id="rgBtn">Daftar</button>
       <div class="msg" id="rgMsg"></div>
       <div class="link">Dah ada akaun? <a id="toLogin">Log masuk</a></div>
@@ -154,12 +153,11 @@ $('liBtn').onclick = async ()=>{
 // ---- register ----
 $('rgBtn').onclick = async ()=>{
   const name=$('rgName').value.trim(), email=$('rgEmail').value.trim(), password=$('rgPass').value;
-  const company=$('rgCompany').value, branch=$('rgBranch').value;
   if(!name||!email||!password){ msg($('rgMsg'),'Lengkapkan semua ruangan','err'); return; }
   if(password.length<6){ msg($('rgMsg'),'Password minimum 6 aksara','err'); return; }
   $('rgBtn').disabled=true; msg($('rgMsg'),'Mendaftar…','warn');
   try{
-    const r=await fetch(WORKER+'/staff/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,password,company,branch})});
+    const r=await fetch(WORKER+'/staff/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,password})});
     const d=await r.json();
     if(r.ok){ msg($('rgMsg'),'✅ Daftar berjaya! Menunggu kelulusan admin. Anda boleh log masuk selepas diluluskan.','ok'); }
     else { msg($('rgMsg'),d.error||'Gagal daftar','err'); }
@@ -244,9 +242,6 @@ async function loadMyUploads(){
 $('logoutBtn').onclick = ()=>{ clearSession(); location.reload(); };
 
 // ---- init ----
-fillCompanies($('rgCompany'));
-fillBranches($('rgBranch'), $('rgCompany').value);
-$('rgCompany').onchange = ()=> fillBranches($('rgBranch'), $('rgCompany').value);
 route();
 </script>
 </body>

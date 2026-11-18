@@ -50,6 +50,7 @@
       <div style="display:flex;gap:8px;align-items:center">
         <select id="filterCompany"><option value="">Semua syarikat</option></select>
         <button class="btn sm" id="refreshBtn">↻ Muat semula</button>
+        <button class="btn sm" onclick="switchAccount()" style="background:#fff;color:var(--mid);border:1px solid var(--line)">Tukar akaun</button>
       </div>
     </div>
     <div class="msg" id="adminMsg"></div>
@@ -62,9 +63,17 @@
 const WORKER = 'https://ezyaccount-staff.keyrooll.workers.dev';
 const CLIENT_ID = '27154479564-ufljm52nmlh4gg7ie54knphff44jvrrq.apps.googleusercontent.com';
 const COMPANIES = {
-  ezybakery:'Ezy Bakery', ezycafe:'Ezy Cafe', ezydurian:'Ezy Durian', ezydurianhq:'Ezydurian HQ',
-  ezysupplier:'Ezy Supplier', ezybranch:'Ezy Branch', ezycashier:'Ezy Cashier', ezysentralkitchen:'Ezy Sentral Kitchen'
+  ezybakery:{name:'Ezy Bakery',branches:['Bangi Cafe','Bangi Durian','Batu Caves','Putrajaya','Shah Alam','TTDI']},
+  ezycafe:{name:'Ezy Cafe',branches:['Ezy Cafe']},
+  ezydurian:{name:'Ezy Durian',branches:['Batu Caves','Shah Alam','Putrajaya','TTDI']},
+  ezydurianhq:{name:'Ezydurian HQ',branches:['Ezydurian HQ']},
+  ezysupplier:{name:'Ezy Supplier',branches:['Batu Caves','Shah Alam','Bangi Cafe','Bangi Durian','Putrajaya','TTDI','Bakery','Central Kitchen']},
+  ezybranch:{name:'Ezy Branch',branches:['Batu Caves','Shah Alam','Bangi Durian','Putrajaya','TTDI','Bakery']},
+  ezycashier:{name:'Ezy Cashier',branches:['Batu Caves','Bangi','Shah Alam']},
+  ezysentralkitchen:{name:'Ezy Sentral Kitchen',branches:['Central Kitchen']},
 };
+const coName=(id)=>(COMPANIES[id]||{}).name||id||'';
+let meEmail='';
 const $ = (id)=>document.getElementById(id);
 const show = (el,on)=>{ el.hidden=!on; };
 function msg(el,t,k){ el.className='msg '+(k||''); el.textContent=t||''; if(!t) el.className='msg'; }
@@ -92,22 +101,32 @@ $('gBtn').onclick = ()=>{
 
 function fillFilter(){
   $('filterCompany').innerHTML = '<option value="">Semua syarikat</option>' +
-    Object.keys(COMPANIES).map(id=>`<option value="${id}">${COMPANIES[id]}</option>`).join('');
+    Object.keys(COMPANIES).map(id=>`<option value="${id}">${coName(id)}</option>`).join('');
 }
 async function enterAdmin(){
   show($('loginCard'),false); show($('adminCard'),true);
   fillFilter();
+  try{
+    const r=await fetch('https://www.googleapis.com/oauth2/v2/userinfo',{headers:{Authorization:'Bearer '+getTok()}});
+    const u=await r.json(); meEmail=(u.email||'');
+  }catch(e){ meEmail=''; }
+  $('adminWho').textContent = meEmail ? ('Log masuk sebagai '+meEmail) : '';
   loadList();
 }
+function switchAccount(){ try{ sessionStorage.removeItem('ezy_admin_tok'); }catch(e){} location.reload(); }
 async function loadList(){
   const company = $('filterCompany').value;
   $('list').innerHTML='<div class="muted">Memuatkan…</div>';
   try{
     const r=await fetch(WORKER+'/staff/admin/list'+(company?('?company='+encodeURIComponent(company)):''),
       {headers:{'Authorization':'Bearer '+getTok()}});
-    if(r.status===401){ sessionStorage.removeItem('ezy_admin_tok'); show($('adminCard'),false); show($('loginCard'),true); msg($('loginMsg'),'Sesi tamat / bukan admin. Log masuk semula.','warn'); return; }
+    if(r.status===401){
+      $('list').innerHTML='';
+      msg($('adminMsg'),'Akaun '+(meEmail||'ini')+' bukan admin yang dibenarkan. Hanya keyrooll@gmail.com boleh lulus staff. Klik "Tukar akaun" & log masuk sebagai admin.','err');
+      return;
+    }
     const d=await r.json(); const staff=d.staff||[];
-    $('adminWho').textContent = staff.length+' staff';
+    msg($('adminMsg'),'','');
     render(staff);
   }catch(e){ $('list').innerHTML='<div class="muted">Gagal memuatkan.</div>'; }
 }
@@ -126,32 +145,47 @@ function render(staff){
   });
   $('list').innerHTML=html;
 }
+function branchOptionsFor(companyId, selected){
+  const b=(COMPANIES[companyId]||{}).branches||[];
+  return b.map(x=>`<option value="${x}"${x===selected?' selected':''}>${x}</option>`).join('');
+}
+function onCoChange(sel){
+  const email=sel.getAttribute('data-email');
+  const br=document.querySelector('.brSel[data-email="'+CSS.escape(email)+'"]');
+  if(br) br.innerHTML=branchOptionsFor(sel.value,'');
+}
 function row(s){
   const em=s.email.replace(/'/g,"\\'");
-  const cn=COMPANIES[s.company]||s.company||'';
-  let actions='';
-  if(s.status==='pending'){
-    actions = `<button class="btn sm ok" onclick="act('${em}','approved')">Lulus</button>
-               <button class="btn sm no" onclick="act('${em}','rejected')">Tolak</button>`;
-  } else if(s.status==='approved'){
-    actions = `<button class="btn sm no" onclick="act('${em}','rejected')">Tarik balik</button>`;
-  } else {
-    actions = `<button class="btn sm ok" onclick="act('${em}','approved')">Lulus</button>`;
+  const badge=`<span class="badge ${s.status}">${({pending:'Menunggu',approved:'Lulus',rejected:'Tolak'})[s.status]||s.status}</span>`;
+  const info=`<div class="info"><b>${s.name||s.email}</b><div class="m">${s.email}${s.company?(' · '+coName(s.company)):''}${s.branch?(' · '+s.branch):''}</div></div>`;
+  if(s.status!=='approved'){
+    // admin assigns the company (+ optional branch) when approving
+    const coSel=`<select class="coSel" data-email="${s.email}" onchange="onCoChange(this)" style="flex:1;min-width:140px"><option value="">— pilih syarikat —</option>${Object.keys(COMPANIES).map(id=>`<option value="${id}"${s.company===id?' selected':''}>${coName(id)}</option>`).join('')}</select>`;
+    const brSel=`<select class="brSel" data-email="${s.email}" style="flex:1;min-width:120px">${branchOptionsFor(s.company,s.branch)}</select>`;
+    const tolak = s.status==='pending' ? `<button class="btn sm no" onclick="act('${em}','rejected')">Tolak</button>` : '';
+    return `<div class="staff">${info}${badge}
+      <div style="display:flex;gap:6px;flex-wrap:wrap;width:100%;margin-top:6px;align-items:center">
+        ${coSel}${brSel}<button class="btn sm ok" onclick="act('${em}','approved')">Lulus</button>${tolak}
+      </div></div>`;
   }
-  return `<div class="staff">
-    <div class="info"><b>${s.name||s.email}</b><div class="m">${s.email} · ${cn}${s.branch?(' · '+s.branch):''}</div></div>
-    <span class="badge ${s.status}">${({pending:'Menunggu',approved:'Lulus',rejected:'Tolak'})[s.status]||s.status}</span>
-    <div style="display:flex;gap:6px">${actions}</div>
-  </div>`;
+  return `<div class="staff">${info}${badge}<div style="display:flex;gap:6px"><button class="btn sm no" onclick="act('${em}','rejected')">Tarik balik</button></div></div>`;
 }
 async function act(email, status){
+  let company='', branch='';
+  if(status==='approved'){
+    const co=document.querySelector('.coSel[data-email="'+CSS.escape(email)+'"]');
+    const br=document.querySelector('.brSel[data-email="'+CSS.escape(email)+'"]');
+    company = co ? co.value : '';
+    branch = br ? br.value : '';
+    if(!company){ msg($('adminMsg'),'Pilih syarikat untuk '+email+' dahulu','err'); return; }
+  }
   msg($('adminMsg'),'Mengemaskini…','warn');
   try{
     const r=await fetch(WORKER+'/staff/admin/approve',{method:'POST',
       headers:{'Authorization':'Bearer '+getTok(),'Content-Type':'application/json'},
-      body:JSON.stringify({email, status})});
+      body:JSON.stringify({email, status, company, branch})});
     const d=await r.json();
-    if(r.ok){ msg($('adminMsg'),'✅ '+email+' → '+(status==='approved'?'diluluskan':'ditolak'),'ok'); loadList(); }
+    if(r.ok){ msg($('adminMsg'),'✅ '+email+' → '+(status==='approved'?('diluluskan ('+coName(company)+')'):'ditolak'),'ok'); loadList(); }
     else if(r.status===401){ msg($('adminMsg'),'Bukan admin / sesi tamat','err'); }
     else { msg($('adminMsg'),d.error||'Gagal','err'); }
   }catch(e){ msg($('adminMsg'),'Masalah sambungan','err'); }
