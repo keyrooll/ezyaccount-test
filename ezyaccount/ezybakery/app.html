@@ -205,7 +205,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
   <label class="kekal-row">
     <input type="checkbox" id="kekalCheck"> Kekal Log Masuk
   </label>
-  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v6.5-2016/2133</div>
+  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v6.6-1121/2133</div>
 </div>
 
 <!-- PENDING SCREEN -->
@@ -233,7 +233,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
     <div class="header-left">
       <img id="headerCompanyLogo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD7HY4Un0Ga8+stR1y50XTtVu/FF1bNqFstyIbXQTOkYYA7cqrHjOOTk9a9Ak/1bf7p/lXl9jY3t/4I8Ita6fLcj+yYQzrbeaEJVev+kRY9eh+vavRwPJyvmtuuifR90znrXurf1t2Lth4p8SaL8Qz4b8Q2F7e6PeeUthrS2XlIJnX/AFT7eOSMA9QevByPRa8l8Y+J7PTtTsvDtnol3cWuiXMd3cXMUnlxq0Q8xlBfPA3jOWzlgB2r1SxuYbyxt7y3YtDPEssZIxlWAI/Q1zYnEUa8k6as1o7K17dbba9baE4eom5QUr2/r5kxGQRjINcPZ+E/EemWNvp+m+K9UjtLWNYoI/KtfkRRtUZMRJwvc9Ww3sb/AIv8INr+t6Zqa6rLbCxDDyCpZHJYMDwy4Py4PUFSR3rkk+Ft8IV0cat5VmdMuYp7uBTH5tzIHWKTytxwY/NlbIYA5QADbXXh1RjSb9qr72cb7X6v+tfJjqOblbl073/r+kaMvw0h1S7kn1++1K8890e4VZ0iS42cL5iRqAxA4yAD/TuNLvdMnQ22nXNs4twYzFEwzGFZo8Y6gBkZfqpHavKtV+BkFzcao1l4luLSC7hhit4TFI6W3liLAx5oDoDFuVWBALtndk56XwH8OI/C3iu58QnVEv7m7tJLeeSW0Cykm5knUhw3AAl2lcYOxSNuMVwSUG3JbvsrF06UYNtLc//Z" alt="" class="header-logo" style="width:32px;height:32px;border-radius:6px;object-fit:contain">
       <span class="header-title" id="headerCompanyName">EzyAccount</span>
-      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v6.5-2016/2133</span>
+      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v6.6-1121/2133</span>
     </div>
     <div class="header-right"><button onclick="window.location.href='../index.html'" title="Tukar Syarikat" style="background:none;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;padding:5px 10px;margin-right:4px">🏢 Tukar</button>
       <button id="btnRefresh" onclick="refreshAllData()" title="Refresh Data" style="background:none;border:none;font-size:18px;cursor:pointer;padding:4px;line-height:1">🔄</button>
@@ -670,6 +670,50 @@ let currentRole = null;
 let currentStep = 1;
 let uploadedImage = null; // base64 (first page, kept for Drive upload)
 let uploadedPages = []; // array of base64 strings for multi-page
+
+// ===== EMAIL MODE (email/password migration) ============================================
+// User logged in with email/password via the ezyaccount-staff worker (no Google token). A fetch
+// shim transparently routes all Google Sheets calls to the worker, which performs them AS THE
+// OWNER. Google users are unaffected (EMAIL_MODE stays false). Drive routing comes next phase.
+const STAFF_WORKER = 'https://ezyaccount-staff.keyrooll.workers.dev';
+let EMAIL_MODE = false, EMAIL_JWT = '';
+function _jwtPayload(t){ try{ return JSON.parse(atob(String(t).split('.')[1].replace(/-/g,'+').replace(/_/g,'/'))); }catch(e){ return {}; } }
+function _emailJwtValid(t){ const p=_jwtPayload(t); return !!(p && p.exp && p.exp*1000>Date.now() && p.company===COMPANY_CONFIG.id); }
+const _ORIG_FETCH = window.fetch.bind(window);
+function _workerSheet(payload){
+  payload.company = COMPANY_CONFIG.id;
+  return _ORIG_FETCH(STAFF_WORKER+'/data/sheet', { method:'POST',
+    headers:{'Authorization':'Bearer '+EMAIL_JWT,'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+}
+window.fetch = function(url, opts){
+  if(EMAIL_MODE){
+    try{
+      const u = (typeof url==='string') ? url : (url && url.url) || '';
+      const mv = u.match(/^https:\/\/sheets\.googleapis\.com\/v4\/spreadsheets\/[^/]+\/values\/([^?]+?)(:append)?(\?.*)?$/);
+      if(mv){
+        const method=((opts&&opts.method)||'GET').toUpperCase();
+        const q=new URLSearchParams(mv[3]||'');
+        let op='get', values;
+        if(mv[2]===':append' || method==='POST') op='append';
+        else if(method==='PUT') op='update';
+        if(opts&&opts.body){ try{ values=JSON.parse(opts.body).values; }catch(e){} }
+        return _workerSheet({op, range:decodeURIComponent(mv[1]), values, valueInputOption:q.get('valueInputOption')||undefined});
+      }
+      const mb = u.match(/^https:\/\/sheets\.googleapis\.com\/v4\/spreadsheets\/[^/:]+:batchUpdate/);
+      if(mb){ let body={}; if(opts&&opts.body){ try{ body=JSON.parse(opts.body); }catch(e){} } return _workerSheet({op:'batchUpdate', body}); }
+    }catch(e){ console.warn('sheet shim:',e); }
+  }
+  return _ORIG_FETCH(url, opts);
+};
+function enterEmailMode(jwt){
+  EMAIL_MODE = true; EMAIL_JWT = jwt;
+  const p = _jwtPayload(jwt);
+  currentToken = jwt; accessToken = jwt;  // truthy so token-guards pass; shim ignores the value
+  currentUser = { email:p.email, name:p.name||p.email };
+  currentRole = (['staff','manager','accountant','super_admin'].includes(p.role)) ? p.role : 'staff';
+  lsSet('ezy_user', currentUser);
+  showMainApp();
+}
 let selectedVendor = null;
 let wizardItems = [];
 let activeTab = '';
@@ -1535,8 +1579,13 @@ function registerUser(u){
 }
 
 function autoLogin(){
+  // Email/password user (no Google) — logged in via the worker; route data through it.
+  // JWT is a raw string (not JSON), so read it directly, not via lsGet's JSON.parse.
+  const ej = (()=>{ try{ return localStorage.getItem('ezy_email_jwt'); }catch(e){ return null; } })();
+  if(ej && _emailJwtValid(ej)){ enterEmailMode(ej); return; }
+
   const user = lsGet('ezy_user',null);
-  
+
   // Check all token sources
   const token1 = lsGet('ezy_token',null);            // app own login
   const expiry1 = lsGet('ezy_token_expiry',0);
@@ -2720,7 +2769,7 @@ function populateDraftBranch(){
 // ===== Phase 3: pull email-staff uploads (from the ezyaccount-staff worker) into Belian drafts.
 // For each pending upload: fetch its image, push it to Drive + a 'Draf' row to the Sheet exactly
 // like submitDraft() does, then tell the worker it's flushed. Owner/accountant only (worker-gated). =====
-const STAFF_WORKER = 'https://ezyaccount-staff.keyrooll.workers.dev';
+// (STAFF_WORKER declared earlier, in the email-mode block.)
 function blobToDataURL(blob){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(blob); }); }
 async function flushStaffUploads(opts){
   const silent = opts && opts.silent;

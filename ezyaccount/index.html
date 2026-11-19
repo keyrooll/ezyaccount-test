@@ -252,9 +252,45 @@
   </label>
   <div class="login-loading" id="loginLoading">⏳ Sedang log masuk...</div>
   <div style="margin-top:18px;padding-top:14px;border-top:1px solid #eee;text-align:center">
-    <a href="staff.html" style="font-size:13px;color:#1a7a4a;font-weight:600;text-decoration:none">👤 Staff? Log Masuk dengan Email</a>
+    <a id="emailLoginToggle" style="font-size:13px;color:#1a7a4a;font-weight:600;text-decoration:none;cursor:pointer">👤 Log Masuk dengan Email</a>
+    <div id="emailLoginForm" style="display:none;margin-top:12px;text-align:left">
+      <input id="elEmail" type="email" autocomplete="username" placeholder="email@contoh.com" style="width:100%;padding:11px 12px;border:1px solid #e5e7eb;border-radius:10px;font-size:15px;margin-bottom:8px">
+      <input id="elPass" type="password" autocomplete="current-password" placeholder="password" style="width:100%;padding:11px 12px;border:1px solid #e5e7eb;border-radius:10px;font-size:15px">
+      <button id="elBtn" style="width:100%;padding:12px;border:none;border-radius:10px;background:#1a7a4a;color:#fff;font-size:15px;font-weight:700;cursor:pointer;margin-top:10px">Log Masuk</button>
+      <div id="elMsg" style="font-size:13px;margin-top:10px;display:none"></div>
+      <div style="text-align:center;margin-top:10px;font-size:12px;color:#6b7280">Belum ada akaun? <a href="staff.html" style="color:#1a7a4a;font-weight:600">Daftar di sini</a></div>
+    </div>
   </div>
 </div>
+<script>
+(function(){
+  const EMAIL_WORKER='https://ezyaccount-staff.keyrooll.workers.dev';
+  const tgl=document.getElementById('emailLoginToggle'), frm=document.getElementById('emailLoginForm');
+  if(tgl&&frm) tgl.onclick=()=>{ frm.style.display = frm.style.display==='none'?'block':'none'; const e=document.getElementById('elEmail'); if(e&&frm.style.display!=='none') e.focus(); };
+  const btn=document.getElementById('elBtn');
+  const msgEl=document.getElementById('elMsg');
+  const show=(t,c)=>{ if(!msgEl)return; msgEl.style.display='block'; msgEl.style.color=c; msgEl.textContent=t; };
+  async function doEmailLogin(){
+    const email=(document.getElementById('elEmail').value||'').trim(), password=document.getElementById('elPass').value;
+    if(!email||!password){ show('Isi email & password','#b91c1c'); return; }
+    btn.disabled=true; show('Memeriksa…','#b45309');
+    try{
+      const r=await fetch(EMAIL_WORKER+'/staff/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password})});
+      const d=await r.json();
+      if(r.ok && d.token){
+        try{ localStorage.setItem('ezy_email_jwt', d.token); }catch(e){}
+        const company=(d.staff&&d.staff.company)||'';
+        if(company){ show('Berjaya, memuatkan…','#0f4a2c'); window.location.href = company+'/app.html'; }
+        else { show('Akaun belum ditetapkan syarikat oleh admin','#b91c1c'); btn.disabled=false; }
+      } else if(r.status===403 && d.pending){ show('Akaun menunggu kelulusan admin.','#b45309'); btn.disabled=false; }
+      else { show(d.error||'Gagal log masuk','#b91c1c'); btn.disabled=false; }
+    }catch(e){ show('Masalah sambungan','#b91c1c'); btn.disabled=false; }
+  }
+  if(btn) btn.onclick=doEmailLogin;
+  const pass=document.getElementById('elPass');
+  if(pass) pass.addEventListener('keydown',e=>{ if(e.key==='Enter') doEmailLogin(); });
+})();
+</script>
 
 <!-- LOADING -->
 <div id="loadingScreen">
@@ -309,7 +345,7 @@
   </div>
 </div>
 
-<div class="footer">EzyAccount · v3.12-0002/0002</div>
+<div class="footer">EzyAccount · v3.13-1121/1121</div>
 
 <script>
 const COMPANIES = [
