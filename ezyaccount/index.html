@@ -345,7 +345,7 @@
   </div>
 </div>
 
-<div class="footer">EzyAccount · v3.13-1121/1121</div>
+<div class="footer">EzyAccount · v3.14-1503/1503</div>
 
 <script>
 const COMPANIES = [
@@ -751,22 +751,39 @@ async function fetchEmailStaff(){
 function emailStaffRow(s){
   const em=(s.email||'').replace(/'/g,"\\'");
   const nm=(s.name||s.email||'').replace(/</g,'&lt;');
-  const badge=s.status==='approved'?'<span style="color:#0f4a2c;font-weight:700;font-size:11px">✓ Lulus</span>':(s.status==='rejected'?'<span style="color:#b91c1c;font-weight:700;font-size:11px">✕ Tolak</span>':'<span style="color:#b45309;font-weight:700;font-size:11px">⏳ Pending</span>');
-  const co=`<select class="emCo" data-email="${s.email}" onchange="_onEmCo(this)" style="font-size:11px;padding:3px;border:1px solid #e5e7eb;border-radius:5px"><option value="">— syarikat —</option>${Object.keys(STAFF_COMPANIES).map(id=>`<option value="${id}"${s.company===id?' selected':''}>${_coName(id)}</option>`).join('')}</select>`;
-  const br=`<select class="emBr" data-email="${s.email}" style="font-size:11px;padding:3px;border:1px solid #e5e7eb;border-radius:5px">${_brOpts(s.company,s.branch)}</select>`;
-  let actions='';
-  if(s.status==='pending'){
-    actions=`<button onclick="approveEmailStaff('${em}','approved')" style="background:#1a7a4a;color:#fff;border:none;border-radius:5px;padding:4px 9px;font-size:11px;font-weight:600;cursor:pointer">Lulus</button><button onclick="approveEmailStaff('${em}','rejected')" style="background:#fff;color:#b91c1c;border:1px solid #b91c1c;border-radius:5px;padding:4px 9px;font-size:11px;cursor:pointer">Tolak</button>`;
-  } else if(s.status==='approved'){
-    actions=`<button onclick="approveEmailStaff('${em}','approved')" style="background:#fff;color:#1a7a4a;border:1px solid #1a7a4a;border-radius:5px;padding:4px 9px;font-size:11px;font-weight:600;cursor:pointer">Kemaskini</button><button onclick="approveEmailStaff('${em}','rejected')" style="background:#fff;color:#b91c1c;border:1px solid #b91c1c;border-radius:5px;padding:4px 9px;font-size:11px;cursor:pointer">Tarik balik</button>`;
-  } else {
-    actions=`<button onclick="approveEmailStaff('${em}','approved')" style="background:#1a7a4a;color:#fff;border:none;border-radius:5px;padding:4px 9px;font-size:11px;font-weight:600;cursor:pointer">Lulus</button>`;
-  }
+  const roles=s.roles||{};
+  const badge = s.status==='approved'?'<span style="font-size:10px;color:#0f4a2c;font-weight:700">✓</span>':(s.status==='rejected'?'<span style="font-size:10px;color:#b91c1c;font-weight:700">✕</span>':'<span style="font-size:10px;color:#d97706;font-weight:700">⏳ pending</span>');
+  // Same per-company role dropdowns as Google staff — assign any role to any company.
   return `<tr style="border-bottom:1px solid #f0f0f0;background:#f0fdf4">
-    <td style="padding:6px 8px"><div style="font-weight:600">${nm} <span style="font-size:10px;color:#2563eb">📧 email</span></div><div style="color:#6b7280;font-size:11px">${s.email}</div></td>
-    <td colspan="${GROUP_COMPANIES.length}" style="padding:4px 8px"><div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center">${co}${br}${badge}${actions}</div></td>
-    <td></td>
+    <td style="padding:6px 8px"><div style="font-weight:600">${nm} <span style="font-size:10px;color:#2563eb">📧 email</span> ${badge}</div><div style="color:#6b7280;font-size:11px">${s.email}</div></td>
+    ${GROUP_COMPANIES.map(c=>{const val=(roles[c.id]||'').toLowerCase();return `<td style="padding:4px;text-align:center"><select onchange="updateEmailRole('${em}','${c.id}',this.value)" style="font-size:11px;padding:3px;border:1px solid #e5e7eb;border-radius:5px">${ROLE_OPTS.map(o=>`<option value="${o[0]}" ${val===o[0]?'selected':''}>${o[1]}</option>`).join('')}</select></td>`;}).join('')}
+    <td style="padding:4px;text-align:center"><button onclick="removeEmailStaff('${em}')" title="Tolak akaun" style="background:none;border:none;color:#dc2626;cursor:pointer;font-size:14px">✕</button></td>
   </tr>`;
+}
+// Per-company role edits for email staff are buffered locally, then saved on "Simpan Semua"
+// (same as Google staff). Each change POSTs a {roles} map to the worker.
+function updateEmailRole(email, companyId, role){
+  const s=(_emailStaff||[]).find(x=>x.email===email); if(!s) return;
+  if(!s.roles) s.roles={};
+  if(role) s.roles[companyId]=role; else delete s.roles[companyId];
+  s._dirty=true;
+}
+async function removeEmailStaff(email){
+  if(!confirm('Tolak / tarik semua akses akaun email '+email+'?')) return;
+  try{
+    const r=await fetch(STAFF_WORKER+'/staff/admin/approve',{method:'POST',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({email,status:'rejected',roles:{}})});
+    if(!r.ok){ const d=await r.json().catch(()=>({})); alert(d.error||'Gagal'); return; }
+  }catch(e){ alert('Masalah sambungan'); return; }
+  await fetchEmailStaff(); renderStaffTable();
+}
+async function saveEmailStaffRoles(){
+  const dirty=(_emailStaff||[]).filter(s=>s._dirty);
+  for(const s of dirty){
+    try{
+      await fetch(STAFF_WORKER+'/staff/admin/approve',{method:'POST',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({email:s.email,roles:s.roles||{}})});
+      s._dirty=false;
+    }catch(e){ console.warn('save email role',e); }
+  }
 }
 async function approveEmailStaff(email, status){
   let company='',branch='';
@@ -836,7 +853,7 @@ function addStaffRow(){
 async function saveStaffRegistry(){
   const btn=document.getElementById('btnSaveRegistry');
   btn.disabled=true; btn.textContent='Menyimpan...';
-  try{ await saveRegistry(); btn.textContent='✅ Disimpan'; setTimeout(()=>{btn.textContent='Simpan Semua';btn.disabled=false;},1500); }
+  try{ await saveRegistry(); await saveEmailStaffRoles(); btn.textContent='✅ Disimpan'; await fetchEmailStaff(); renderStaffTable(); setTimeout(()=>{btn.textContent='Simpan Semua';btn.disabled=false;},1500); }
   catch(e){ alert('Gagal simpan: '+e.message); btn.textContent='Simpan Semua'; btn.disabled=false; }
 }
 
