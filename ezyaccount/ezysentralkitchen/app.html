@@ -201,7 +201,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
   <div class="login-title" style="font-size:28px;font-weight:800;color:var(--dark);margin-bottom:4px">Receipt System</div>
   <div style="font-size:13px;color:var(--mid);margin-bottom:28px">smart staff, ezy working</div>
   <button class="btn-google" onclick="doLogin()">
-    <svg class="google-svg" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Log masuk dengan Google</button>
+    <svg class="google-svg" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.27h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Log masuk dengan Google</button>
   <label class="kekal-row">
     <input type="checkbox" id="kekalCheck"> Kekal Log Masuk
   </label>
@@ -999,7 +999,57 @@ function silentRenew(){
   try{ tokenClient.requestAccessToken({prompt:''}); }   // '' = no popup while a Google session exists
   catch(e){ _renewInFlight=false; console.warn('silentRenew',e); onRenewFail(); }
 }
+// ===== Email/password login (no Google). The session is established at the landing page (level 1);
+// this app just accepts the JWT and routes all Google-Sheet calls through the ezyaccount-staff worker. =====
+const STAFF_WORKER='https://ezyaccount-staff.keyrooll.workers.dev';
+let EMAIL_MODE=false, EMAIL_JWT='';
+let _myRoles={}, _myBranchMap={}, _writeCompany=null;
+function _jwtPayload(t){ try{ return JSON.parse(atob(String(t).split('.')[1].replace(/-/g,'+').replace(/_/g,'/'))); }catch(e){ return {}; } }
+function _roleForThisCompany(p){ return (p && p.roles && p.roles[COMPANY_CONFIG.id]) || (p && p.company===COMPANY_CONFIG.id ? p.role : '') || ''; }
+function _emailJwtValid(t){ const p=_jwtPayload(t); return !!(p && p.exp && p.exp*1000>Date.now() && _roleForThisCompany(p)); }
+const _ORIG_FETCH = window.fetch.bind(window);
+function _workerSheet(payload){
+  if(!payload.company) payload.company = COMPANY_CONFIG.id;
+  return _ORIG_FETCH(STAFF_WORKER+'/data/sheet', { method:'POST',
+    headers:{'Authorization':'Bearer '+EMAIL_JWT,'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+}
+window.fetch = function(url, opts){
+  if(EMAIL_MODE){
+    try{
+      const u = (typeof url==='string') ? url : (url && url.url) || '';
+      const mv = u.match(/^https:\/\/sheets\.googleapis\.com\/v4\/spreadsheets\/[^/]+\/values\/([^?]+?)(:append)?(\?.*)?$/);
+      if(mv){
+        const method=((opts&&opts.method)||'GET').toUpperCase();
+        const q=new URLSearchParams(mv[3]||'');
+        let op='get', values;
+        if(mv[2]===':append' || method==='POST') op='append';
+        else if(method==='PUT') op='update';
+        if(opts&&opts.body){ try{ values=JSON.parse(opts.body).values; }catch(e){} }
+        const range=decodeURIComponent(mv[1]);
+        const isReceipt=/^(resit|resit_items)(!|$)/i.test(range);
+        const company=(isReceipt && _writeCompany)?_writeCompany:COMPANY_CONFIG.id;
+        return _workerSheet({op, range, values, valueInputOption:q.get('valueInputOption')||undefined, company});
+      }
+      const mb = u.match(/^https:\/\/sheets\.googleapis\.com\/v4\/spreadsheets\/[^/:]+:batchUpdate/);
+      if(mb){ let body={}; if(opts&&opts.body){ try{ body=JSON.parse(opts.body); }catch(e){} } return _workerSheet({op:'batchUpdate', body, company:(_writeCompany||COMPANY_CONFIG.id)}); }
+    }catch(e){ console.warn('sheet shim:',e); }
+  }
+  return _ORIG_FETCH(url, opts);
+};
+function enterEmailMode(jwt){
+  EMAIL_MODE = true; EMAIL_JWT = jwt;
+  _authPhase = 'active';
+  const p = _jwtPayload(jwt);
+  _myRoles = p.roles || {}; _myBranchMap = p.branches || {}; _writeCompany = null;
+  const role = _roleForThisCompany(p) || 'staff';
+  currentToken = jwt; accessToken = jwt;
+  currentUser = { email:p.email, name:p.name||p.email };
+  currentRole = (['staff','manager','accountant','super_admin'].includes(role)) ? role : 'staff';
+  lsSet('ezy_user', currentUser);
+  showMainApp();
+}
 function onRenewFail(){
+  if(EMAIL_MODE || currentToken) return;   // email session or a held token — never bounce
   // Couldn't refresh silently (signed out of Google / cleared cookies).
   if(_authPhase==='entering') window.location.href='../index.html'; // need a real login
   else showReconnectBar();                                          // already inside — offer reconnect
@@ -1094,6 +1144,19 @@ function registerUser(u){
 }
 
 function autoLogin(){
+  // Email session (from the landing page) takes priority — never fall into the Google re-login.
+  const ej = (()=>{ try{ return localStorage.getItem('ezy_email_jwt'); }catch(e){ return null; } })();
+  if(ej){
+    const _p = _jwtPayload(ej);
+    const _live = _p && _p.exp && _p.exp*1000 > Date.now();
+    if(_live){
+      if(_roleForThisCompany(_p)){ enterEmailMode(ej); return; }
+      const _tgt = Object.keys(_p.roles||{})[0] || _p.company || '';
+      if(_tgt && _tgt!==COMPANY_CONFIG.id){ window.location.href='../'+_tgt+'/app.html'; return; }
+      window.location.href='../index.html'; return;
+    }
+    try{ localStorage.removeItem('ezy_email_jwt'); }catch(e){}
+  }
   const user = lsGet('ezy_user',null);
   
   // Check all token sources
@@ -1125,7 +1188,7 @@ function autoLogin(){
     if(gisReady && tokenClient){
       silentRenew();
       // Safety net: if no token arrives (Google session really gone), go log in.
-      setTimeout(()=>{ if(!currentToken && _authPhase==='entering') window.location.href='../index.html'; }, 6000);
+      setTimeout(()=>{ if(!currentToken && _authPhase==='entering' && !EMAIL_MODE) window.location.href='../index.html'; }, 10000);
     }
     // else: GIS not ready yet — onGISLoaded() calls autoLogin() again once it is.
     return;
