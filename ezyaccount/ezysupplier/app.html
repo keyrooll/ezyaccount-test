@@ -205,7 +205,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
   <label class="kekal-row">
     <input type="checkbox" id="kekalCheck"> Kekal Log Masuk
   </label>
-  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v3.55-2251/2224</div>
+  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v3.56-cfoupload</div>
 </div>
 
 <!-- PENDING SCREEN -->
@@ -233,7 +233,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
     <div class="header-left">
       <img id="headerCompanyLogo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD7HY4Un0Ga8+stR1y50XTtVu/FF1bNqFstyIbXQTOkYYA7cqrHjOOTk9a9Ak/1bf7p/lXl9jY3t/4I8Ita6fLcj+yYQzrbeaEJVev+kRY9eh+vavRwPJyvmtuuifR90znrXurf1t2Lth4p8SaL8Qz4b8Q2F7e6PeeUthrS2XlIJnX/AFT7eOSMA9QevByPRa8l8Y+J7PTtTsvDtnol3cWuiXMd3cXMUnlxq0Q8xlBfPA3jOWzlgB2r1SxuYbyxt7y3YtDPEssZIxlWAI/Q1zYnEUa8k6as1o7K17dbba9baE4eom5QUr2/r5kxGQRjINcPZ+E/EemWNvp+m+K9UjtLWNYoI/KtfkRRtUZMRJwvc9Ww3sb/AIv8INr+t6Zqa6rLbCxDDyCpZHJYMDwy4Py4PUFSR3rkk+Ft8IV0cat5VmdMuYp7uBTH5tzIHWKTytxwY/NlbIYA5QADbXXh1RjSb9qr72cb7X6v+tfJjqOblbl073/r+kaMvw0h1S7kn1++1K8890e4VZ0iS42cL5iRqAxA4yAD/TuNLvdMnQ22nXNs4twYzFEwzGFZo8Y6gBkZfqpHavKtV+BkFzcao1l4luLSC7hhit4TFI6W3liLAx5oDoDFuVWBALtndk56XwH8OI/C3iu58QnVEv7m7tJLeeSW0Cykm5knUhw3AAl2lcYOxSNuMVwSUG3JbvsrF06UYNtLc//Z" alt="" class="header-logo" style="width:32px;height:32px;border-radius:6px;object-fit:contain">
       <span class="header-title" id="headerCompanyName">EzyAccount</span>
-      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v3.55-2251/2224</span>
+      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v3.56-cfoupload</span>
     </div>
     <div class="header-right"><button onclick="window.location.href='../index.html'" title="Tukar Syarikat" style="background:none;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;padding:5px 10px;margin-right:4px">🏢 Tukar</button>
       <button id="btnRefresh" onclick="refreshAllData()" title="Refresh Data" style="background:none;border:none;font-size:18px;cursor:pointer;padding:4px;line-height:1">🔄</button>
@@ -2320,6 +2320,16 @@ async function submitDraft(){
   if(!uploadedImage && !(uploadedPages&&uploadedPages.length)){ showToast('Sila ambil gambar resit dulu ⚠️'); return; }
   if(btn){ btn.disabled=true; btn.textContent='Menghantar...'; }
   const branch=document.getElementById('draftBranch')?.value || (getStaffBranches(currentUser.email)[0]||'');
+  if(EMAIL_MODE){
+    const res=await emailStaffUpload(branch,'','');
+    if(btn){ btn.disabled=false; btn.textContent='Hantar Resit'; }
+    if(!res.ok){ showToast('❌ '+res.error); return; }
+    ['wStep1','wStep2','wStep3','wStep4'].forEach(idd=>{const el=document.getElementById(idd);if(el)el.style.display='none';});
+    const _sc=document.getElementById('wSuccess'); if(_sc) _sc.style.display='block';
+    uploadedImage=null; uploadedPages=[];
+    showToast('Resit dihantar ✅ (Miss CFO akan proses)');
+    return;
+  }
   const u=currentUser; const profile=getUserProfile(u.email); const uploadedBy=profile.fullname||u.name;
   const date=new Date().toISOString().split('T')[0];
   let driveLink='',filename='';
@@ -2384,6 +2394,14 @@ async function submitReceipt(){
   const amount=parseFloat(document.getElementById('receiptAmount').value)||0;
   const nota=document.getElementById('receiptNota').value;
   const branch=document.getElementById('receiptBranch').value;
+  if(EMAIL_MODE){
+    const res=await emailStaffUpload(branch, amount||'', nota||'');
+    if(!res.ok){ btn.disabled=false; btn.textContent='Hantar'; showToast('❌ '+res.error); return; }
+    const _sc=document.getElementById('wSuccess'); if(_sc) _sc.style.display='block';
+    uploadedImage=null; uploadedPages=[]; selectedVendor=null; wizardItems=[]; currentStep=1;
+    showToast('Resit dihantar ✅ (Miss CFO akan proses)');
+    return;
+  }
   const items=wizardItems.filter(i=>!i._deleted&&!i._empty);
   const incompleteItem=items.find(i=>!i.name&&(parseFloat(i.price)>0||parseFloat(i.qty)>0));
   if(incompleteItem){
@@ -2583,6 +2601,29 @@ function base64ToBlob(base64,type){
   const arr=new Uint8Array(b.length);
   for(let i=0;i<b.length;i++) arr[i]=b.charCodeAt(i);
   return new Blob([arr],{type});
+}
+// Email-mode staff: send receipt image(s) to the accountant inbox (/staff/upload -> Miss CFO).
+// Email-staff have no Google token, so the old sheet/Drive path silently no-ops; this routes the
+// image to R2 + pending_uploads instead, and reports REAL success/failure (no more fake "Dihantar").
+async function emailStaffUpload(branch, amount, note){
+  const pages=(uploadedPages&&uploadedPages.length)?uploadedPages:(uploadedImage?[uploadedImage]:[]);
+  if(!pages.length) return { ok:false, error:'Tiada gambar' };
+  const company=_writeCompany||COMPANY_CONFIG.id;
+  let ok=0, err='';
+  for(const b64 of pages){
+    try{
+      const fd=new FormData();
+      fd.append('image', base64ToBlob(b64,'image/jpeg'), 'resit.jpg');
+      fd.append('company', company);
+      fd.append('branch', branch||'');
+      if(amount) fd.append('amount', amount);
+      if(note) fd.append('note', note);
+      const r=await fetch(STAFF_WORKER+'/staff/upload',{ method:'POST', headers:{'Authorization':'Bearer '+EMAIL_JWT}, body:fd });
+      const d=await r.json().catch(()=>({}));
+      if(r.ok) ok++; else err=(r.status===401?'Sesi tamat — log masuk semula':(d.error||'Gagal hantar'));
+    }catch(e){ err='Masalah sambungan'; }
+  }
+  return ok?{ ok:true, count:ok }:{ ok:false, error:err||'Gagal hantar' };
 }
 
 // =====================
