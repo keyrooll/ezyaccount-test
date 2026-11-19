@@ -205,7 +205,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
   <label class="kekal-row">
     <input type="checkbox" id="kekalCheck"> Kekal Log Masuk
   </label>
-  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v6.8-1603/2133</div>
+  <div style="position:absolute;bottom:20px;font-size:11px;color:#bbb;letter-spacing:0.5px">EzyAccount v6.9-1630/2133</div>
 </div>
 
 <!-- PENDING SCREEN -->
@@ -233,7 +233,7 @@ table.data-table td{padding:8px;border-bottom:1px solid var(--border);color:var(
     <div class="header-left">
       <img id="headerCompanyLogo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAAgACADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD7HY4Un0Ga8+stR1y50XTtVu/FF1bNqFstyIbXQTOkYYA7cqrHjOOTk9a9Ak/1bf7p/lXl9jY3t/4I8Ita6fLcj+yYQzrbeaEJVev+kRY9eh+vavRwPJyvmtuuifR90znrXurf1t2Lth4p8SaL8Qz4b8Q2F7e6PeeUthrS2XlIJnX/AFT7eOSMA9QevByPRa8l8Y+J7PTtTsvDtnol3cWuiXMd3cXMUnlxq0Q8xlBfPA3jOWzlgB2r1SxuYbyxt7y3YtDPEssZIxlWAI/Q1zYnEUa8k6as1o7K17dbba9baE4eom5QUr2/r5kxGQRjINcPZ+E/EemWNvp+m+K9UjtLWNYoI/KtfkRRtUZMRJwvc9Ww3sb/AIv8INr+t6Zqa6rLbCxDDyCpZHJYMDwy4Py4PUFSR3rkk+Ft8IV0cat5VmdMuYp7uBTH5tzIHWKTytxwY/NlbIYA5QADbXXh1RjSb9qr72cb7X6v+tfJjqOblbl073/r+kaMvw0h1S7kn1++1K8890e4VZ0iS42cL5iRqAxA4yAD/TuNLvdMnQ22nXNs4twYzFEwzGFZo8Y6gBkZfqpHavKtV+BkFzcao1l4luLSC7hhit4TFI6W3liLAx5oDoDFuVWBALtndk56XwH8OI/C3iu58QnVEv7m7tJLeeSW0Cykm5knUhw3AAl2lcYOxSNuMVwSUG3JbvsrF06UYNtLc//Z" alt="" class="header-logo" style="width:32px;height:32px;border-radius:6px;object-fit:contain">
       <span class="header-title" id="headerCompanyName">EzyAccount</span>
-      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v6.8-1603/2133</span>
+      <span style="font-size:9px;color:#9ca3af;margin-left:4px;letter-spacing:0.3px">v6.9-1630/2133</span>
     </div>
     <div class="header-right"><button onclick="window.location.href='../index.html'" title="Tukar Syarikat" style="background:none;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;font-weight:500;color:#6b7280;cursor:pointer;padding:5px 10px;margin-right:4px">🏢 Tukar</button>
       <button id="btnRefresh" onclick="refreshAllData()" title="Refresh Data" style="background:none;border:none;font-size:18px;cursor:pointer;padding:4px;line-height:1">🔄</button>
@@ -747,6 +747,7 @@ window.fetch = function(url, opts){
 };
 function enterEmailMode(jwt){
   EMAIL_MODE = true; EMAIL_JWT = jwt;
+  _authPhase = 'active';   // fully inside via email — never let a Google token renewal bounce us out
   const p = _jwtPayload(jwt);
   _myRoles = p.roles || {}; _myBranchMap = p.branches || {}; _writeCompany = null;
   const role = _roleForThisCompany(p) || 'staff';
@@ -1531,6 +1532,7 @@ function silentRenew(){
   catch(e){ _renewInFlight=false; console.warn('silentRenew',e); onRenewFail(); }
 }
 function onRenewFail(){
+  if(EMAIL_MODE || currentToken) return;   // email session, or we still hold a token — never bounce
   // Couldn't refresh silently (signed out of Google / cleared cookies).
   if(_authPhase==='entering') window.location.href='../index.html'; // need a real login
   else showReconnectBar();                                          // already inside — offer reconnect
@@ -1624,7 +1626,19 @@ function autoLogin(){
   // Email/password user (no Google) — logged in via the worker; route data through it.
   // JWT is a raw string (not JSON), so read it directly, not via lsGet's JSON.parse.
   const ej = (()=>{ try{ return localStorage.getItem('ezy_email_jwt'); }catch(e){ return null; } })();
-  if(ej && _emailJwtValid(ej)){ enterEmailMode(ej); return; }
+  if(ej){
+    const _p = _jwtPayload(ej);
+    const _live = _p && _p.exp && _p.exp*1000 > Date.now();
+    if(_live){
+      if(_roleForThisCompany(_p)){ enterEmailMode(ej); return; }    // has a role here → come in
+      // Valid email session but no role for THIS company: route to a company they DO have.
+      // Email users must NEVER fall through into the Google re-login (that caused the login bounce).
+      const _tgt = Object.keys(_p.roles||{})[0] || _p.company || '';
+      if(_tgt && _tgt!==COMPANY_CONFIG.id){ window.location.href = '../'+_tgt+'/app.html'; return; }
+      window.location.href = '../index.html'; return;               // no usable company → landing
+    }
+    try{ localStorage.removeItem('ezy_email_jwt'); }catch(e){}       // expired token → drop it, fall through
+  }
 
   const user = lsGet('ezy_user',null);
 
@@ -1657,7 +1671,7 @@ function autoLogin(){
     if(gisReady && tokenClient){
       silentRenew();
       // Safety net: if no token arrives (Google session really gone), go log in.
-      setTimeout(()=>{ if(!currentToken && _authPhase==='entering') window.location.href='../index.html'; }, 6000);
+      setTimeout(()=>{ if(!currentToken && _authPhase==='entering' && !EMAIL_MODE) window.location.href='../index.html'; }, 10000);
     }
     // else: GIS not ready yet — onGISLoaded() calls autoLogin() again once it is.
     return;

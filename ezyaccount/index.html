@@ -345,7 +345,7 @@
   </div>
 </div>
 
-<div class="footer">EzyAccount · v3.15-1603/1503</div>
+<div class="footer">EzyAccount · v3.16-1630/1503</div>
 
 <script>
 const COMPANIES = [
@@ -483,7 +483,13 @@ async function fetchUser(){
     sessionStorage.setItem('ezy_sess_token', currentToken);
     sessionStorage.setItem('ezy_sess_expiry', String(expiry||Date.now()+3599000));
     showCompanyScreen(u);
-  }catch(e){console.error(e);showScreen('loginScreen');}
+  }catch(e){
+    console.error(e);
+    // A transient userinfo failure right after a valid token must NOT bounce the user back to login.
+    const cached=lsGet('ezy_user',null);
+    if(cached&&cached.email){ showCompanyScreen(cached); return; }
+    showScreen('loginScreen');
+  }
 }
 
 function autoLogin(){
