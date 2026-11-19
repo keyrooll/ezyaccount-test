@@ -345,7 +345,7 @@
   </div>
 </div>
 
-<div class="footer">EzyAccount · v3.14-1503/1503</div>
+<div class="footer">EzyAccount · v3.15-1603/1503</div>
 
 <script>
 const COMPANIES = [
@@ -736,6 +736,7 @@ const STAFF_COMPANIES={
 };
 const _coName=(id)=>(STAFF_COMPANIES[id]||{}).name||id||'';
 const _brOpts=(co,sel)=>((STAFF_COMPANIES[co]||{}).branches||[]).map(b=>`<option value="${b}"${b===sel?' selected':''}>${b}</option>`).join('');
+const _emKey=(email)=>(email||'').replace(/[^a-z0-9]/gi,'_');
 function _onEmCo(sel){ const em=sel.getAttribute('data-email'); const br=document.querySelector('.emBr[data-email="'+CSS.escape(em)+'"]'); if(br) br.innerHTML=_brOpts(sel.value,''); }
 let _emailStaff=[], _emailStaffErr='';
 async function fetchEmailStaff(){
@@ -750,23 +751,58 @@ async function fetchEmailStaff(){
 // a single company/branch assignment spanning the per-company columns + status + actions.
 function emailStaffRow(s){
   const em=(s.email||'').replace(/'/g,"\\'");
+  const key=_emKey(s.email||'');
   const nm=(s.name||s.email||'').replace(/</g,'&lt;');
   const roles=s.roles||{};
+  const colspan=GROUP_COMPANIES.length+2;
   const badge = s.status==='approved'?'<span style="font-size:10px;color:#0f4a2c;font-weight:700">✓</span>':(s.status==='rejected'?'<span style="font-size:10px;color:#b91c1c;font-weight:700">✕</span>':'<span style="font-size:10px;color:#d97706;font-weight:700">⏳ pending</span>');
   // Same per-company role dropdowns as Google staff — assign any role to any company.
+  // Plus a collapsible branch panel: admin locks which branch(es) of each assigned company the staff may file to.
   return `<tr style="border-bottom:1px solid #f0f0f0;background:#f0fdf4">
-    <td style="padding:6px 8px"><div style="font-weight:600">${nm} <span style="font-size:10px;color:#2563eb">📧 email</span> ${badge}</div><div style="color:#6b7280;font-size:11px">${s.email}</div></td>
+    <td style="padding:6px 8px"><div style="font-weight:600">${nm} <span style="font-size:10px;color:#2563eb">📧 email</span> ${badge}</div><div style="color:#6b7280;font-size:11px">${s.email}</div><button onclick="toggleEmBranchRow('${em}')" style="margin-top:4px;background:#eff6ff;border:1px solid #bfdbfe;color:#2563eb;border-radius:6px;padding:2px 8px;font-size:10px;cursor:pointer">🏢 Branch</button></td>
     ${GROUP_COMPANIES.map(c=>{const val=(roles[c.id]||'').toLowerCase();return `<td style="padding:4px;text-align:center"><select onchange="updateEmailRole('${em}','${c.id}',this.value)" style="font-size:11px;padding:3px;border:1px solid #e5e7eb;border-radius:5px">${ROLE_OPTS.map(o=>`<option value="${o[0]}" ${val===o[0]?'selected':''}>${o[1]}</option>`).join('')}</select></td>`;}).join('')}
     <td style="padding:4px;text-align:center"><button onclick="removeEmailStaff('${em}')" title="Tolak akaun" style="background:none;border:none;color:#dc2626;cursor:pointer;font-size:14px">✕</button></td>
-  </tr>`;
+  </tr>
+  <tr id="embrRow_${key}" style="display:none;background:#f0fdf4"><td colspan="${colspan}" style="padding:4px 12px 10px 12px;border-bottom:1px solid #f0f0f0"><div style="font-size:10px;color:#6b7280;margin-bottom:4px">🏢 <b>Branch dibenarkan</b> per company — klik untuk hijau = benarkan. Tiada pilihan = <b>semua branch</b> dibenarkan.</div><div id="embrPanel_${key}">${emBranchPanel(s)}</div></td></tr>`;
+}
+// Branch lock panel for one email staff: a chip group per company they hold a role for.
+function emBranchPanel(s){
+  const email=s.email||'';
+  const roles=s.roles||{}, br=s.branches||{};
+  const cos=Object.keys(roles);
+  if(!cos.length) return '<div style="color:#9ca3af;font-size:11px">Assign role dulu untuk kunci branch.</div>';
+  return cos.map(co=>{
+    const all=(STAFF_COMPANIES[co]||{}).branches||[];
+    const sel=br[co]||[];
+    const chips=all.map(b=>{
+      const on=sel.includes(b);
+      return `<span onclick="toggleEmBranch('${email.replace(/'/g,"\\'")}','${co}','${b.replace(/'/g,"\\'").replace(/"/g,'&quot;')}')" style="display:inline-block;padding:3px 9px;margin:2px;border-radius:14px;cursor:pointer;font-size:11px;border:1px solid ${on?'#16a34a':'#e5e7eb'};background:${on?'#16a34a':'#fff'};color:${on?'#fff':'#374151'}">${b.replace(/</g,'&lt;')}</span>`;
+    }).join('')||'<span style="font-size:11px;color:#9ca3af">(tiada branch)</span>';
+    const note = sel.length? `<span style="font-size:10px;color:#16a34a;margin-left:6px">${sel.length} dipilih</span>` : '<span style="font-size:10px;color:#9ca3af;margin-left:6px">(semua branch)</span>';
+    return `<div style="margin:6px 0"><div style="font-size:11px;font-weight:700;color:#2563eb;margin-bottom:2px">${_coName(co)}${note}</div><div>${chips}</div></div>`;
+  }).join('');
+}
+function toggleEmBranchRow(email){
+  const row=document.getElementById('embrRow_'+_emKey(email)); if(row) row.style.display=(row.style.display==='none'?'table-row':'none');
+}
+function toggleEmBranch(email,co,branch){
+  const s=(_emailStaff||[]).find(x=>x.email===email); if(!s) return;
+  if(!s.branches) s.branches={};
+  let arr=s.branches[co]?s.branches[co].slice():[];
+  if(arr.includes(branch)) arr=arr.filter(b=>b!==branch); else arr.push(branch);
+  if(arr.length) s.branches[co]=arr; else delete s.branches[co];
+  s._dirty=true;
+  const cell=document.getElementById('embrPanel_'+_emKey(email)); if(cell) cell.innerHTML=emBranchPanel(s);
 }
 // Per-company role edits for email staff are buffered locally, then saved on "Simpan Semua"
 // (same as Google staff). Each change POSTs a {roles} map to the worker.
 function updateEmailRole(email, companyId, role){
   const s=(_emailStaff||[]).find(x=>x.email===email); if(!s) return;
   if(!s.roles) s.roles={};
-  if(role) s.roles[companyId]=role; else delete s.roles[companyId];
+  if(role) s.roles[companyId]=role; else { delete s.roles[companyId]; if(s.branches) delete s.branches[companyId]; }
   s._dirty=true;
+  // Role added/removed → refresh the branch panel so the company appears/disappears there too.
+  const cell=document.getElementById('embrPanel_'+_emKey(email)); if(cell) cell.innerHTML=emBranchPanel(s);
 }
 async function removeEmailStaff(email){
   if(!confirm('Tolak / tarik semua akses akaun email '+email+'?')) return;
@@ -780,7 +816,7 @@ async function saveEmailStaffRoles(){
   const dirty=(_emailStaff||[]).filter(s=>s._dirty);
   for(const s of dirty){
     try{
-      await fetch(STAFF_WORKER+'/staff/admin/approve',{method:'POST',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({email:s.email,roles:s.roles||{}})});
+      await fetch(STAFF_WORKER+'/staff/admin/approve',{method:'POST',headers:{Authorization:'Bearer '+currentToken,'Content-Type':'application/json'},body:JSON.stringify({email:s.email,roles:s.roles||{},branches:s.branches||{}})});
       s._dirty=false;
     }catch(e){ console.warn('save email role',e); }
   }
