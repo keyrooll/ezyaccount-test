@@ -2121,6 +2121,7 @@ function populateDraftBranch(){
   else { if(grp) grp.style.display='block'; sel.innerHTML=branches.map(b=>`<option value="${b}">${b}</option>`).join(''); }
 }
 async function submitDraft(){
+  if(EMAIL_MODE){ return emailSubmitFromDom('draftBranch'); }
   const btn=document.getElementById('btnSubmitDraft');
   if(!uploadedImage && !(uploadedPages&&uploadedPages.length)){ showToast('Sila ambil gambar resit dulu ⚠️'); return; }
   if(btn){ btn.disabled=true; btn.textContent='Menghantar...'; }
@@ -2182,6 +2183,7 @@ function completeDraft(id){
 }
 
 async function submitReceipt(){
+  if(EMAIL_MODE){ return emailSubmitFromDom('receiptBranch','receiptAmount','receiptNota'); }
   const btn=document.getElementById('btnSubmit');
   btn.disabled=true;btn.textContent='Menyimpan...';
   const vendor=selectedVendor;
@@ -2374,6 +2376,42 @@ async function getOrCreateFolder(token, path){
     parentId=await getOrCreateSubfolder(token,parentId,part);
   }
   return parentId;
+}
+
+// === Email-mode staff receipt upload -> /staff/upload (Miss CFO inbox). Added by CFO rollout. ===
+async function emailStaffUpload(branch, amount, note){
+  const pages=(typeof uploadedPages!=='undefined'&&uploadedPages&&uploadedPages.length)?uploadedPages:((typeof uploadedImage!=='undefined'&&uploadedImage)?[uploadedImage]:[]);
+  if(!pages.length) return { ok:false, error:'Tiada gambar' };
+  const company=(typeof _writeCompany!=='undefined'&&_writeCompany)||(typeof COMPANY_CONFIG!=='undefined'&&COMPANY_CONFIG&&COMPANY_CONFIG.id)||'';
+  let ok=0, err='';
+  for(const b64 of pages){
+    try{
+      const fd=new FormData();
+      fd.append('image', base64ToBlob(b64,'image/jpeg'), 'resit.jpg');
+      fd.append('company', company);
+      fd.append('branch', branch||'');
+      if(amount) fd.append('amount', amount);
+      if(note) fd.append('note', note);
+      const r=await fetch(STAFF_WORKER+'/staff/upload',{ method:'POST', headers:{'Authorization':'Bearer '+EMAIL_JWT}, body:fd });
+      const d=await r.json().catch(()=>({}));
+      if(r.ok) ok++; else err=(r.status===401?'Sesi tamat — log masuk semula':(d.error||'Gagal hantar'));
+    }catch(e){ err='Masalah sambungan'; }
+  }
+  return ok?{ ok:true, count:ok }:{ ok:false, error:err||'Gagal hantar' };
+}
+async function emailSubmitFromDom(branchId, amountId, noteId){
+  const branch=((document.getElementById(branchId)||{}).value)||'';
+  const amount=amountId?(parseFloat((document.getElementById(amountId)||{}).value)||''):'';
+  const note=noteId?(((document.getElementById(noteId)||{}).value)||''):'';
+  const res=await emailStaffUpload(branch, amount, note);
+  if(!res.ok){ showToast('❌ '+res.error); return; }
+  const _sc=document.getElementById('wSuccess');
+  if(_sc){ ['wStep1','wStep2','wStep3','wStep4'].forEach(idd=>{const el=document.getElementById(idd);if(el)el.style.display='none';}); _sc.style.display='block'; }
+  if(typeof uploadedImage!=='undefined') uploadedImage=null;
+  if(typeof uploadedPages!=='undefined') uploadedPages=[];
+  if(typeof selectedVendor!=='undefined') selectedVendor=null;
+  if(typeof wizardItems!=='undefined') wizardItems=[];
+  showToast('Resit dihantar ✅ (Miss CFO akan proses)');
 }
 
 function base64ToBlob(base64,type){
