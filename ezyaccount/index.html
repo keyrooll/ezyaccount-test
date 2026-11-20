@@ -227,20 +227,9 @@
     .login-atom-wrap{ line-height:0; }
     .atom-slot{ margin:2px 0 14px; line-height:0; }
     .atom-slot-sm{ margin:0 0 4px; line-height:0; }
-
-    /* ── DARK AUTH THEME — aktif masa login/loading sahaja, supaya glow atom nampak ── */
-    body.auth-dark{ background:#04060c; }
-    body.auth-dark .login-brand span{ color:#e8edf3; }
-    body.auth-dark .login-title{ color:#93a4b8; }
-    body.auth-dark .kekal-row{ color:#93a4b8; }
-    body.auth-dark .login-loading{ color:#7fd1a0; }
-    body.auth-dark .footer{ color:#5b6676; }
-    body.auth-dark #loadingScreen{ color:#cfe4ff; }
-    body.auth-dark #loginFallback{ color:#5ec98f; }
-    body.auth-dark #loginFallback span{ color:#e8edf3; }
   </style>
 </head>
-<body class="auth-dark">
+<body>
 
 <script>
 /* ============================================================
@@ -529,7 +518,7 @@ if(window._gisLoaded) _doGISInit();
 (function(){
   var holder = document.querySelector('#loginScreen .main-logo');
   var LOGO = holder ? holder.getAttribute('src') : '';
-  var TONE = 'dark';
+  var TONE = 'light';
   var a = document.getElementById('loginAtom'); if (a && !a.childNodes.length) a.appendChild(createAtomLogo({ size:200, tone:TONE, logoSrc:LOGO }));
   var b = document.getElementById('loadAtom');  if (b && !b.childNodes.length) b.appendChild(createAtomLogo({ size:150, tone:TONE, logoSrc:LOGO }));
 })();
@@ -1054,7 +1043,6 @@ function showScreen(id){
   ['loginScreen','loadingScreen','companyScreen'].forEach(s=>{
     document.getElementById(s).style.display=(s===id)?'flex':'none';
   });
-  document.body.classList.toggle('auth-dark', id==='loginScreen'||id==='loadingScreen');
 }
 </script>
 </body>
